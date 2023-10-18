@@ -74,12 +74,11 @@ const Banner: React.FC<MensajesResponse> = ({
               <div className="col-span-3 sm:col-span-2 mt-2">
                 <button
                   onClick={() => {
-                    document
-                      .getElementsByClassName("simplybook-widget-button")[0]
-                      .click();
-                    document.getElementsByClassName(
+                    let element: HTMLElement = document.getElementsByClassName(
                       "simplybook-widget-button"
-                    )[0].onload = function () {
+                    )[0] as HTMLElement;
+                    element.click();
+                    element.onload = function () {
                       document.body.scrollTop = 0;
                       document.documentElement.scrollTop = 0;
                     };
