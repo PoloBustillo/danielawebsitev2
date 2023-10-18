@@ -1,17 +1,20 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   DropdownItem,
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
   Avatar,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from "@nextui-org/react";
 import {
   ChevronDown,
@@ -23,8 +26,25 @@ import {
   Scale,
 } from "./icons/Icons";
 import { AcmeLogo } from "./icons/AcmeLogo";
+import { ThemeSwitcher } from "./ThemeSwitcher";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
+  const path = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const menuItems = [
+    "Profile",
+    "Dashboard",
+    "Activity",
+    "Analytics",
+    "System",
+    "Deployments",
+    "My Settings",
+    "Team Settings",
+    "Help & Feedback",
+    "Log Out",
+  ];
   const icons = {
     chevron: <ChevronDown fill="currentColor" size={16} />,
     scale: <Scale className="text-warning" fill="currentColor" size={30} />,
@@ -38,14 +58,23 @@ export default function NavBar() {
   };
 
   return (
-    <Navbar isBordered isBlurred={true}>
+    <Navbar isBordered isBlurred={true} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarMenuToggle
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        className="sm:hidden"
+      />
       <NavbarBrand>
         <AcmeLogo />
-        <p className="font-bold  text-content1-foreground">ACME</p>
+        <a href="/" className="font-bold  text-content1-foreground">
+          Psicóloga Daniela Diaz
+        </a>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <Dropdown>
-          <NavbarItem>
+          <NavbarItem
+            isActive={path == "/"}
+            className=" data-[active=true]:font-extrabold"
+          >
             <DropdownTrigger>
               <Button
                 disableRipple
@@ -54,7 +83,7 @@ export default function NavBar() {
                 radius="sm"
                 variant="light"
               >
-                Features
+                Servicios
               </Button>
             </DropdownTrigger>
           </NavbarItem>
@@ -102,27 +131,36 @@ export default function NavBar() {
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
+        <NavbarItem
+          isActive={path == "/procesos"}
+          className=" data-[active=true]:font-extrabold"
+        >
+          <Link href="/procesos" aria-current="page">
+            Procesos
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
+        <NavbarItem
+          isActive={path == "/blogs"}
+          className=" data-[active=true]:font-extrabold"
+        >
+          <Link color="foreground" href="/blogs">
+            Blog:"Cuidado mental"
           </Link>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent as="div" justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem>
+          <ThemeSwitcher></ThemeSwitcher>
+        </NavbarItem>
+        {/* <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color="primary" href="#" variant="flat">
             Sign Up
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
@@ -152,6 +190,25 @@ export default function NavBar() {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              color={
+                index === 2
+                  ? "primary"
+                  : index === menuItems.length - 1
+                  ? "danger"
+                  : "foreground"
+              }
+              className="w-full"
+              href="#"
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }

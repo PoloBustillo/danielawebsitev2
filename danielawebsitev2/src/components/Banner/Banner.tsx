@@ -1,21 +1,28 @@
 "use client";
 
 import { MensajesResponse } from "@/lib/types";
+import Stars from "../icons/Stars";
+import { useTheme } from "next-themes";
 
 const Banner: React.FC<MensajesResponse> = ({
   lema,
   frase,
 }: MensajesResponse) => {
+  const { theme, setTheme } = useTheme();
+
   return (
-    <main className="banner-image">
+    <section className="banner-image">
       <div className="relative px-6 lg:px-8">
         <div className="mx-auto max-w-5xl pt-16 sm:pt-40 sm:pb-24">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-75px md:4px">
-              <p> {lema?.enable ? lema?.message : ""}</p>
+              <p>UNA VIDA SALUDABLE EMPIEZA CON UNA MENTE SALUDABLE</p>
             </h1>
-            <p className="mt-6 text-lg leading-8 text-black">
+            <p className="mt-6 text-lg leading-8">
               {frase?.enable ? frase?.message : ""}
+            </p>
+            <p className="mt-6 text-medium font-extrabold leading-8 ">
+              Psicóloga Daniela Diaz Merino
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <div className="hidden sm:block -space-x-2 overflow-hidden">
@@ -48,7 +55,8 @@ const Banner: React.FC<MensajesResponse> = ({
               <div className="bannerBorder sm:pl-8">
                 <div className="flex justify-center sm:justify-start">
                   <h3 className="text-2xl font-semibold mr-2">4.5</h3>
-                  <img src={"/assets/banner/Stars.svg"} alt="stars-icon" />
+
+                  <Stars color={theme == "black" ? "white" : "black"}></Stars>
                 </div>
                 <div>
                   <h3 className="text-sm">En google y otras plataformas</h3>
@@ -61,18 +69,31 @@ const Banner: React.FC<MensajesResponse> = ({
 
           <div className="mx-auto max-w-4xl mt-24 pt-6 pb-8 px-6 lg:max-w-4xl lg:px-8 bg-white rounded-lg boxshadow">
             <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-8 xl:gap-x-8">
-              <div className="col-span-3"></div>
-              <div className="col-span-3"></div>
+              <div className="col-span-3 text-black">Sesiones</div>
+              <div className="col-span-3 text-black">Terapias</div>
               <div className="col-span-3 sm:col-span-2 mt-2">
-                <button className="bg-purple w-full hover:bg-pruple text-white font-bold py-4 px-3 rounded">
-                  Start
+                <button
+                  onClick={() => {
+                    document
+                      .getElementsByClassName("simplybook-widget-button")[0]
+                      .click();
+                    document.getElementsByClassName(
+                      "simplybook-widget-button"
+                    )[0].onload = function () {
+                      document.body.scrollTop = 0;
+                      document.documentElement.scrollTop = 0;
+                    };
+                  }}
+                  className="bg-purple w-full hover:bg-pruple text-white font-bold py-4 px-3 rounded"
+                >
+                  Reserva ahora
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 };
 
