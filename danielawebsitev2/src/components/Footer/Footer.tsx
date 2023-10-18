@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 // MIDDLE LINKS DATA
@@ -41,9 +42,11 @@ const Footer = () => {
             </h3>
             <div className="flex gap-4">
               <Link href="/">
-                <img
+                <Image
                   src={"/assets/footer/insta.svg"}
                   alt="instagram"
+                  width={33}
+                  height={33}
                   className="footer-icons"
                 />
               </Link>
@@ -112,7 +115,12 @@ const Footer = () => {
                   type="submit"
                   className="p-1 focus:outline-none focus:shadow-outline"
                 >
-                  <img src={"/assets/footer/inputIcon.svg"} alt="inputicon" />
+                  <Image
+                    width={33}
+                    height={33}
+                    src={"/assets/footer/inputIcon.svg"}
+                    alt="inputicon"
+                  />
                 </button>
               </div>
             </div>
@@ -127,7 +135,7 @@ const Footer = () => {
           @2023 - All Rights Reserved by{" "}
           <Link href="https://adminmart.com/" target="_blank">
             {" "}
-            Adminmart.com
+            TakitoCorp
           </Link>
         </h3>
       </div>
