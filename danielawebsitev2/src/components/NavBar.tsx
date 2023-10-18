@@ -144,7 +144,7 @@ export default function NavBar() {
           className=" data-[active=true]:font-extrabold"
         >
           <Link color="foreground" href="/blogs">
-            Blog:"Cuidado mental"
+            Blog:Cuidado mental
           </Link>
         </NavbarItem>
       </NavbarContent>
