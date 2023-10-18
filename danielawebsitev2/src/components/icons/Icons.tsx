@@ -3,6 +3,7 @@ import React from "react";
 type iconProps = {
   fill: string;
   size: number;
+  className?: string;
   height?: number;
   width?: number;
 };
