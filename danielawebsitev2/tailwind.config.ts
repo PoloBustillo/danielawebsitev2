@@ -48,9 +48,8 @@ module.exports = {
       "15px": ["15px", { lineHeight: "1" }],
       "75px": ["75px", { lineHeight: "1" }],
     },
-    width: ({ theme }) => ({
+    width: ({}) => ({
       auto: "auto",
-      ...theme("spacing"),
       "1/2": "50%",
       "1/3": "33.333333%",
       "2/3": "66.666667%",
