@@ -7,7 +7,11 @@ import Script from "next/script";
 export function Providers(props: { children: ReactNode }) {
   return (
     <NextUIProvider>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="light"
+        forcedTheme="light"
+      >
         {props.children}
         {/* <!-- Messenger Chat plugin Code --> */}
         <div id="fb-root"></div>
