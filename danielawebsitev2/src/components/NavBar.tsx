@@ -25,6 +25,7 @@ import {
   Server,
   TagUser,
   Scale,
+  Books,
 } from "./icons/Icons";
 import { AcmeLogo } from "./icons/AcmeLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
@@ -47,6 +48,7 @@ export default function NavBar({ areasTerapias }: any) {
     "Log Out",
   ];
   const icons = {
+    books: <Books fill="currentColor" size={16} />,
     chevron: <ChevronDown fill="currentColor" size={16} />,
     scale: <Scale className="text-warning" fill="currentColor" size={30} />,
     lock: <Lock className="text-success" fill="currentColor" size={30} />,
@@ -113,17 +115,19 @@ export default function NavBar({ areasTerapias }: any) {
           >
             {areasTerapias &&
               Object.keys(areasTerapias).map((area: any) => {
-                return (
-                  <DropdownSection title={area}>
-                    <DropdownItem
-                      key="autoscaling"
-                      description="ACME scales apps to meet user demand, automagically, based on load."
-                      startContent={icons.scale}
-                    >
-                      OTRO
-                    </DropdownItem>
-                  </DropdownSection>
-                );
+                <DropdownSection title={area} draggable>
+                  {areasTerapias[area].map((terapias: any) => {
+                    return (
+                      <DropdownItem
+                        key="autoscaling"
+                        description="ACME scales apps to meet user demand, automagically, based on load."
+                        startContent={icons.books}
+                      >
+                        {terapias.name}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownSection>;
               })}
             <DropdownItem
               key="autoscaling"
