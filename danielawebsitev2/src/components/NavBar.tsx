@@ -15,6 +15,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  DropdownSection,
 } from "@nextui-org/react";
 import {
   ChevronDown,
@@ -29,10 +30,10 @@ import { AcmeLogo } from "./icons/AcmeLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { usePathname } from "next/navigation";
 
-export default function NavBar() {
+export default function NavBar({ areasTerapias }: any) {
   const path = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  console.log(areasTerapias);
   const menuItems = [
     "Profile",
     "Dashboard",
@@ -70,7 +71,13 @@ export default function NavBar() {
         </a>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <Dropdown>
+        <Dropdown
+          backdrop="blur"
+          showArrow
+          classNames={{
+            arrow: "bg-default-400",
+          }}
+        >
           <NavbarItem
             isActive={path == "/"}
             className=" data-[active=true]:font-extrabold"
@@ -88,12 +95,36 @@ export default function NavBar() {
             </DropdownTrigger>
           </NavbarItem>
           <DropdownMenu
-            aria-label="ACME features"
+            aria-label="Terapias por areas"
             className="w-[340px]"
             itemClasses={{
-              base: "gap-4",
+              base: [
+                "rounded-md",
+                "text-default-500",
+                "transition-opacity",
+                "data-[hover=true]:text-foreground",
+                "data-[hover=true]:bg-default-100",
+                "dark:data-[hover=true]:bg-default-50",
+                "data-[selectable=true]:focus:bg-default-50",
+                "data-[pressed=true]:opacity-70",
+                "data-[focus-visible=true]:ring-default-500",
+              ],
             }}
           >
+            {areasTerapias &&
+              Object.keys(areasTerapias).map((area: any) => {
+                return (
+                  <DropdownSection title={area}>
+                    <DropdownItem
+                      key="autoscaling"
+                      description="ACME scales apps to meet user demand, automagically, based on load."
+                      startContent={icons.scale}
+                    >
+                      OTRO
+                    </DropdownItem>
+                  </DropdownSection>
+                );
+              })}
             <DropdownItem
               key="autoscaling"
               description="ACME scales apps to meet user demand, automagically, based on load."

@@ -1,14 +1,33 @@
 "use client";
 
-import { MensajesResponse } from "@/lib/types";
+import { BannerResponse, Mensaje } from "@/lib/types";
 import Stars from "../icons/Stars";
 import { useTheme } from "next-themes";
-
-const Banner: React.FC<MensajesResponse> = ({
-  lema,
-  frase,
-}: MensajesResponse) => {
+import { Button, Card, CardFooter, Image } from "@nextui-org/react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+export interface BannerType {
+  lema?: Mensaje;
+  frase?: Mensaje;
+  banners: BannerResponse[];
+}
+const Banner: React.FC<BannerType> = ({ lema, frase, banners }: BannerType) => {
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
+
+  const [indexImg, setIndexImg] = useState(
+    Math.floor(Math.random() * banners.length)
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let index = Math.floor(Math.random() * banners.length);
+      if (index == indexImg) index = Math.floor(Math.random() * banners.length);
+      setIndexImg(index);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [indexImg]);
 
   return (
     <section className="banner-image">
@@ -25,33 +44,44 @@ const Banner: React.FC<MensajesResponse> = ({
               Psicóloga Daniela Diaz Merino
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <div className="hidden sm:block -space-x-2 overflow-hidden">
-                <img
-                  className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-                  src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-                <img
-                  className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-                  src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-                <img
-                  className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-                  alt=""
-                />
-                <img
-                  className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-                <img
-                  className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-                  src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-              </div>
+              <Card isFooterBlurred>
+                <motion.div
+                  initial={{ y: -2 }}
+                  animate={{ y: 2 }}
+                  transition={{
+                    type: "smooth",
+                    repeatType: "mirror",
+                    duration: 4,
+                    repeat: Infinity,
+                  }}
+                  className="hidden sm:block -space-x-2 overflow-hidden"
+                >
+                  <Image
+                    isZoomed
+                    width={300}
+                    height={280}
+                    alt={banners[indexImg].description}
+                    src={banners[indexImg].image}
+                  />
+                </motion.div>
+                <CardFooter className="mb-1  -bottom-1 justify-between bg-purple/60 border-purple/10 border-1  py-1 absolute before:rounded-xl rounded-large  w-full shadow-small  z-10">
+                  <p className="text-tiny text-offwhite">
+                    {banners[indexImg].description}
+                  </p>
+                  <Button
+                    className="text-tiny text-white bg-black/40"
+                    variant="flat"
+                    color="default"
+                    radius="lg"
+                    size="sm"
+                    onClick={() => {
+                      router.push(banners[indexImg].url!);
+                    }}
+                  >
+                    Conoce más
+                  </Button>
+                </CardFooter>
+              </Card>
               <div className="bannerBorder sm:pl-8">
                 <div className="flex justify-center sm:justify-start">
                   <h3 className="text-2xl font-semibold mr-2">4.5</h3>

@@ -76,10 +76,11 @@ export default function Cards() {
             </CardHeader>
             <Image
               removeWrapper
-              alt="Relaxing app background"
+              alt="Terapia familiar"
               className="z-0 w-full h-full object-cover"
-              src="https://terapygo.com/wp-content/uploads/2020/05/razones-para-ir-a-terapia-1.jpg"
+              src="/assets/cartoons/2.png"
             />
+
             <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
               <div className="flex flex-grow gap-2 items-center">
                 <Image
@@ -94,9 +95,6 @@ export default function Cards() {
                   </p>
                 </div>
               </div>
-              <Button radius="full" size="sm">
-                Get App
-              </Button>
             </CardFooter>
           </Card>
         ))}

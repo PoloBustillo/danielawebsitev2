@@ -47,16 +47,25 @@ export const getBannerImages = async () => {
   const bannerRef = collection(db, "banner");
 
   const bannerDocs = await getDocs(bannerRef);
-  let images = [];
-  bannerDocs.forEach(async (doc) => {
-    images = Promise.all(
-      doc.data().images.map((url) => {
-        return getDownloadURL(ref(storage, url));
-      })
-    );
-  });
 
-  return images;
+  let response = [];
+  await bannerDocs.forEach(async (doc) => {
+    response.push({
+      url: doc.data().url,
+      description: doc.data().description,
+      image: doc.data().image,
+    });
+  });
+  let responseWithUrls = await Promise.all(
+    response.map(async (data) => {
+      return {
+        ...data,
+        image: await getDownloadURL(ref(storage, data.image)),
+      };
+    })
+  );
+
+  return responseWithUrls;
 };
 
 export const getWebData = async () => {
