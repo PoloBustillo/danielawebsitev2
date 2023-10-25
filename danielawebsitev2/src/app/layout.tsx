@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer/Footer";
 import { getTerapias } from "@/lib/api";
+import { TerapiasResponseType } from "@/lib/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const terapiasResponse = await getTerapias();
-  let areasTerapias = terapiasResponse?.reduce((a, v) => {
+  let areasTerapias: TerapiasResponseType = terapiasResponse?.reduce((a, v) => {
     if (a[v.type]) {
       a[v.type] = a[v.type].concat(v);
     } else {
@@ -27,7 +28,7 @@ export default async function RootLayout({
     }
     return a;
   }, {});
-  console.log("AREAS:::::: ", areasTerapias);
+
   return (
     <html lang="es">
       <body className={inter.className}>

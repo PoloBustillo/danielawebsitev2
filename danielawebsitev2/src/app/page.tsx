@@ -2,12 +2,12 @@ import Banner from "@/components/Banner/Banner";
 
 import React from "react";
 import { getBannerImages, getMensajes, getTerapias } from "../lib/api";
-import { BannerResponse, MensajesResponse, Mensaje } from "@/lib/types";
+import { BannerResponse, MensajesResponseType } from "@/lib/types";
 import Cards from "@/components/Cards/Cards";
 import Newsletter from "@/components/Newsletter/Newsletter";
 
 const page = async () => {
-  const { frase, lema, mensaje }: MensajesResponse = await getMensajes();
+  const { frase, lema, mensaje }: MensajesResponseType = await getMensajes();
   const bannerResponse: BannerResponse[] = await getBannerImages();
 
   return (

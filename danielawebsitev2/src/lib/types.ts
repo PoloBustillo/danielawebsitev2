@@ -1,12 +1,25 @@
-export interface Mensaje {
+export interface MensajeType {
   message?: string;
   enable?: boolean;
 }
-
-export interface MensajesResponse {
-  frase?: Mensaje;
-  lema?: Mensaje;
-  mensaje?: Mensaje;
+export interface TerapiaType {
+  imageBanner?: string;
+  name?: string;
+  type?: string;
+  costos?: [];
+  imageDescription: string;
+  longDescription: string;
+  description: string;
+}
+export interface TerapiasResponseType {
+  Educativa: TerapiaType[];
+  Social: TerapiaType[];
+  Clinica: TerapiaType[];
+}
+export interface MensajesResponseType {
+  frase?: MensajeType;
+  lema?: MensajeType;
+  mensaje?: MensajeType;
 }
 
 export interface BannerResponse {

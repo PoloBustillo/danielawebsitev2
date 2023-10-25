@@ -18,6 +18,11 @@ export function Providers(props: { children: ReactNode }) {
           src="//widget.simplybook.me/v2/widget/widget.js"
         ></Script>
         <Script
+          src="https://widgets.sociablekit.com/google-reviews/widget.js"
+          async
+          defer
+        ></Script>
+        <Script
           id="simplybook-call"
           strategy="lazyOnload"
           dangerouslySetInnerHTML={{

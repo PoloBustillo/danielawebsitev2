@@ -160,6 +160,7 @@ export const Books = ({
       fill="none"
       stroke-linecap="round"
       stroke-linejoin="round"
+      {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M5 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />

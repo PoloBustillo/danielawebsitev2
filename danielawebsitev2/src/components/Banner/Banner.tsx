@@ -1,18 +1,22 @@
 "use client";
 
-import { BannerResponse, Mensaje } from "@/lib/types";
+import { BannerResponse, MensajeType } from "@/lib/types";
 import Stars from "../icons/Stars";
 import { useTheme } from "next-themes";
 import { Button, Card, CardFooter, Image } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-export interface BannerType {
-  lema?: Mensaje;
-  frase?: Mensaje;
+interface BannerProps {
+  lema?: MensajeType;
+  frase?: MensajeType;
   banners: BannerResponse[];
 }
-const Banner: React.FC<BannerType> = ({ lema, frase, banners }: BannerType) => {
+const Banner: React.FC<BannerProps> = ({
+  lema,
+  frase,
+  banners,
+}: BannerProps) => {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
 
@@ -94,7 +98,7 @@ const Banner: React.FC<BannerType> = ({ lema, frase, banners }: BannerType) => {
               </div>
             </div>
           </div>
-
+          <div className="sk-ww-google-reviews" data-embed-id="214937"></div>
           {/* DROPDOWN BUTTONS */}
 
           <div className="mx-auto max-w-4xl mt-24 pt-6 pb-8 px-6 lg:max-w-4xl lg:px-8 bg-white rounded-lg boxshadow">

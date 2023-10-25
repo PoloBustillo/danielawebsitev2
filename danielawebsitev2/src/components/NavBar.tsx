@@ -30,11 +30,18 @@ import {
 import { AcmeLogo } from "./icons/AcmeLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { usePathname } from "next/navigation";
+import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 
-export default function NavBar({ areasTerapias }: any) {
+interface NavBarProps {
+  areasTerapias: TerapiasResponseType;
+}
+
+export default function NavBar({ areasTerapias }: NavBarProps) {
   const path = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  console.log(areasTerapias);
+
+  let arrayTerapias = Object.keys(areasTerapias) as [];
+
   const menuItems = [
     "Profile",
     "Dashboard",
@@ -48,7 +55,7 @@ export default function NavBar({ areasTerapias }: any) {
     "Log Out",
   ];
   const icons = {
-    books: <Books fill="currentColor" size={16} />,
+    books: <Books className="text-success" fill="currentColor" size={16} />,
     chevron: <ChevronDown fill="currentColor" size={16} />,
     scale: <Scale className="text-warning" fill="currentColor" size={30} />,
     lock: <Lock className="text-success" fill="currentColor" size={30} />,
@@ -68,12 +75,16 @@ export default function NavBar({ areasTerapias }: any) {
       />
       <NavbarBrand>
         <AcmeLogo />
-        <a href="/" className="font-bold  text-content1-foreground">
+        <a
+          href="/"
+          className="font-bold hidden md:block text-content1-foreground"
+        >
           Psicóloga Daniela Diaz
         </a>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <Dropdown
+          shouldBlockScroll={false}
           backdrop="blur"
           showArrow
           classNames={{
@@ -98,7 +109,7 @@ export default function NavBar({ areasTerapias }: any) {
           </NavbarItem>
           <DropdownMenu
             aria-label="Terapias por areas"
-            className="w-[340px]"
+            className="w-[440px]"
             itemClasses={{
               base: [
                 "rounded-md",
@@ -113,57 +124,29 @@ export default function NavBar({ areasTerapias }: any) {
               ],
             }}
           >
-            {areasTerapias &&
-              Object.keys(areasTerapias).map((area: any) => {
-                <DropdownSection title={area} draggable>
-                  {areasTerapias[area].map((terapias: any) => {
+            {(arrayTerapias as any).map((area: keyof typeof areasTerapias) => {
+              return (
+                <DropdownSection key={area} title={area} showDivider>
+                  {areasTerapias[area].map((terapia: TerapiaType) => {
                     return (
                       <DropdownItem
-                        key="autoscaling"
-                        description="ACME scales apps to meet user demand, automagically, based on load."
-                        startContent={icons.books}
+                        key={terapia.type + terapia.name!}
+                        description={terapia.description}
+                        startContent={
+                          area === "Educativa"
+                            ? icons.books
+                            : area === "Social"
+                            ? icons.user
+                            : icons.flash
+                        }
                       >
-                        {terapias.name}
+                        {terapia.name}
                       </DropdownItem>
                     );
                   })}
-                </DropdownSection>;
-              })}
-            <DropdownItem
-              key="autoscaling"
-              description="ACME scales apps to meet user demand, automagically, based on load."
-              startContent={icons.scale}
-            >
-              Autoscaling
-            </DropdownItem>
-            <DropdownItem
-              key="usage_metrics"
-              description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-              startContent={icons.activity}
-            >
-              Usage Metrics
-            </DropdownItem>
-            <DropdownItem
-              key="production_ready"
-              description="ACME runs on ACME, join us and others serving requests at web scale."
-              startContent={icons.flash}
-            >
-              Production Ready
-            </DropdownItem>
-            <DropdownItem
-              key="99_uptime"
-              description="Applications stay on the grid with high availability and high uptime guarantees."
-              startContent={icons.server}
-            >
-              +99% Uptime
-            </DropdownItem>
-            <DropdownItem
-              key="supreme_support"
-              description="Overcome any challenge with a supporting team ready to respond."
-              startContent={icons.user}
-            >
-              +Supreme Support
-            </DropdownItem>
+                </DropdownSection>
+              );
+            })}
           </DropdownMenu>
         </Dropdown>
         <NavbarItem
@@ -226,23 +209,109 @@ export default function NavBar({ areasTerapias }: any) {
         </Dropdown>
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
-              href="#"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        <div className="flex mr-10 h-screen flex-col justify-between bg-transparent">
+          <div className="px-4 py-6">
+            <ul className="mt-6 space-y-1">
+              <li>
+                <a
+                  href=""
+                  className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+                >
+                  Blog: Cuida tu mente
+                </a>
+              </li>
+
+              <li>
+                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <span className="text-sm font-medium"> Procesos </span>
+
+                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </summary>
+
+                  <ul className="mt-2 space-y-1 px-4">
+                    <li>
+                      <a
+                        href=""
+                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      >
+                        Instituciones asociadas
+                      </a>
+                    </li>
+
+                    <li>
+                      <a
+                        href=""
+                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      >
+                        Estudio socioecomico
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              {(arrayTerapias as any).map(
+                (item: keyof typeof areasTerapias) => {
+                  console.log("ITEM", item);
+                  return (
+                    <>
+                      <li>
+                        <details className="group [&_summary::-webkit-details-marker]:hidden">
+                          <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            <span className="text-sm font-medium">{item}</span>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </summary>
+
+                          <ul className="mt-2 space-y-1 px-4">
+                            {areasTerapias[item].map((terapia: TerapiaType) => {
+                              return (
+                                <li>
+                                  <a
+                                    href=""
+                                    className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                  >
+                                    {terapia.name}
+                                  </a>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </details>
+                      </li>
+                    </>
+                  );
+                }
+              )}
+            </ul>
+          </div>
+        </div>
       </NavbarMenu>
     </Navbar>
   );
