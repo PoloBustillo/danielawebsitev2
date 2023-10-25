@@ -4,8 +4,10 @@ import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer/Footer";
+
+import { TerapiaType, TerapiasResponseType } from "@/lib/types";
+import { cache } from "react";
 import { getTerapias } from "@/lib/api";
-import { TerapiasResponseType } from "@/lib/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,21 +21,26 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const terapiasResponse = await getTerapias();
-  let areasTerapias: TerapiasResponseType = terapiasResponse?.reduce((a, v) => {
-    if (a[v.type]) {
-      a[v.type] = a[v.type].concat(v);
-    } else {
-      a[v.type] = [v];
-    }
-    return a;
-  }, {});
+  let terapiasResponse: TerapiaType[] = await getTerapias();
+
+  let areasTerapias: TerapiasResponseType = terapiasResponse?.reduce(
+    (a: TerapiasResponseType, v) => {
+      let vType: string & keyof typeof a = v.type;
+      if (a[vType]) {
+        a[vType] = a[vType].concat(v);
+      } else {
+        a[v.type] = [v];
+      }
+      return a;
+    },
+    {}
+  );
 
   return (
     <html lang="es">
       <body className={inter.className}>
         <Providers>
-          <div className="bg-purple px-4 py-3 text-white">
+          <div className="bg-purple px-4 py-3 text-slate-300 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
             <p className="text-center text-sm font-medium">
               Actualizando página web&nbsp;&nbsp;
               <a href="/blogs" className="inline-block underline">
@@ -42,6 +49,7 @@ export default async function RootLayout({
             </p>
           </div>
           <NavBar areasTerapias={areasTerapias}></NavBar>
+
           {children}
           <Footer />
         </Providers>

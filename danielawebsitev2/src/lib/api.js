@@ -2,6 +2,9 @@ import axios from "axios";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { db, storage } from "./firebase-config";
+import { cache } from "react";
+
+export const revalidate = 3600; // revalidate the data at most every hour
 
 export function getStrapiURL(path = "") {
   return `${process.env.NEXT_SERVER_CMS_URL || "http://localhost:1337"}${path}`;
@@ -14,7 +17,8 @@ export async function fetchAPI(path) {
   const data = await response.data;
   return data;
 }
-export const getMensajes = async () => {
+
+export const getMensajes = cache(async () => {
   const mensajeRef = collection(db, "mensaje");
   const mesajeDocs = await getDocs(mensajeRef);
   let mensajes = {};
@@ -22,7 +26,8 @@ export const getMensajes = async () => {
     mensajes[doc.id] = doc.data();
   });
   return mensajes;
-};
+});
+
 export const getTerapias = async () => {
   const terapiasRef = collection(db, "terapias");
   const docSnaps = await getDocs(terapiasRef);

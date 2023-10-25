@@ -5,16 +5,14 @@ export interface MensajeType {
 export interface TerapiaType {
   imageBanner?: string;
   name?: string;
-  type?: string;
+  type: string;
   costos?: [];
   imageDescription: string;
   longDescription: string;
   description: string;
 }
 export interface TerapiasResponseType {
-  Educativa: TerapiaType[];
-  Social: TerapiaType[];
-  Clinica: TerapiaType[];
+  [key: string]: TerapiaType[];
 }
 export interface MensajesResponseType {
   frase?: MensajeType;
