@@ -6,7 +6,6 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer/Footer";
 
 import { TerapiaType, TerapiasResponseType } from "@/lib/types";
-import { cache } from "react";
 import { getTerapias } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });

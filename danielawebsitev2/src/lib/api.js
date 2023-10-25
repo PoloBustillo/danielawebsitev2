@@ -4,8 +4,6 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { db, storage } from "./firebase-config";
 import { cache } from "react";
 
-export const revalidate = 3600; // revalidate the data at most every hour
-
 export function getStrapiURL(path = "") {
   return `${process.env.NEXT_SERVER_CMS_URL || "http://localhost:1337"}${path}`;
 }
