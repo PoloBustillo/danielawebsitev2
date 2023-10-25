@@ -174,6 +174,40 @@ export const Books = ({
   );
 };
 
+export const Settings = ({
+  fill = "currentColor",
+  size,
+  height,
+  width,
+  ...props
+}: iconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-adjustments-horizontal"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+      <path d="M4 6l8 0"></path>
+      <path d="M16 6l4 0"></path>
+      <path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+      <path d="M4 12l2 0"></path>
+      <path d="M10 12l10 0"></path>
+      <path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+      <path d="M4 18l11 0"></path>
+      <path d="M19 18l1 0"></path>
+    </svg>
+  );
+};
 export const Server = ({
   fill = "currentColor",
   size,
@@ -201,6 +235,97 @@ export const Server = ({
   );
 };
 
+export const Question = ({
+  fill = "currentColor",
+  size,
+  height,
+  width,
+  ...props
+}: iconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-message-question"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M8 9h8"></path>
+      <path d="M8 13h6"></path>
+      <path d="M14 18h-1l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5"></path>
+      <path d="M19 22v.01"></path>
+      <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"></path>
+    </svg>
+  );
+};
+export const Calendar = ({
+  fill = "currentColor",
+  size,
+  height,
+  width,
+  ...props
+}: iconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-calendar-time"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
+      <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+      <path d="M15 3v4"></path>
+      <path d="M7 3v4"></path>
+      <path d="M3 11h16"></path>
+      <path d="M18 16.496v1.504l1 1"></path>
+    </svg>
+  );
+};
+
+export const Task = ({
+  fill = "currentColor",
+  size,
+  height,
+  width,
+  ...props
+}: iconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-checklist"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"></path>
+      <path d="M14 19l2 2l4 -4"></path>
+      <path d="M9 8h4"></path>
+      <path d="M9 12h2"></path>
+    </svg>
+  );
+};
 export const TagUser = ({
   fill = "currentColor",
   size,

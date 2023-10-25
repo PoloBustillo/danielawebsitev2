@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   Avatar,
   NavbarMenu,
-  NavbarMenuItem,
   NavbarMenuToggle,
   DropdownSection,
 } from "@nextui-org/react";
@@ -26,6 +25,10 @@ import {
   TagUser,
   Scale,
   Books,
+  Settings,
+  Task,
+  Calendar,
+  Question,
 } from "./icons/Icons";
 import { AcmeLogo } from "./icons/AcmeLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
@@ -42,22 +45,11 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
 
   let arrayTerapias = Object.keys(areasTerapias) as [];
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
   const icons = {
     books: <Books className="text-success" fill="currentColor" size={16} />,
     chevron: <ChevronDown fill="currentColor" size={16} />,
     scale: <Scale className="text-warning" fill="currentColor" size={30} />,
+
     lock: <Lock className="text-success" fill="currentColor" size={30} />,
     activity: (
       <Activity className="text-secondary" fill="currentColor" size={30} />
@@ -75,14 +67,22 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
       />
       <NavbarBrand>
         <AcmeLogo />
-        <a
+        <Link
           href="/"
-          className="font-bold hidden md:block text-content1-foreground"
+          className="ml-1 font-bold hidden md:block text-content1-foreground"
         >
-          Psicóloga Daniela Diaz
-        </a>
+          Psic. Daniela Diaz
+        </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarItem
+          isActive={path == "/procesos"}
+          className=" data-[active=true]:font-extrabold"
+        >
+          <Link href="/procesos" aria-current="page">
+            Procesos
+          </Link>
+        </NavbarItem>
         <Dropdown
           shouldBlockScroll={false}
           backdrop="blur"
@@ -97,11 +97,10 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
           >
             <DropdownTrigger>
               <Button
-                disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                color={"secondary"}
+                variant={"shadow"}
+                className="capitalize font-bold"
                 endContent={icons.chevron}
-                radius="sm"
-                variant="light"
               >
                 Servicios
               </Button>
@@ -149,14 +148,7 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
             })}
           </DropdownMenu>
         </Dropdown>
-        <NavbarItem
-          isActive={path == "/procesos"}
-          className=" data-[active=true]:font-extrabold"
-        >
-          <Link href="/procesos" aria-current="page">
-            Procesos
-          </Link>
-        </NavbarItem>
+
         <NavbarItem
           isActive={path == "/blogs"}
           className=" data-[active=true]:font-extrabold"
@@ -192,18 +184,40 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+            <DropdownItem key="profile" className="h-14 gap-2 ">
+              <p className="font-semibold">Accediste como:</p>
+              <p className="font-semibold text-bgpurple dark:text-success">
+                zoey@example.com
+              </p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
+            <DropdownItem
+              startContent={<Settings fill="currentColor" size={30}></Settings>}
+              key="settings"
+            >
+              Mis configuraciones
+            </DropdownItem>
+            <DropdownItem
+              startContent={<Task fill="currentColor" size={30}></Task>}
+              key="system"
+            >
+              Tareas
+            </DropdownItem>
+            <DropdownItem
+              startContent={<Calendar fill="currentColor" size={30}></Calendar>}
+              key="configurations"
+            >
+              Citas
+            </DropdownItem>
+            <DropdownItem
+              startContent={<Question fill="currentColor" size={30}></Question>}
+              key="help_and_feedback"
+            >
+              Ayuda & Reseñas
+            </DropdownItem>
+            <DropdownItem key="logout">
+              <Button className="w-full bg-danger-400 border-none text-white justify-center flex">
+                Salir
+              </Button>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

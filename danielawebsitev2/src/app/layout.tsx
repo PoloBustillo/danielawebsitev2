@@ -36,7 +36,7 @@ export default async function RootLayout({
           <div className="bg-purple px-4 py-3 text-white">
             <p className="text-center text-sm font-medium">
               Actualizando página web&nbsp;&nbsp;
-              <a href="#" className="inline-block underline">
+              <a href="/blogs" className="inline-block underline">
                 Revisa el nuevo blog!!
               </a>
             </p>
