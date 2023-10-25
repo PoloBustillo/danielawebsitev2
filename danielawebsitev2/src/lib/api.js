@@ -26,7 +26,7 @@ export const getMensajes = cache(async () => {
   return mensajes;
 });
 
-export const getTerapias = async () => {
+export const getTerapias = cache(async () => {
   const terapiasRef = collection(db, "terapias");
   const docSnaps = await getDocs(terapiasRef);
   let terapias = [];
@@ -34,7 +34,7 @@ export const getTerapias = async () => {
     terapias.push(terapia.data());
   });
   return terapias;
-};
+});
 
 export const getPreguntas = async () => {
   const preguntasRef = collection(db, "preguntas");
@@ -46,7 +46,7 @@ export const getPreguntas = async () => {
   return preguntas;
 };
 
-export const getBannerImages = async () => {
+export const getBannerImages = cache(async () => {
   const bannerRef = collection(db, "banner");
 
   const bannerDocs = await getDocs(bannerRef);
@@ -69,7 +69,7 @@ export const getBannerImages = async () => {
   );
 
   return responseWithUrls;
-};
+});
 
 export const getWebData = async () => {
   const docRef = doc(db, "data", "psicologa");

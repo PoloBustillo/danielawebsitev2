@@ -98,7 +98,10 @@ const Banner: React.FC<BannerProps> = ({
               </div>
             </div>
           </div>
-          <div className="sk-ww-google-reviews" data-embed-id="214937"></div>
+          <div
+            className=" my-10 sk-ww-google-reviews"
+            data-embed-id="214937"
+          ></div>
           {/* DROPDOWN BUTTONS */}
 
           <div className="mx-auto max-w-4xl mt-24 pt-6 pb-8 px-6 lg:max-w-4xl lg:px-8 bg-white rounded-lg boxshadow">

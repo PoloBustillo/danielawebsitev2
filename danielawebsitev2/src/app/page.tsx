@@ -6,7 +6,7 @@ import { BannerResponse, MensajesResponseType } from "@/lib/types";
 import Cards from "@/components/Cards/Cards";
 import Newsletter from "@/components/Newsletter/Newsletter";
 
-export const revalidate = 30; // revalidate the data at most every hour
+export const revalidate = 600; // revalidate the data at most every hour
 
 const page = async () => {
   const { frase, lema, mensaje }: MensajesResponseType = await getMensajes();

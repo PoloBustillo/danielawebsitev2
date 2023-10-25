@@ -9,7 +9,7 @@ import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 import { getTerapias } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });
-
+export const revalidate = 600;
 export const metadata: Metadata = {
   title: "Psicologa Daniela Diaz",
   description: "Servicios de Terapias psicológicas al mejor precio.",
