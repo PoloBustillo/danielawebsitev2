@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Roboto_Condensed } from "next/font/google";
+
 import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/NavBar";
@@ -9,7 +10,11 @@ import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 import { getTerapias } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });
-export const revalidate = 600;
+const roboto_condensed = Roboto_Condensed({
+  weight: "400",
+  subsets: ["latin"],
+});
+export const revalidate = 30;
 export const metadata: Metadata = {
   title: "Psicologa Daniela Diaz",
   description: "Servicios de Terapias psicológicas al mejor precio.",
@@ -37,7 +42,7 @@ export default async function RootLayout({
 
   return (
     <html lang="es">
-      <body className={inter.className}>
+      <body className={roboto_condensed.className}>
         <Providers>
           <div className="bg-purple px-4 py-3 text-slate-300 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
             <p className="text-center text-sm font-medium">

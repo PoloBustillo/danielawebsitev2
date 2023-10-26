@@ -32,7 +32,7 @@ import {
 } from "./icons/Icons";
 import { AcmeLogo } from "./icons/AcmeLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 
 interface NavBarProps {
@@ -41,6 +41,7 @@ interface NavBarProps {
 
 export default function NavBar({ areasTerapias }: NavBarProps) {
   const path = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   let arrayTerapias = Object.keys(areasTerapias) as [];
@@ -79,9 +80,16 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
           isActive={path == "/procesos"}
           className=" data-[active=true]:font-extrabold"
         >
-          <Link href="/procesos" aria-current="page">
+          <Button
+            color={"primary"}
+            variant={"ghost"}
+            className="capitalize font-extrabold"
+            onClick={() => {
+              router.push("/procesos");
+            }}
+          >
             Procesos
-          </Link>
+          </Button>
         </NavbarItem>
         <Dropdown
           shouldBlockScroll={false}
@@ -98,7 +106,7 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
             <DropdownTrigger>
               <Button
                 color={"secondary"}
-                variant={"shadow"}
+                variant={"bordered"}
                 className="capitalize font-extrabold"
                 endContent={icons.chevron}
               >
@@ -155,9 +163,16 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
           isActive={path == "/blogs"}
           className=" data-[active=true]:font-extrabold"
         >
-          <Link color="foreground" href="/blogs">
+          <Button
+            color={"primary"}
+            variant={"ghost"}
+            className="capitalize font-extrabold"
+            onClick={() => {
+              router.push("/procesos");
+            }}
+          >
             Blog:Cuidado mental
-          </Link>
+          </Button>
         </NavbarItem>
       </NavbarContent>
 

@@ -3,7 +3,14 @@
 import { BannerResponse, MensajeType } from "@/lib/types";
 import Stars from "../icons/Stars";
 import { useTheme } from "next-themes";
-import { Button, Card, CardFooter, Image } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  Image,
+} from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -36,17 +43,74 @@ const Banner: React.FC<BannerProps> = ({
   return (
     <section className="banner-image">
       <div className="relative px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl pt-16 sm:pt-40 sm:pb-24">
+        <div className="mx-auto max-w-5xl pt-4 sm:pt-20 sm:pb-24">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-75px md:4px">
+            <h1 className="text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500     bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-4xl font-bold tracking-tight sm:text-75px md:4px">
               <p> {lema?.enable ? lema?.message : ""}</p>
             </h1>
-            <p className="mt-6 text-lg leading-8">
+
+            <p className="mt-6 text-lg sm:text-2xl leading-8 mx-10 capitalize dark:text-slate-300">
               {frase?.enable ? frase?.message : ""}
             </p>
-            <p className="mt-6 text-medium font-extrabold leading-8 ">
-              Psicóloga Daniela Diaz Merino
-            </p>
+            <div className="flex md:flex-row flex-col">
+              <Card
+                isBlurred
+                className="border-none bg-[#37354b]  dark:bg-default-100/50 max-w-[610px] m-4 p-10 pt-3 "
+                //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
+              >
+                <CardBody className="flex flex-col my-3 justify-center">
+                  <div className="flex  justify-center">
+                    <div className="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 dark:bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] dark:from-yellow-200 dark:via-red-500 dark:to-fuchsia-500 relative inline-flex items-center justify-center w-[30vh] h-[30-vh] text-gray-900  animate-morphdiv">
+                      <div className="p-2">
+                        <Avatar
+                          radius="full"
+                          color="secondary"
+                          src="/assets/psicDaniela.jpg"
+                          className="w-[25vh] h-[25vh] text-large "
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <p className="flex  justify-center text-medium text-[whitesmoke] font-extrabold leading-8">
+                    Psicóloga Daniela Diaz Merino
+                  </p>
+                  <p className="flex mt-4  justify-center text-center text-small text-[whitesmoke]  leading-8">
+                    Psicólogo Puebla Daniela Diaz es un Licenciada en Psicología
+                    con consulta en la ciudad de Heroica Puebla de Zaragoza,
+                    Puedes conocerla y reservar cita.Amplia experiencia en
+                    diversas metodologías de la psicología. Terapia en educación
+                    especial.
+                  </p>
+                </CardBody>
+              </Card>{" "}
+              <Card
+                isBlurred
+                className="border-none bg-[#37354b]  dark:bg-default-100/50 max-w-[380px] m-4 pt-3 "
+                //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
+              >
+                <CardBody className="flex flex-col my-3 justify-center align-middle">
+                  <div className="bannerBorder sm:pl-8 flex justify-center flex-col items-center">
+                    <div className="flex flex-col justify-center align-middle ">
+                      <h3 className="text-2xl text-center text-[whitesmoke] font-semibold flex flex-col justify-center align-middle">
+                        4.8
+                      </h3>
+
+                      <Stars color={"yellow"}></Stars>
+                    </div>
+                    <div className="flex justify-center">
+                      <h3 className="text-sm text-[whitesmoke]">
+                        En Google y otras plataformas
+                      </h3>
+                    </div>
+                  </div>
+                  <div
+                    className=" my-10 sk-ww-google-reviews flex"
+                    data-embed-id="214937"
+                  ></div>
+                </CardBody>
+              </Card>
+            </div>
+
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Card isFooterBlurred>
                 <motion.div
@@ -68,8 +132,8 @@ const Banner: React.FC<BannerProps> = ({
                     src={banners[indexImg].image}
                   />
                 </motion.div>
-                <CardFooter className="mb-1  -bottom-1 justify-between bg-purple/60 border-purple/10 border-1  py-1 absolute before:rounded-xl rounded-large  w-full shadow-small  z-10">
-                  <p className="text-tiny text-offwhite">
+                <CardFooter className="mb-1  -bottom-1 justify-between bg-purple-900/60 border-purple-900/10 border-1  py-1 absolute before:rounded-xl rounded-large  w-full shadow-small  z-10">
+                  <p className="text-tiny text-[whitesmoke]">
                     {banners[indexImg].description}
                   </p>
                   <Button
@@ -86,22 +150,9 @@ const Banner: React.FC<BannerProps> = ({
                   </Button>
                 </CardFooter>
               </Card>
-              <div className="bannerBorder sm:pl-8">
-                <div className="flex justify-center sm:justify-start">
-                  <h3 className="text-2xl font-semibold mr-2">4.5</h3>
-
-                  <Stars color={theme == "black" ? "white" : "black"}></Stars>
-                </div>
-                <div>
-                  <h3 className="text-sm">En google y otras plataformas</h3>
-                </div>
-              </div>
             </div>
           </div>
-          <div
-            className=" my-10 sk-ww-google-reviews"
-            data-embed-id="214937"
-          ></div>
+
           {/* DROPDOWN BUTTONS */}
 
           <div className="mx-auto max-w-4xl mt-24 pt-6 pb-8 px-6 lg:max-w-4xl lg:px-8 bg-white rounded-lg boxshadow">
