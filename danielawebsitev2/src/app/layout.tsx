@@ -44,8 +44,8 @@ export default async function RootLayout({
     <html lang="es">
       <body className={roboto_condensed.className}>
         <Providers>
-          <div className="bg-purple px-4 py-3 text-slate-300 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
-            <p className="text-center text-sm font-medium">
+          <div className="bg-purple px-4 py-3 text-slate-300 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] dark:from-yellow-200 dark:via-red-500 dark:to-fuchsia-500">
+            <p className="text-center dark:text-slate-800 text-sm font-medium">
               Actualizando página web&nbsp;&nbsp;
               <a href="/blogs" className="inline-block underline">
                 Revisa el nuevo blog!!

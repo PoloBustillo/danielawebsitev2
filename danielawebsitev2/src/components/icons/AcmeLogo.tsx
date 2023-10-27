@@ -5,7 +5,6 @@ import Link from "next/link";
 import React from "react";
 export const AcmeLogo = () => {
   const { theme, setTheme } = useTheme();
-  console.log(theme);
   return (
     <Link href={"/"}>
       <Image
