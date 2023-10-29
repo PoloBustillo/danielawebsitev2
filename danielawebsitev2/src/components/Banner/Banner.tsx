@@ -12,7 +12,7 @@ import {
   Image,
 } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 interface BannerProps {
   lema?: MensajeType;
@@ -66,6 +66,7 @@ const Banner: React.FC<BannerProps> = ({
                           radius="full"
                           color="secondary"
                           src="/assets/psicDaniela.jpg"
+                          title="Psicologa Daniela Diaz"
                           className="w-[25vh] h-[25vh] text-large "
                         />
                       </div>
@@ -103,6 +104,7 @@ const Banner: React.FC<BannerProps> = ({
                       </h3>
                     </div>
                   </div>
+
                   <div
                     className=" my-10 sk-ww-google-reviews flex"
                     data-embed-id="214937"

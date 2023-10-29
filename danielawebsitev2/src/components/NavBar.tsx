@@ -148,7 +148,9 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
                               : icons.flash
                           }
                         >
-                          {terapia.name}
+                          <span className="block rounded-lg px-4 py-2 text-lg font-bold dark:text-gray-200 dark:hover:bg-gray-100 dark:hover:text-gray-700">
+                            {terapia.name}
+                          </span>
                         </DropdownItem>
                       );
                     })}
@@ -171,7 +173,7 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
               router.push("/procesos");
             }}
           >
-            Blog:Cuidado mental
+            Blog
           </Button>
         </NavbarItem>
       </NavbarContent>
@@ -323,8 +325,8 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
                             return (
                               <li key={terapia.name}>
                                 <a
-                                  href=""
-                                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                  href={`/terapias/${terapia.name}`}
+                                  className="block rounded-lg px-4 py-2 text-lg font-bold text-gray-200 hover:bg-gray-100 hover:text-gray-700"
                                 >
                                   {terapia.name}
                                 </a>
