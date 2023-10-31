@@ -9,7 +9,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 
-import { AcmeLogo } from "../icons/AcmeLogo";
+import { Logo } from "../icons/Logo";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 
 import { TerapiasResponseType } from "@/lib/types";
@@ -19,9 +19,10 @@ import { DesktopMenu } from "./NavComponents/DesktopMenu";
 
 interface NavBarProps {
   areasTerapias: TerapiasResponseType;
+  pageName: string;
 }
 
-export default function NavBar({ areasTerapias }: NavBarProps) {
+export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
@@ -31,12 +32,12 @@ export default function NavBar({ areasTerapias }: NavBarProps) {
         className="sm:hidden"
       />
       <NavbarBrand>
-        <AcmeLogo />
+        <Logo />
         <Link
           href="/"
           className="ml-1 font-bold hidden md:block text-content1-foreground"
         >
-          Psic. Daniela Diaz
+          {pageName}
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">

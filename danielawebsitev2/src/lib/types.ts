@@ -25,3 +25,14 @@ export interface BannerResponse {
   description?: string;
   url?: string;
 }
+export interface WebDataType {
+  email: string;
+  telefono: string;
+  slogan: string;
+  name: string;
+  tags: [string];
+  googleMapUrl: string;
+  address: [{ values: string; type: string }];
+  website: string;
+  socialNetwork: [{ values: string; red: string }];
+}

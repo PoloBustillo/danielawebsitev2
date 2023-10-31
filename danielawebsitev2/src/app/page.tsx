@@ -1,10 +1,9 @@
 import Banner from "@/components/Banner/Banner";
 
 import React from "react";
-import { getBannerImages, getMensajes } from "../lib/api";
-import { BannerResponse, MensajesResponseType } from "@/lib/types";
+import { getMensajes } from "../lib/api";
+import { MensajesResponseType } from "@/lib/types";
 import Cards from "@/components/Cards/Cards";
-import Newsletter from "@/components/Newsletter/Newsletter";
 
 export const revalidate = 30; // revalidate the data at most every hour
 
@@ -12,13 +11,10 @@ const page = async () => {
   const { frase, lema, mensaje }: MensajesResponseType =
     (await getMensajes()) as MensajesResponseType;
 
-  const bannerResponse: BannerResponse[] = await getBannerImages();
-
   return (
     <main>
-      <Banner lema={lema} frase={frase} banners={bannerResponse} />
+      <Banner lema={lema} frase={frase} />
       <Cards></Cards>
-      <Newsletter />
     </main>
   );
 };

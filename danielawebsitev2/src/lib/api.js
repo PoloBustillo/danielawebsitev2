@@ -1,20 +1,7 @@
-import axios from "axios";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { db, storage } from "./firebase-config";
 import { cache } from "react";
-
-export function getStrapiURL(path = "") {
-  return `${process.env.NEXT_SERVER_CMS_URL || "http://localhost:1337"}${path}`;
-}
-
-// Helper to make GET requests to Strapi
-export async function fetchAPI(path) {
-  const requestUrl = getStrapiURL(path);
-  const response = await axios.get(requestUrl);
-  const data = await response.data;
-  return data;
-}
 
 export const getMensajes = cache(async () => {
   const mensajeRef = collection(db, "mensaje");
@@ -80,7 +67,7 @@ export const getBannerImages = cache(async () => {
   return responseWithUrls;
 });
 
-export const getWebData = async () => {
+export const getWebData = cache(async () => {
   const docRef = doc(db, "data", "psicologa");
   const docSnap = await getDoc(docRef);
 
@@ -89,4 +76,4 @@ export const getWebData = async () => {
   } else {
     return [];
   }
-};
+});

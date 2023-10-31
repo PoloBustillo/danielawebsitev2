@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AcmeLogo } from "../icons/AcmeLogo";
+import { Logo } from "../icons/Logo";
+import { WebDataType } from "@/lib/types";
 
 // MIDDLE LINKS DATA
 interface ProductType {
@@ -28,20 +29,15 @@ const products: ProductType[] = [
   },
 ];
 
-const Footer = () => {
+const Footer = ({ webData }: { webData: WebDataType }) => {
   return (
-    <div
-      className="bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-yellow-200 via-red-500 to-fuchsia-500-mt-64"
-      id="first-section"
-    >
-      <div className="mx-auto max-w-2xl pt-64 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+    <div className="bg-gradient-to-t from-pink-600 px-14" id="first-section">
+      <div className="mx-auto max-w-2xl pt-36 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mt-24 grid grid-cols-1 gap-y-10 gap-x-16 sm:grid-cols-2 lg:grid-cols-12 xl:gap-x-8">
-          {/* COLUMN-1 */}
-
-          <div className="col-span-4">
-            <AcmeLogo></AcmeLogo>
-            <h3 className="text-white text-lg font-medium leading-9 mb-4 lg:mb-20">
-              La salud mental es importante
+          <div className=" flex flex-col  justify-center items-center col-span-4">
+            <Logo width="100px" height="100px"></Logo>
+            <h3 className="text-white text-md text-center font-medium leading-9 mb-4 lg:mb-20">
+              {webData.slogan}
             </h3>
             <div className="flex gap-4">
               <Link href="/">
@@ -134,9 +130,9 @@ const Footer = () => {
       {/* All Rights Reserved */}
 
       <div className="pb-24 px-4">
-        <h3 className="text-center text-offwhite">
+        <h3 className="text-center text-[whitesmoke]">
           @2023 - All Rights Reserved by{" "}
-          <Link href="https://adminmart.com/" target="_blank">
+          <Link href="light-hub.com" target="_blank">
             {" "}
             TakitoCorp
           </Link>
