@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 
 export const WithSkeleton = () => {
   return (
-    <Suspense fallback={<>Loading</>}>
+    <Suspense key={crypto.randomUUID()} fallback={<>Loading</>}>
       <NewCard></NewCard>
     </Suspense>
   );

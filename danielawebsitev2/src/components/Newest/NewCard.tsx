@@ -4,19 +4,17 @@ import { BannerResponse } from "@/lib/types";
 import { Button, Card, CardFooter, Image } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, Usable, use, useEffect, useState } from "react";
+
+async function getBanners() {
+  return await getBannerImages();
+}
 
 const NewCard = () => {
   const router = useRouter();
   const [indexImg, setIndexImg] = useState<number>(0);
-  const [banners, setBanners] = useState<BannerResponse[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const bannerResponse: BannerResponse[] = await getBannerImages();
-      setBanners(bannerResponse);
-    })();
-  }, []);
+  const banners = use(getBanners());
 
   useEffect(() => {
     const timer = setTimeout(async () => {
