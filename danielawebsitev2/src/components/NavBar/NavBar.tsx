@@ -29,9 +29,9 @@ import {
   Task,
   Calendar,
   Question,
-} from "./icons/Icons";
-import { AcmeLogo } from "./icons/AcmeLogo";
-import { ThemeSwitcher } from "./ThemeSwitcher";
+} from "../icons/Icons";
+import { AcmeLogo } from "../icons/AcmeLogo";
+import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import { usePathname, useRouter } from "next/navigation";
 import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 

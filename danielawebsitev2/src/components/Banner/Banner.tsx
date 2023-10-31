@@ -1,19 +1,14 @@
 "use client";
 
 import { BannerResponse, MensajeType } from "@/lib/types";
-import Stars from "../icons/Stars";
+
 import { useTheme } from "next-themes";
-import {
-  Avatar,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Image,
-} from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Bio from "./Bio/Bio";
+import Reviews from "./Reviews/Reviews";
 interface BannerProps {
   lema?: MensajeType;
   frase?: MensajeType;
@@ -53,64 +48,8 @@ const Banner: React.FC<BannerProps> = ({
               {frase?.enable ? frase?.message : ""}
             </p>
             <div className="flex md:flex-row flex-col">
-              <Card
-                isBlurred
-                className="border-none bg-[#37354b]  dark:bg-default-100/50 max-w-[610px] m-4 p-10 pt-3 "
-                //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
-              >
-                <CardBody className="flex flex-col my-3 justify-center">
-                  <div className="flex  justify-center">
-                    <div className="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 dark:bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] dark:from-yellow-200 dark:via-red-500 dark:to-fuchsia-500 relative inline-flex items-center justify-center w-[30vh] h-[30-vh] text-gray-900  animate-morphdiv">
-                      <div className="p-2">
-                        <Avatar
-                          radius="full"
-                          color="secondary"
-                          src="/assets/psicDaniela.jpg"
-                          title="Psicologa Daniela Diaz"
-                          className="w-[25vh] h-[25vh] text-large "
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <p className="flex  justify-center text-medium text-[whitesmoke] font-extrabold leading-8">
-                    Psicóloga Daniela Diaz Merino
-                  </p>
-                  <p className="flex mt-4  justify-center text-center text-small text-[whitesmoke]  leading-8">
-                    Psicólogo Puebla Daniela Diaz es un Licenciada en Psicología
-                    con consulta en la ciudad de Heroica Puebla de Zaragoza,
-                    Puedes conocerla y reservar cita.Amplia experiencia en
-                    diversas metodologías de la psicología. Terapia en educación
-                    especial.
-                  </p>
-                </CardBody>
-              </Card>{" "}
-              <Card
-                isBlurred
-                className="border-none bg-[#37354b]  dark:bg-default-100/50 max-w-[380px] m-4 pt-3 "
-                //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
-              >
-                <CardBody className="flex flex-col my-3 justify-center align-middle">
-                  <div className="bannerBorder sm:pl-8 flex justify-center flex-col items-center">
-                    <div className="flex flex-col justify-center align-middle ">
-                      <h3 className="text-2xl text-center text-[whitesmoke] font-semibold flex flex-col justify-center align-middle">
-                        4.8
-                      </h3>
-
-                      <Stars color={"yellow"}></Stars>
-                    </div>
-                    <div className="flex justify-center">
-                      <h3 className="text-sm text-[whitesmoke]">
-                        En Google y otras plataformas
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div
-                    className=" my-10 sk-ww-google-reviews flex"
-                    data-embed-id="214937"
-                  ></div>
-                </CardBody>
-              </Card>
+              <Bio></Bio>
+              <Reviews></Reviews>
             </div>
 
             <div className="mt-10 flex items-center justify-center gap-x-6">

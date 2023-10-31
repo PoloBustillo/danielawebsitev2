@@ -17,7 +17,7 @@ export interface TerapiasResponseType {
 export interface MensajesResponseType {
   frase?: MensajeType;
   lema?: MensajeType;
-  mensaje?: MensajeType;
+  mensaje: MensajeType;
 }
 
 export interface BannerResponse {

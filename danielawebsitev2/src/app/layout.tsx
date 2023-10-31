@@ -3,7 +3,7 @@ import { Inter, Roboto_Condensed } from "next/font/google";
 
 import "./globals.css";
 import { Providers } from "./providers";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
 
 import {
@@ -12,7 +12,7 @@ import {
   TerapiasResponseType,
 } from "@/lib/types";
 import { getMensajes, getTerapias } from "@/lib/api";
-import MsgBanner from "@/components/MsgBanner";
+import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto_condensed = Roboto_Condensed({
@@ -31,6 +31,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   let terapiasResponse: TerapiaType[] = await getTerapias();
+  const { mensaje }: MensajesResponseType =
+    (await getMensajes()) as MensajesResponseType;
 
   let areasTerapias: TerapiasResponseType = terapiasResponse?.reduce(
     (a: TerapiasResponseType, v) => {
@@ -49,7 +51,7 @@ export default async function RootLayout({
     <html lang="es">
       <body className={roboto_condensed.className}>
         <Providers>
-          <MsgBanner></MsgBanner>
+          <MsgBanner messageData={mensaje}></MsgBanner>
           <NavBar areasTerapias={areasTerapias}></NavBar>
           {children}
           <Footer />
