@@ -33,7 +33,16 @@ export const getTerapias = cache(async () => {
   docSnaps.forEach((terapia) => {
     terapias.push(terapia.data());
   });
-  return terapias;
+  const terapiasReduced = terapias.reduce((a, v) => {
+    let vType = v.type;
+    if (a[vType]) {
+      a[vType] = a[vType].concat(v);
+    } else {
+      a[v.type] = [v];
+    }
+    return a;
+  }, {});
+  return terapiasReduced;
 });
 
 export const getPreguntas = async () => {
