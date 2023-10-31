@@ -9,7 +9,8 @@ import Newsletter from "@/components/Newsletter/Newsletter";
 export const revalidate = 30; // revalidate the data at most every hour
 
 const page = async () => {
-  const { frase, lema, mensaje }: MensajesResponseType = await getMensajes();
+  const { frase, lema, mensaje }: MensajesResponseType =
+    (await getMensajes()) as MensajesResponseType;
 
   const bannerResponse: BannerResponse[] = await getBannerImages();
 
