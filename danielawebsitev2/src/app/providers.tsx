@@ -17,9 +17,9 @@ export function Providers(props: { children: ReactNode }) {
           {props.children}
           <Messenger color="rgb(214, 41, 123)" />
           {/* <!-- Messenger Chat plugin Code --> */}
-          <div id="fb-root"></div>
+          {/* <div id="fb-root"></div> */}
           {/* <!-- Your Chat plugin code --> */}
-          <div id="fb-customer-chat" className="fb-customerchat"></div>
+          {/* <div id="fb-customer-chat" className="fb-customerchat"></div> */}
           <Script
             id="simplybook"
             src="//widget.simplybook.me/v2/widget/widget.js"
