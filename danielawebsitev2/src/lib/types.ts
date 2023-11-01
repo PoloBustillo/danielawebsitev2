@@ -6,7 +6,7 @@ export interface TerapiaType {
   imageBanner?: string;
   name?: string;
   type: string;
-  costos?: [];
+  costos: { type: string; value: string }[];
   imageDescription: string;
   longDescription: string;
   description: string;

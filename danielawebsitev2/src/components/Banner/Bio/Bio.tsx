@@ -30,11 +30,13 @@ const Bio = async () => {
         <p className="flex  justify-center text-medium text-[whitesmoke] font-extrabold leading-8">
           Psicóloga Daniela Diaz Merino
         </p>
-        <p className="flex mt-4  justify-center text-center text-small text-[whitesmoke]  leading-8">
-          <Markdown rehypePlugins={[rehypeRaw]}>
-            {bioData.shortDescription}
-          </Markdown>
-        </p>
+
+        <Markdown
+          rehypePlugins={[rehypeRaw]}
+          className="flex mt-4  justify-center text-center text-small text-[whitesmoke]  leading-8"
+        >
+          {bioData.shortDescription}
+        </Markdown>
       </CardBody>
     </Card>
   );

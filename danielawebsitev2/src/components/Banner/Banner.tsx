@@ -2,6 +2,7 @@ import { MensajeType } from "@/lib/types";
 
 import Bio from "./Bio/Bio";
 import Reviews from "./Reviews/Reviews";
+import { WithSkeleton } from "../WithSkeleton";
 interface BannerProps {
   lema?: MensajeType;
   frase?: MensajeType;
@@ -19,9 +20,13 @@ const Banner: React.FC<BannerProps> = ({ lema, frase }: BannerProps) => {
             <p className="mt-6 text-lg sm:text-2xl leading-8 mx-10 capitalize dark:text-slate-300">
               {frase?.enable ? frase?.message : ""}
             </p>
-            <div className="flex md:flex-row flex-col">
+            <div className="flex mt-10 md:flex-row flex-col">
               <Bio></Bio>
-              <Reviews></Reviews>
+
+              <WithSkeleton
+                children={<Reviews></Reviews>}
+                fallback={<>Loading</>}
+              ></WithSkeleton>
             </div>
           </div>
 

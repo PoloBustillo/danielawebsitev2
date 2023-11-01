@@ -19,7 +19,7 @@ export function Providers(props: { children: ReactNode }) {
         ></Script>
         <Script
           src="https://widgets.sociablekit.com/google-reviews/widget.js"
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
           async
           defer
         ></Script>
