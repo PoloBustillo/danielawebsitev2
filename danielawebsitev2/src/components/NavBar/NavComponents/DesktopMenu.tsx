@@ -49,6 +49,7 @@ export const DesktopMenu = ({
         className=" data-[active=true]:font-extrabold"
       >
         <Button
+          role="button"
           aria-label="Procesos"
           color={"primary"}
           variant={"ghost"}
@@ -74,6 +75,7 @@ export const DesktopMenu = ({
         >
           <DropdownTrigger>
             <Button
+              role="button"
               aria-label="Selector Servicios"
               color={"secondary"}
               variant={"bordered"}
@@ -136,6 +138,7 @@ export const DesktopMenu = ({
         className=" data-[active=true]:font-extrabold"
       >
         <Button
+          role="button"
           aria-label="Enlace a Blog"
           color={"primary"}
           variant={"ghost"}

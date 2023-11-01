@@ -55,7 +55,10 @@ const UserAvatar = () => {
           Ayuda & Reseñas
         </DropdownItem>
         <DropdownItem key="logout">
-          <Button className="w-full bg-danger-400 border-none text-white justify-center flex">
+          <Button
+            role="button"
+            className="w-full bg-danger-400 border-none text-white justify-center flex"
+          >
             Salir
           </Button>
         </DropdownItem>

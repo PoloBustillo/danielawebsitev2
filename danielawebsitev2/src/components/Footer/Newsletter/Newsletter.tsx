@@ -28,7 +28,10 @@ const Newsletter = async () => {
                   placeholder="Tu email..."
                   autoComplete="off"
                 />
-                <button className="  bg-background dark:hover:bg-[whitesmoke] dark:hover:text-background text-current font-medium py-2 px-4 rounded">
+                <button
+                  role="button"
+                  className="  bg-background dark:hover:bg-[whitesmoke] dark:hover:text-background text-current font-medium py-2 px-4 rounded"
+                >
                   Subscribete
                 </button>
               </div>

@@ -111,6 +111,7 @@ const Footer = ({ webData }: { webData: WebDataType }) => {
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-2">
                 <button
+                  role="button"
                   type="submit"
                   className="p-1 focus:outline-none focus:shadow-outline"
                 >

@@ -44,6 +44,7 @@ const NewCard = ({ banners }: { banners: BannerResponse[] }) => {
           {banners[indexImg]?.description}
         </p>
         <Button
+          role="button"
           className="text-tiny text-white bg-black/40"
           variant="flat"
           color="default"
