@@ -16,10 +16,10 @@ const UserAvatar = () => {
         <Avatar
           isBordered
           as="button"
-          className="transition-transform"
+          className="transition-all"
           color="secondary"
           name="Jason Hughes"
-          size="sm"
+          size="md"
           src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
         />
       </DropdownTrigger>

@@ -8,7 +8,7 @@ interface BannerProps {
 }
 const Banner: React.FC<BannerProps> = ({ lema, frase }: BannerProps) => {
   return (
-    <section className="banner-image">
+    <section>
       <div className="relative px-6 lg:px-8">
         <div className="mx-auto max-w-5xl pt-4 sm:pt-20 sm:pb-24">
           <div className="text-center">

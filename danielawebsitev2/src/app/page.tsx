@@ -5,10 +5,10 @@ import { getMensajes } from "../lib/api";
 import { MensajesResponseType } from "@/lib/types";
 import Cards from "@/components/Cards/Cards";
 
-export const revalidate = 30; // revalidate the data at most every hour
+export const dynamic = "force-dynamic";
 
 const page = async () => {
-  const { frase, lema, mensaje }: MensajesResponseType =
+  const { frase, lema }: MensajesResponseType =
     (await getMensajes()) as MensajesResponseType;
 
   return (

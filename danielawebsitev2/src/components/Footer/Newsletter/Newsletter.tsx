@@ -35,10 +35,7 @@ const Newsletter = async () => {
             </div>
             <div>
               <div className="h-full flex items-center justify-center gap-x-4">
-                <WithSkeleton
-                  children={<NewCard banners={banners} />}
-                  fallback={<NewCardSkeleton></NewCardSkeleton>}
-                />
+                <NewCard banners={banners} />
               </div>
             </div>
           </div>

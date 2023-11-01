@@ -19,6 +19,7 @@ export function Providers(props: { children: ReactNode }) {
         ></Script>
         <Script
           src="https://widgets.sociablekit.com/google-reviews/widget.js"
+          strategy="beforeInteractive"
           async
           defer
         ></Script>
@@ -32,17 +33,16 @@ export function Providers(props: { children: ReactNode }) {
         />
         <Script
           id="messenger-tag"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `{var chatbox = document.getElementById('fb-customer-chat');
             chatbox.setAttribute("page_id", "106715554719583");
             chatbox.setAttribute("attribution", "biz_inbox");}`,
           }}
         ></Script>
-
         <Script
           id="messenger-sdk"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: ` window.fbAsyncInit = function() {
               FB.init({

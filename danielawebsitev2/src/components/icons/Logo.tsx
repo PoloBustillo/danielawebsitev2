@@ -3,18 +3,22 @@ import { Image } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import React from "react";
+import NextImage from "next/image";
 
 export const Logo = ({
-  width = "50px",
-  height = "50px",
+  width = 50,
+  height = 50,
 }: {
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
 }) => {
   const { theme } = useTheme();
   return (
     <Link href={"/"}>
       <Image
+        alt="Logo de Psicologa en Puebla Daniela Diaz"
+        as={NextImage}
+        radius="full"
         isZoomed
         height={width}
         width={height}

@@ -77,3 +77,16 @@ export const getWebData = cache(async () => {
     return [];
   }
 });
+
+export const getBio = cache(async () => {
+  const docRef = doc(db, "info", "daniela");
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    let data = docSnap.data();
+    let image = await getDownloadURL(ref(storage, data?.image));
+    return { ...data, image };
+  } else {
+    return {};
+  }
+});

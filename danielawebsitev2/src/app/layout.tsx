@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import type {
+  MensajesResponseType,
+  TerapiasResponseType,
+  WebDataType,
+} from "@/lib/types";
+
 import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
-import {
-  MensajesResponseType,
-  TerapiasResponseType,
-  WebDataType,
-} from "@/lib/types";
 import { getMensajes, getTerapias, getWebData } from "@/lib/api";
 import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
 import { metadataPsic } from "@/utils/constants";

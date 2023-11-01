@@ -49,6 +49,7 @@ export const DesktopMenu = ({
         className=" data-[active=true]:font-extrabold"
       >
         <Button
+          aria-label="Procesos"
           color={"primary"}
           variant={"ghost"}
           className="capitalize font-extrabold"
@@ -73,6 +74,7 @@ export const DesktopMenu = ({
         >
           <DropdownTrigger>
             <Button
+              aria-label="Selector Servicios"
               color={"secondary"}
               variant={"bordered"}
               className="capitalize font-extrabold"
@@ -106,6 +108,7 @@ export const DesktopMenu = ({
                   {areasTerapias[area].map((terapia: TerapiaType) => {
                     return (
                       <DropdownItem
+                        aria-label={terapia.name}
                         key={terapia.type + terapia.name!}
                         description={terapia.description}
                         startContent={
@@ -133,11 +136,12 @@ export const DesktopMenu = ({
         className=" data-[active=true]:font-extrabold"
       >
         <Button
+          aria-label="Enlace a Blog"
           color={"primary"}
           variant={"ghost"}
           className="capitalize font-extrabold"
           onClick={() => {
-            router.push("/procesos");
+            router.push("/blogs");
           }}
         >
           Blog

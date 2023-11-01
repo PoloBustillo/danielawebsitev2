@@ -1,13 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Image,
-} from "@nextui-org/react";
+import { Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 
 export default function Cards() {
   const list = [

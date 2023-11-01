@@ -18,6 +18,15 @@ export function ThemeSwitcher() {
 
   return (
     <>
+      {/* {theme == "dark" ? (
+        <button onClick={() => setTheme("light")}>
+          <SunIcon />{" "}
+        </button>
+      ) : (
+        <button onClick={() => setTheme("dark")}>
+          <MoonIcon />
+        </button>
+      )} */}
       <Switch
         defaultSelected={theme == "light"}
         size="lg"

@@ -1,7 +1,12 @@
+import { getBio } from "@/lib/api";
 import { Avatar, Card, CardBody } from "@nextui-org/react";
 import React from "react";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
-const Bio = () => {
+const Bio = async () => {
+  const bioData = (await getBio()) as any;
+
   return (
     <Card
       isBlurred
@@ -15,7 +20,7 @@ const Bio = () => {
               <Avatar
                 radius="full"
                 color="secondary"
-                src="/assets/psicDaniela.jpg"
+                src={bioData.image}
                 title="Psicologa Daniela Diaz"
                 className="w-[25vh] h-[25vh] text-large "
               />
@@ -26,10 +31,9 @@ const Bio = () => {
           Psicóloga Daniela Diaz Merino
         </p>
         <p className="flex mt-4  justify-center text-center text-small text-[whitesmoke]  leading-8">
-          Psicólogo Puebla Daniela Diaz es un Licenciada en Psicología con
-          consulta en la ciudad de Heroica Puebla de Zaragoza, Puedes conocerla
-          y reservar cita.Amplia experiencia en diversas metodologías de la
-          psicología. Terapia en educación especial.
+          <Markdown rehypePlugins={[rehypeRaw]}>
+            {bioData.shortDescription}
+          </Markdown>
         </p>
       </CardBody>
     </Card>
