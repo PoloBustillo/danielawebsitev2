@@ -3,12 +3,14 @@ import React, { ReactNode } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Script from "next/script";
+import Reviews from "@/components/Banner/Reviews/Reviews";
 
 export function Providers(props: { children: ReactNode }) {
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="light">
         {props.children}
+
         {/* <!-- Messenger Chat plugin Code --> */}
         <div id="fb-root"></div>
         {/* <!-- Your Chat plugin code --> */}
@@ -17,12 +19,7 @@ export function Providers(props: { children: ReactNode }) {
           id="simplybook"
           src="//widget.simplybook.me/v2/widget/widget.js"
         ></Script>
-        <Script
-          src="https://widgets.sociablekit.com/google-reviews/widget.js"
-          strategy="lazyOnload"
-          async
-          defer
-        ></Script>
+
         <Script
           id="simplybook-call"
           strategy="lazyOnload"
