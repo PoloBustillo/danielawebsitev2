@@ -66,7 +66,7 @@ export const DesktopMenu = ({
         backdrop="blur"
         showArrow
         classNames={{
-          arrow: "bg-default-400",
+          arrow: "bg-[#1B1B1B]",
         }}
       >
         <NavbarItem
@@ -88,31 +88,24 @@ export const DesktopMenu = ({
         </NavbarItem>
         <DropdownMenu
           aria-label="Terapias por areas"
-          className="w-[440px]"
           itemClasses={{
-            base: [
-              "rounded-md",
-              "text-default-500",
-              "transition-opacity",
-              "data-[hover=true]:text-foreground",
-              "data-[hover=true]:bg-default-100",
-              "dark:data-[hover=true]:bg-default-50",
-              "data-[selectable=true]:focus:bg-default-50",
-              "data-[pressed=true]:opacity-70",
-              "data-[focus-visible=true]:ring-default-500",
-            ],
+            base: ["text-current"],
           }}
         >
           {(arrayTerapias as any).map(
             (area: string & keyof typeof areasTerapias) => {
               return (
-                <DropdownSection key={area} title={area} showDivider>
+                <DropdownSection
+                  className="text-lg"
+                  key={area}
+                  title={area}
+                  showDivider
+                >
                   {areasTerapias[area].map((terapia: TerapiaType) => {
                     return (
                       <DropdownItem
                         aria-label={terapia.name}
                         key={terapia.type + terapia.name!}
-                        description={terapia.description}
                         startContent={
                           area === "Educativa"
                             ? icons.books
@@ -121,7 +114,7 @@ export const DesktopMenu = ({
                             : icons.flash
                         }
                       >
-                        <span className="block rounded-lg px-4 py-2 text-lg font-bold dark:text-gray-200 dark:hover:bg-gray-100 dark:hover:text-gray-700">
+                        <span className="block rounded-lg px-4 py-2 text-sm font-bold text-current  hover:bg-gray-100 hover:text-gray-700">
                           {terapia.name}
                         </span>
                       </DropdownItem>

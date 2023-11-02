@@ -4,6 +4,7 @@ import React from "react";
 import { getMensajes, getTerapias } from "../lib/api";
 import { MensajesResponseType, TerapiasResponseType } from "@/lib/types";
 import Cards from "@/components/Cards/Cards";
+import Newsletter from "@/components/Footer/Newsletter/Newsletter";
 
 export const dynamic = "force-dynamic";
 
@@ -17,10 +18,13 @@ const page = async () => {
     .flat();
 
   return (
-    <main>
-      <Banner lema={lema} frase={frase} />
-      <Cards terapias={terapias}></Cards>
-    </main>
+    <>
+      <main>
+        <Banner lema={lema} frase={frase} />
+        <Cards terapias={terapias}></Cards>
+      </main>
+      <Newsletter />
+    </>
   );
 };
 

@@ -43,7 +43,7 @@ export default async function RootLayout({
             pageName={webData.name}
           ></NavBar>
           {children}
-          <Newsletter />
+
           <Footer webData={webData} />
         </Providers>
       </body>
