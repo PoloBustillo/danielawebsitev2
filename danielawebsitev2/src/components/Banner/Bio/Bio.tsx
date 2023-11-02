@@ -31,12 +31,14 @@ const Bio = async () => {
           Psicóloga Daniela Diaz Merino
         </p>
 
-        <Markdown
-          rehypePlugins={[rehypeRaw]}
-          className="flex mt-4  justify-center text-center text-small text-[whitesmoke]  leading-8"
-        >
-          {bioData.shortDescription}
-        </Markdown>
+        <div className="animate-border inline-block rounded-md bg-white bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-[length:400%_400%]">
+          <Markdown
+            rehypePlugins={[rehypeRaw]}
+            className="p-1 mt-4 bg-foreground justify-center text-center text-small text-[whitesmoke]  leading-8"
+          >
+            {bioData.shortDescription}
+          </Markdown>
+        </div>
       </CardBody>
     </Card>
   );

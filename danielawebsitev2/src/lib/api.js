@@ -40,7 +40,7 @@ export const getTerapias = cache(async () => {
   return terapiasReduced;
 });
 
-export const getPreguntas = async () => {
+export const getPreguntas = cache(async () => {
   const preguntasRef = collection(db, "preguntas");
   const docSnaps = await getDocs(preguntasRef);
   let preguntas = [];
@@ -48,7 +48,7 @@ export const getPreguntas = async () => {
     preguntas.push(pregunta.data());
   });
   return preguntas;
-};
+});
 
 export const getBannerImages = cache(async () => {
   const bannerRef = collection(db, "banner");

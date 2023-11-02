@@ -3,7 +3,6 @@ import React, { ReactNode } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Script from "next/script";
-import Reviews from "@/components/Banner/Reviews/Reviews";
 
 export function Providers(props: { children: ReactNode }) {
   return (

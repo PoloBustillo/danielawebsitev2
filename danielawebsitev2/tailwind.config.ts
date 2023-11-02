@@ -10,24 +10,6 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    // colors: {
-    //   transparent: "transparent",
-    //   current: "currentColor",
-    //   white: "#ffffff",
-    //   black: "#000000",
-    //   purple: "#611F69",
-    //   lightgrey: "#8C8C8C",
-    //   green: "#6B9F36",
-    //   lightpink: "#FCF6EF",
-    //   orange: "#F9CD92",
-    //   grey500: "#ECECEC",
-    //   bgpink: "#FCF5EF",
-    //   bgpurple: "#451F49",
-    //   emailbg: "#6a4c6d",
-    //   offwhite: " #FDFDFD",
-    //   offblack: "#333333",
-    //   red: "#FF605C",
-    // },
     fontFamily: {
       inter: ["Inter", "sans-serif"],
       roboto: ["Roboto Condensed"],
@@ -62,8 +44,13 @@ module.exports = {
         "fade-right": "fade-right 3s ease-in-out forwards",
         "enter-line": "fade-in 3s ease-in-out forwards",
         morphdiv: "blob 12s linear infinite alternate",
+        border: "border 4s ease infinite",
       },
       keyframes: {
+        border: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
         blob: {
           "0%": { "border-radius": "77% 47% 61% 49%" },
           "20%": { "border-radius": "89% 46% 70% 30%" },
@@ -158,6 +145,7 @@ module.exports = {
           colors: {
             background: "#F5F5F5",
             foreground: "#2e2b22",
+            focus: "#fb7185",
           }, // light theme colors
         },
         dark: {
@@ -166,6 +154,7 @@ module.exports = {
             background: "#101010",
             foreground: "#F5F5F5",
             secondary: "#f36c29",
+            focus: "#fb7185",
           },
         },
       },

@@ -13,7 +13,6 @@ import Footer from "@/components/Footer/Footer";
 import { getMensajes, getTerapias, getWebData } from "@/lib/api";
 import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
 import { metadataPsic } from "@/utils/constants";
-import Newsletter from "@/components/Footer/Newsletter/Newsletter";
 
 const roboto_condensed = Roboto_Condensed({
   weight: "400",
@@ -43,7 +42,6 @@ export default async function RootLayout({
             pageName={webData.name}
           ></NavBar>
           {children}
-
           <Footer webData={webData} />
         </Providers>
       </body>
