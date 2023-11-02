@@ -20,7 +20,15 @@ export const getTerapias = cache(async () => {
   docSnaps.forEach((terapia) => {
     terapias.push(terapia.data());
   });
-  const terapiasReduced = terapias.reduce((a, v) => {
+  let terapiasWithUrls = await Promise.all(
+    terapias.map(async (data) => {
+      return {
+        ...data,
+        imageBanner: await getDownloadURL(ref(storage, data.imageBanner)),
+      };
+    })
+  );
+  const terapiasReduced = terapiasWithUrls.reduce((a, v) => {
     let vType = v.type;
     if (a[vType]) {
       a[vType] = a[vType].concat(v);
