@@ -55,7 +55,7 @@ export const DesktopMenu = ({
           variant={"ghost"}
           className="capitalize font-extrabold"
           onClick={() => {
-            router.push("/procesos");
+            router.push("/servicios");
           }}
         >
           Servicios

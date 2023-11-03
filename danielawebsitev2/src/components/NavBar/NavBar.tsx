@@ -24,9 +24,14 @@ interface NavBarProps {
 
 export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  console.log(isMenuOpen);
   return (
-    <Navbar isBordered isBlurred={true} onMenuOpenChange={setIsMenuOpen}>
+    <Navbar
+      isBordered
+      isBlurred={true}
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+    >
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         className="sm:hidden"
@@ -50,7 +55,10 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         </NavbarItem>
         <UserAvatar></UserAvatar>
       </NavbarContent>
-      <MenuMobile areasTerapias={areasTerapias}></MenuMobile>
+      <MenuMobile
+        closeMenu={setIsMenuOpen}
+        areasTerapias={areasTerapias}
+      ></MenuMobile>
     </Navbar>
   );
 }

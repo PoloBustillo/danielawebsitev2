@@ -15,7 +15,7 @@ const Bio = async () => {
     >
       <CardBody className="flex flex-col my-3 justify-center">
         <div className="flex  justify-center">
-          <div className="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 dark:bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] dark:from-yellow-200 dark:via-red-500 dark:to-fuchsia-500 relative inline-flex items-center justify-center w-[30vh] h-[30-vh] text-gray-900  animate-morphdiv">
+          <div className="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 dark:bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] dark:from-yellow-200 dark:via-red-500 dark:to-fuchsia-500 relative inline-flex items-center justify-center  h-[30-vh] text-gray-900  animate-morphdiv">
             <div className="p-2">
               <Avatar
                 radius="full"
@@ -31,13 +31,14 @@ const Bio = async () => {
           Psicóloga Daniela Diaz Merino
         </p>
 
-        <div className="animate-border inline-block rounded-md bg-white bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-[length:400%_400%]">
-          <Markdown
-            rehypePlugins={[rehypeRaw]}
-            className="p-1 mt-4 bg-foreground justify-center text-center text-small text-[whitesmoke]  leading-8"
-          >
-            {bioData.shortDescription}
-          </Markdown>
+        <div className="flex md:mt-20 sm:mt-5 w-full flex-row items-center justify-center">
+          <div className="animate-border inline-block rounded-md bg-foreground bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-[length:400%_400%] p-1">
+            <span className="block rounded-md leading-8 p-1 dark:bg-[#1B1B1B] bg-[#37354b] px-5 py-3 justify-center text-center text-small text-[whitesmoke] text-white">
+              <Markdown rehypePlugins={[rehypeRaw]} className="   ">
+                {bioData.shortDescription}
+              </Markdown>
+            </span>
+          </div>
         </div>
       </CardBody>
     </Card>

@@ -4,8 +4,6 @@ import { Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { TerapiaType } from "@/lib/types";
 
 export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
-  const list = [{}, {}, {}, {}, {}, {}, {}, {}];
-  console.log(terapias);
   return (
     <section id="servicios" className="mx-20 mb-5">
       <div className="gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -94,9 +92,12 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
                       </svg>
                     </button>
                   </div>
-                  {terapia.costos.map((costo) => {
+                  {terapia.costos.map((costo, index) => {
                     return (
-                      <div className="flex gap-1">
+                      <div
+                        key={costo + index.toString()}
+                        className="flex gap-1"
+                      >
                         <p className="capitalize text-white text-small">
                           {costo.type}
                         </p>
