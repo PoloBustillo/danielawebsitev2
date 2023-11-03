@@ -58,7 +58,7 @@ export const DesktopMenu = ({
             router.push("/procesos");
           }}
         >
-          Procesos
+          Servicios
         </Button>
       </NavbarItem>
       <Dropdown
@@ -82,7 +82,7 @@ export const DesktopMenu = ({
               className="capitalize font-extrabold"
               endContent={icons.chevron}
             >
-              Servicios
+              Terapias
             </Button>
           </DropdownTrigger>
         </NavbarItem>
@@ -141,6 +141,23 @@ export const DesktopMenu = ({
           }}
         >
           Blog
+        </Button>
+      </NavbarItem>
+      <NavbarItem
+        isActive={path == "/blogs"}
+        className=" data-[active=true]:font-extrabold"
+      >
+        <Button
+          role="button"
+          aria-label="Enlace a Blog"
+          color={"primary"}
+          variant={"ghost"}
+          className="capitalize font-extrabold"
+          onClick={() => {
+            router.push("/cita");
+          }}
+        >
+          Reserva tu cita
         </Button>
       </NavbarItem>
     </>
