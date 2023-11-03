@@ -1,6 +1,4 @@
 import NewCard from "@/components/Newest/NewCard";
-import NewCardSkeleton from "@/components/Skeletons/NewCardSkeleton";
-import { WithSkeleton } from "@/components/WithSkeleton";
 import { getBannerImages } from "@/lib/api";
 import { BannerResponse } from "@/lib/types";
 

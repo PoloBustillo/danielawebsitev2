@@ -5,6 +5,7 @@ import { getMensajes, getTerapias } from "../lib/api";
 import { MensajesResponseType, TerapiasResponseType } from "@/lib/types";
 import Cards from "@/components/Cards/Cards";
 import Newsletter from "@/components/Footer/Newsletter/Newsletter";
+import Contact from "@/components/ContactSection/Contact";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,7 @@ const page = async () => {
       <main>
         <Banner lema={lema} frase={frase} />
         <Cards terapias={terapias}></Cards>
+        <Contact></Contact>
       </main>
       <Newsletter />
     </>
