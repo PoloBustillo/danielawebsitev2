@@ -7,24 +7,38 @@ import { WebDataType } from "@/lib/types";
 interface ProductType {
   id: number;
   section: string;
-  link: string[];
+  link: { name: string; value: string; target?: string }[];
 }
 
 const products: ProductType[] = [
   {
     id: 1,
     section: "Company",
-    link: ["About us", "Blog", "Contact us", "Pricing", "Testimonials"],
+    link: [
+      { name: "About us", value: "" },
+      { name: "Blog", value: "" },
+      { name: "Contact us", value: "" },
+      { name: "Pricing", value: "" },
+      { name: "Testimonials", value: "" },
+    ],
   },
   {
     id: 2,
-    section: "Support",
+    section: "Soporte",
     link: [
-      "Help center",
-      "Terms of service",
-      "Legal",
-      "Privacy Policy",
-      "Status",
+      { name: "Help center", value: "" },
+      {
+        name: "Terminos de servicios",
+        value: "/TERMINOSSERVICIO.pdf",
+        target: "_blank",
+      },
+      {
+        name: "Declaración de privacidad",
+        value: "/DECLARACIONPRIVACIDAD.pdf",
+        target: "_blank",
+      },
+      { name: "Privacy Policy", value: "" },
+      { name: "Status", value: "" },
     ],
   },
 ];
@@ -81,16 +95,23 @@ const Footer = ({ webData }: { webData: WebDataType }) => {
                 {product.section}
               </p>
               <ul>
-                {product.link.map((link: string, index: number) => (
-                  <li key={index} className="mb-5">
-                    <Link
-                      href="/"
-                      className="text-[#FDFDFD] text-sm font-normal mb-6 space-links"
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                ))}
+                {product.link.map(
+                  (
+                    link: { name: string; value: string; target?: string },
+                    index: number
+                  ) => (
+                    <li key={index} className="mb-5">
+                      <Link
+                        rel="noopener noreferrer"
+                        target={link.target}
+                        href={link.value}
+                        className="text-[#FDFDFD] text-sm font-normal mb-6 space-links"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           ))}
