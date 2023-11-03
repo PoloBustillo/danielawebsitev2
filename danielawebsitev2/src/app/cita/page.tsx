@@ -9,7 +9,8 @@ const CitaPage = () => {
     script.async = true;
     script.src = "//widget.simplybook.me/v2/widget/widget.js";
     script.onload = () => {
-      new SimplybookWidget({
+      var simply = (window as any).SimplybookWidget;
+      new simply({
         widget_type: "iframe",
         url: "https://psicdaniela.simplybook.me",
         theme: "minimal",
