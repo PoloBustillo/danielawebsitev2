@@ -7,7 +7,7 @@ const Contact = async () => {
   const webData = (await getWebData()) as WebDataType;
   console.log(webData);
   return (
-    <section className="py-6 mt-20 dark:bg-gray-800 dark:text-gray-50">
+    <section className="md:py-32 py-10 px-5 md:px-0 mt-20 dark:bg-gray-800 dark:text-gray-50">
       <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
         <div className="py-6 md:py-0 md:px-6">
           <h1 className="text-4xl font-bold">Contactame</h1>
