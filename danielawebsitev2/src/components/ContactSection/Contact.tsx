@@ -2,12 +2,16 @@ import { getWebData } from "@/lib/api";
 import { WebDataType } from "@/lib/types";
 import React from "react";
 import { Stairs } from "../icons/Stairs";
+import { Link } from "@nextui-org/react";
 
 const Contact = async () => {
   const webData = (await getWebData()) as WebDataType;
   console.log(webData);
   return (
-    <section className="md:py-32 py-10 px-5 md:px-0 mt-20 dark:bg-gray-800 dark:text-gray-50">
+    <section
+      id="contactame"
+      className="md:pt-32 px-5 md:px-0 dark:bg-gray-800 dark:text-gray-50 md:pb-20 pb-10"
+    >
       <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
         <div className="py-6 md:py-0 md:px-6">
           <h1 className="text-4xl font-bold">Contactame</h1>
@@ -49,9 +53,13 @@ const Contact = async () => {
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
               </svg>
               <span>
-                <a href={`tel:+52${webData.telefono.replaceAll("·", "")}`}>
+                <Link
+                  className=" text-current text-md font-normal"
+                  showAnchorIcon
+                  href={`tel:+52${webData.telefono.replaceAll("·", "")}`}
+                >
                   {webData.telefono}
-                </a>
+                </Link>
               </span>
             </p>
             <p className="flex items-center">
@@ -65,7 +73,13 @@ const Contact = async () => {
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
               </svg>
               <span>
-                <a href={`mailto:${webData.email}`}>{webData.email}</a>
+                <Link
+                  className=" text-current text-md font-normal"
+                  showAnchorIcon
+                  href={`mailto:${webData.email}`}
+                >
+                  {webData.email}
+                </Link>
               </span>
             </p>
             {webData.extraData?.length ? <h3>Información extra:</h3> : null}

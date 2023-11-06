@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
+
 import { Logo } from "../icons/Logo";
 import { WebDataType } from "@/lib/types";
+import { Link } from "@nextui-org/react";
 
 // MIDDLE LINKS DATA
 interface ProductType {
@@ -102,8 +103,8 @@ const Footer = ({ webData }: { webData: WebDataType }) => {
                   ) => (
                     <li key={index} className="mb-5">
                       <Link
-                        rel="noopener noreferrer"
-                        target={link.target}
+                        showAnchorIcon
+                        isExternal={link.target === "_blank"}
                         href={link.value}
                         className="text-[#FDFDFD] text-sm font-normal mb-6 space-links"
                       >

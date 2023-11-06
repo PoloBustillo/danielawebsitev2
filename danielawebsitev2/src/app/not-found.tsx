@@ -1,5 +1,6 @@
 import { Button, Link as LinkUI } from "@nextui-org/react";
 import Link from "next/link";
+
 import React from "react";
 
 const NotFound = () => {
