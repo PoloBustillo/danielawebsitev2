@@ -64,7 +64,9 @@ const Contact = async () => {
                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
               </svg>
-              <span>{webData.email}</span>
+              <span>
+                <a href={`mailto:${webData.email}`}>{webData.email}</a>
+              </span>
             </p>
             {webData.extraData?.length ? <h3>Información extra:</h3> : null}
             {webData.extraData?.map((extraData) => (
@@ -88,11 +90,11 @@ const Contact = async () => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center flex-col py-6 space-y-6 md:py-0 md:px-6">
+        <div className="flex justify-center flex-col ">
           <iframe
             src={webData.googleMapUrl}
             style={{ border: "0", height: "35vh" }}
-            className="ml-10 justify-center"
+            className="justify-center md:ml-20"
             allowFullScreen={false}
             aria-hidden="false"
             tabIndex={0}
