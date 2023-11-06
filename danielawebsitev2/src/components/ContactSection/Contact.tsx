@@ -1,6 +1,7 @@
 import { getWebData } from "@/lib/api";
 import { WebDataType } from "@/lib/types";
 import React from "react";
+import { Stairs } from "../icons/Stairs";
 
 const Contact = async () => {
   const webData = (await getWebData()) as WebDataType;
@@ -65,13 +66,33 @@ const Contact = async () => {
               </svg>
               <span>{webData.email}</span>
             </p>
+            {webData.extraData?.length ? <h3>Información extra:</h3> : null}
+            {webData.extraData?.map((extraData) => (
+              <p className="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 mr-2 sm:mr-6"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  strokeWidth="2.3"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  dangerouslySetInnerHTML={{
+                    __html: extraData.icon,
+                  }}
+                ></svg>
+                <span>{`${extraData.name}: ${extraData.value}`}</span>
+              </p>
+            ))}
           </div>
         </div>
-        <div className="flex flex-col py-6 space-y-6 md:py-0 md:px-6">
+        <div className="flex justify-center flex-col py-6 space-y-6 md:py-0 md:px-6">
           <iframe
             src={webData.googleMapUrl}
             style={{ border: "0", height: "35vh" }}
-            className="ml-10"
+            className="ml-10 justify-center"
             allowFullScreen={false}
             aria-hidden="false"
             tabIndex={0}

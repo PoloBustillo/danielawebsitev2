@@ -31,6 +31,7 @@ export interface WebDataType {
   slogan: string;
   name: string;
   tags: [string];
+  extraData: [{ name: string; value: string; icon: string }];
   googleMapUrl: string;
   address: [{ values: string; type: string }];
   website: string;
