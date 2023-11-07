@@ -5,12 +5,10 @@ const CitaPage = () => {
   const widgetContainerRef = useRef(null);
 
   useEffect(() => {
-    let button = document.querySelector(".simplybook-widget-button");
-    if (button) {
-      (button as HTMLElement).style.display = "none";
-      document.removeChild(button?.parentNode as Node);
-      console.log(button);
-    }
+    let button = document.querySelector(
+      ".simplybook-widget-button"
+    ) as HTMLElement;
+    if (button?.style) button.style.display = "none";
   });
 
   useEffect(() => {
