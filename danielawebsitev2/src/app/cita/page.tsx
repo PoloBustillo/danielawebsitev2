@@ -4,6 +4,14 @@ import React, { useEffect, useRef } from "react";
 
 const CitaPage = () => {
   const widgetContainerRef = useRef(null);
+
+  useEffect(() => {
+    let button = document.querySelector(
+      ".simplybook-widget-button"
+    ) as HTMLElement;
+    if (button?.style) button.style.display = "none";
+  });
+
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
