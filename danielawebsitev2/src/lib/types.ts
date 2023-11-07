@@ -25,6 +25,12 @@ export interface BannerResponse {
   description?: string;
   url?: string;
 }
+
+export interface PreguntasResponseType {
+  respuesta: string;
+  orden: number;
+  pregunta: string;
+}
 export interface WebDataType {
   email: string;
   telefono: string;

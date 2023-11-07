@@ -1,9 +1,18 @@
 "use client";
-import Script from "next/script";
 import React, { useEffect, useRef } from "react";
 
 const CitaPage = () => {
   const widgetContainerRef = useRef(null);
+
+  useEffect(() => {
+    let button = document.querySelector(".simplybook-widget-button");
+    if (button) {
+      (button as HTMLElement).style.display = "none";
+      document.removeChild(button?.parentNode as Node);
+      console.log(button);
+    }
+  });
+
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
@@ -44,7 +53,9 @@ const CitaPage = () => {
         container_id: "sbw_x5a3ue",
       });
     };
+
     document.head.appendChild(script);
+
     return () => {
       document.head.removeChild(script);
     };

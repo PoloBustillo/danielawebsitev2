@@ -24,7 +24,7 @@ interface NavBarProps {
 
 export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  console.log(isMenuOpen);
+
   return (
     <Navbar
       isBordered

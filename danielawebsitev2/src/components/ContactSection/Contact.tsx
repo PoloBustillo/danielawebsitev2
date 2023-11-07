@@ -6,7 +6,7 @@ import { Link } from "@nextui-org/react";
 
 const Contact = async () => {
   const webData = (await getWebData()) as WebDataType;
-  console.log(webData);
+
   return (
     <section
       id="contactame"
