@@ -21,12 +21,10 @@ const Banner: React.FC<BannerProps> = ({ lema, frase }: BannerProps) => {
             <p className="mt-6 text-lg sm:text-2xl leading-8 mx-10 dark:text-slate-300">
               {frase?.enable ? frase?.message : ""}
             </p>
-            <div className="flex mt-10 md:flex-row flex-col">
+            <div className="flex mt-10 md:flex-row flex-col items-center">
               <Bio></Bio>
               <Reviews></Reviews>
             </div>
-
-          
           </div>
 
           {/* <div className="mx-auto max-w-4xl mt-24 pt-6 pb-8 px-6 lg:max-w-4xl lg:px-8 bg-white rounded-lg boxshadow">

@@ -55,18 +55,16 @@ const Carousel = () => {
         <div className="embla__container">
           {slides.map((selectedIndex) => (
             <div className="embla__slide" key={selectedIndex}>
-              <div className="embla__slide__img">
-                <BannerCarousel></BannerCarousel>
-              </div>
+              <BannerCarousel></BannerCarousel>
             </div>
           ))}
         </div>
-        <div className="embla__dots">
+        <div className="embla__dots ">
           {slides.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => scrollTo(index)}
-              className={"embla__dot".concat(
+              className={"after:bg-foreground embla__dot".concat(
                 index === selectedIndex ? " embla__dot--selected" : ""
               )}
             />

@@ -2,7 +2,6 @@
 import { Card, CardBody } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import Stars from "../../icons/Stars";
-import Script from "next/script";
 
 const Reviews = () => {
   useEffect(() => {
@@ -16,7 +15,7 @@ const Reviews = () => {
   return (
     <Card
       isBlurred
-      className="border-none bg-[#37354b]  dark:bg-default-100/50 max-w-[380px] max-h-[680px] m-4 pt-3 "
+      className="border-none bg-[#37354b]  dark:bg-default-100/50 min-w-[20vw] max-w-[80vw] md:max-w-[380px] max-h-[650px] m-4 pt-3 "
       //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
     >
       <CardBody className="flex overflow-hidden flex-col my-3 justify-center align-middle">
