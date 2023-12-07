@@ -1,8 +1,8 @@
 import { getWebData } from "@/lib/api";
 import { WebDataType } from "@/lib/types";
 import React from "react";
-import { Stairs } from "../icons/Stairs";
 import { Link } from "@nextui-org/react";
+import SocialLink from "../SocialLinks/SocialLink";
 
 const Contact = async () => {
   const webData = (await getWebData()) as WebDataType;
@@ -82,6 +82,7 @@ const Contact = async () => {
                 </Link>
               </span>
             </p>
+
             {webData.extraData?.length ? <h3>Información extra:</h3> : null}
             {webData.extraData?.map((extraData) => (
               <p className="flex items-center">
@@ -103,6 +104,7 @@ const Contact = async () => {
               </p>
             ))}
           </div>
+          <SocialLink socialData={webData.socialNetwork}></SocialLink>
         </div>
         <div className="flex justify-center flex-col ">
           <iframe
