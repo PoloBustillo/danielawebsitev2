@@ -9,7 +9,7 @@ const Faq = async () => {
   const preguntas = ((await getPreguntas()) as PreguntasResponseType[]).sort(
     (a, b) => a.orden - b.orden
   );
-  console.log(preguntas);
+
   return (
     <section className="dark px-5 md:px-0  bg-[#37354b] dark:bg-background dark:text-foreground text-gray-100">
       <div className="container flex flex-col justify-center px-10 py-8 mx-auto md:p-20">
