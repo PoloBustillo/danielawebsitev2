@@ -1,3 +1,5 @@
+"use client";
+import { useTheme } from "next-themes";
 import React from "react";
 
 const SocialLink = ({
@@ -5,7 +7,9 @@ const SocialLink = ({
 }: {
   socialData: [{ red: string; values: string }];
 }) => {
-  console.log(socialData);
+  const { theme } = useTheme();
+  const color = theme == "light" ? "currentColor" : "white";
+
   return (
     <div className="mt-6 flex justify-center gap-4">
       {socialData.map((socialLink, index) => {
@@ -22,7 +26,7 @@ const SocialLink = ({
 
               <svg
                 className="h-6 w-6"
-                fill="currentColor"
+                fill={color}
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
@@ -46,7 +50,7 @@ const SocialLink = ({
 
               <svg
                 className="h-6 w-6"
-                fill="currentColor"
+                fill={color}
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
@@ -70,7 +74,7 @@ const SocialLink = ({
 
               <svg
                 className="h-6 w-6"
-                fill="currentColor"
+                fill={color}
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
@@ -94,7 +98,7 @@ const SocialLink = ({
                 height="24"
                 viewBox="0 0 24 24"
                 stroke-width="2"
-                stroke="currentColor"
+                stroke={color}
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -121,7 +125,7 @@ const SocialLink = ({
                 height="24"
                 viewBox="0 0 24 24"
                 stroke-width="2"
-                stroke="currentColor"
+                stroke={color}
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"
