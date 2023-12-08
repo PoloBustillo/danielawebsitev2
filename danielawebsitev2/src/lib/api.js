@@ -98,3 +98,28 @@ export const getBio = cache(async () => {
     return {};
   }
 });
+
+export const getCarouselData = cache(async () => {
+  const collectionRef = collection(db, "carousel");
+  const docSnaps = await getDocs(collectionRef);
+
+  let response = [];
+  await docSnaps.forEach(async (doc) => {
+    if (doc.data().enable)
+      response.push({
+        content: doc.data().content,
+        title: doc.data().title,
+        image: doc.data().image,
+      });
+  });
+
+  let responseWithUrls = await Promise.all(
+    response.map(async (data) => {
+      return {
+        ...data,
+        image: await getDownloadURL(ref(storage, data.image)),
+      };
+    })
+  );
+  return responseWithUrls;
+});

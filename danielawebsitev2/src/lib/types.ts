@@ -11,6 +11,12 @@ export interface TerapiaType {
   longDescription: string;
   description: string;
 }
+export interface CarouselResponseType {
+  image?: string;
+  content?: string;
+  title?: string;
+}
+
 export interface TerapiasResponseType {
   [key: string]: TerapiaType[];
 }

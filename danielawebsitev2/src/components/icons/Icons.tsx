@@ -158,8 +158,8 @@ export const Books = ({
       strokeWidth="2"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -191,8 +191,8 @@ export const Settings = ({
       strokeWidth="2"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -252,8 +252,8 @@ export const Question = ({
       strokeWidth="2"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -282,8 +282,8 @@ export const Calendar = ({
       strokeWidth="2"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -314,8 +314,8 @@ export const Task = ({
       strokeWidth="2"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
