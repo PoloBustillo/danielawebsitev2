@@ -8,9 +8,8 @@ import useEmblaCarousel, {
 } from "embla-carousel-react";
 
 import BannerCarousel from "../BannerCarousel/BannerCarousel";
+import { CarouselResponseType } from "@/lib/types";
 
-const SLIDE_COUNT = 5;
-const slides = Array.from(Array(SLIDE_COUNT).keys());
 const options: EmblaOptionsType = { loop: true };
 
 type PropType = PropsWithChildren<
@@ -28,7 +27,11 @@ const DotButton: React.FC<PropType> = (props) => {
     </button>
   );
 };
-const Carousel = () => {
+
+interface CarouselProps {
+  carouselData: CarouselResponseType[];
+}
+const Carousel = ({ carouselData }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -53,14 +56,14 @@ const Carousel = () => {
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((selectedIndex) => (
-            <div className="embla__slide" key={selectedIndex}>
-              <BannerCarousel></BannerCarousel>
+          {carouselData.map((banner) => (
+            <div className="embla__slide" key={banner.title}>
+              <BannerCarousel data={banner}></BannerCarousel>
             </div>
           ))}
         </div>
         <div className="embla__dots ">
-          {slides.map((_, index) => (
+          {carouselData.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => scrollTo(index)}

@@ -35,7 +35,7 @@ const page = async () => {
       <main>
         <Banner lema={lema} frase={frase} />
         <Cards terapias={terapias}></Cards>
-        <Carousel></Carousel>
+        <Carousel carouselData={carouselData}></Carousel>
         <Contact></Contact>
         <Faq></Faq>
       </main>

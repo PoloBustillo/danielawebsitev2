@@ -2,8 +2,7 @@ import { MensajeType } from "@/lib/types";
 
 import Bio from "./Bio/Bio";
 import Reviews from "./Reviews/Reviews";
-import { WithSkeleton } from "../WithSkeleton";
-import Contact from "../ContactSection/Contact";
+
 interface BannerProps {
   lema?: MensajeType;
   frase?: MensajeType;
@@ -12,7 +11,7 @@ const Banner: React.FC<BannerProps> = ({ lema, frase }: BannerProps) => {
   return (
     <section>
       <div className="relative px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl pt-4 sm:pt-20 sm:pb-24">
+        <div className="mx-auto max-w-7xl pt-4 sm:pt-20">
           <div className="text-center">
             <h1 className="text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500     bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-4xl font-bold tracking-tight sm:text-75px md:4px">
               <p> {lema?.enable ? lema?.message : ""}</p>
