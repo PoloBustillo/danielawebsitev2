@@ -32,7 +32,10 @@ interface CarouselProps {
   carouselData: CarouselResponseType[];
 }
 const Carousel = ({ carouselData }: CarouselProps) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
+    Autoplay({ delay: 5000, stopOnInteraction: true }),
+  ]);
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollTo = useCallback(
@@ -50,6 +53,10 @@ const Carousel = ({ carouselData }: CarouselProps) => {
 
     emblaApi.on("reInit", onSelect);
     emblaApi.on("select", onSelect);
+    return () => {
+      console.log("REMOVED");
+      emblaApi.destroy();
+    };
   }, [emblaApi, onSelect]);
 
   return (
