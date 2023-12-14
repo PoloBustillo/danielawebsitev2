@@ -28,8 +28,6 @@ const page = async () => {
     .map((key) => areasTerapias[key])
     .flat();
 
-  console.log("Carousel", carouselData);
-
   return (
     <>
       <main>
