@@ -45,8 +45,17 @@ module.exports = {
         "enter-line": "fade-in 3s ease-in-out forwards",
         morphdiv: "blob 12s linear infinite alternate",
         border: "border 4s ease infinite",
+        hideMe: "hideMe 0s ease-in 5s forwards",
       },
       keyframes: {
+        hideMe: {
+          to: {
+            width: 0,
+            height: 0,
+            visibility: "hidden",
+            padding: 0,
+          },
+        },
         border: {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },

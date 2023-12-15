@@ -1,3 +1,4 @@
+import getURL from "@/lib/api";
 import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 import { NavbarMenu } from "@nextui-org/react";
 import Link from "next/link";
@@ -76,7 +77,9 @@ const MenuMobile = ({
                             <li key={terapia.name}>
                               <Link
                                 onClick={() => closeMenu(false)}
-                                href={`/terapias/${terapia.name}`}
+                                href={getURL(
+                                  `terapia/${encodeURIComponent(terapia.name!)}`
+                                )}
                                 className="block rounded-lg px-4 py-2 text-lg font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                               >
                                 {terapia.name}

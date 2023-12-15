@@ -11,13 +11,13 @@ const Banner: React.FC<BannerProps> = ({ lema, frase }: BannerProps) => {
   return (
     <section>
       <div className="relative px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl pt-4 sm:pt-20">
+        <div className="mx-auto max-w-7xl pt-4 sm:pt-20 md:mt-0 mt-4">
           <div className="text-center">
             <h1 className="text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500     bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-4xl font-bold tracking-tight sm:text-75px md:4px">
               <p> {lema?.enable ? lema?.message : ""}</p>
             </h1>
 
-            <p className="mt-6 text-lg sm:text-2xl leading-8 mx-10 dark:text-slate-300">
+            <p className="sub-title mt-6 text-lg sm:text-2xl leading-8 mx-10 dark:text-slate-300">
               {frase?.enable ? frase?.message : ""}
             </p>
             <div className="flex mt-10 md:flex-row flex-col items-center">

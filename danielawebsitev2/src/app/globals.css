@@ -158,3 +158,12 @@
             rgb(112, 215, 21), rgb(236, 14, 158)
     );
 }
+@media only screen and (max-width: 600px) {
+    .simplybook-widget-button{
+        display: none !important;
+    }
+
+    #carousel, .sub-title{
+        display: none !important;
+    }
+}
