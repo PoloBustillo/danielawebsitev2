@@ -20,6 +20,8 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { TerapiaType, TerapiasResponseType } from "@/lib/types";
+import Link from "next/link";
+import getURL from "@/lib/api";
 
 const icons = {
   books: <Books className="text-success" fill="currentColor" size={16} />,
@@ -41,6 +43,7 @@ export const DesktopMenu = ({
 }) => {
   const path = usePathname();
   const router = useRouter();
+
   let arrayTerapias = Object.keys(areasTerapias) as [];
   return (
     <>
@@ -114,9 +117,15 @@ export const DesktopMenu = ({
                             : icons.flash
                         }
                       >
-                        <span className="block rounded-lg px-4 py-2 text-sm font-bold text-current  hover:bg-gray-100 hover:text-gray-700">
-                          {terapia.name}
-                        </span>
+                        <Link
+                          href={getURL(
+                            `terapia/${encodeURIComponent(terapia.name!)}`
+                          )}
+                        >
+                          <span className="block rounded-lg px-4 py-2 text-sm font-bold text-current  hover:bg-gray-100 hover:text-gray-700">
+                            {terapia.name}
+                          </span>
+                        </Link>
                       </DropdownItem>
                     );
                   })}

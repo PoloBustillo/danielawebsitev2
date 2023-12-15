@@ -10,7 +10,7 @@ import useEmblaCarousel, {
 import BannerCarousel from "../BannerCarousel/BannerCarousel";
 import { CarouselResponseType } from "@/lib/types";
 
-const options: EmblaOptionsType = { loop: true };
+const options: EmblaOptionsType = { loop: false };
 
 type PropType = PropsWithChildren<
   React.DetailedHTMLProps<
@@ -54,34 +54,37 @@ const Carousel = ({ carouselData }: CarouselProps) => {
     emblaApi.on("reInit", onSelect);
     emblaApi.on("select", onSelect);
     return () => {
-      console.log("REMOVED");
       emblaApi.destroy();
     };
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
-          {carouselData.map((banner) => (
-            <div className="embla__slide" key={banner.title}>
-              <BannerCarousel data={banner}></BannerCarousel>
+    <section id="carousel">
+      <div className="mx-auto max-w-7xl">
+        <div className="embla">
+          <div className="embla__viewport" ref={emblaRef}>
+            <div className="embla__container">
+              {carouselData.map((banner) => (
+                <div className="embla__slide" key={banner.title}>
+                  <BannerCarousel data={banner}></BannerCarousel>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="embla__dots ">
-          {carouselData.map((_, index) => (
-            <DotButton
-              key={index}
-              onClick={() => scrollTo(index)}
-              className={"after:bg-foreground embla__dot".concat(
-                index === selectedIndex ? " embla__dot--selected" : ""
-              )}
-            />
-          ))}
+            <div className="embla__dots ">
+              {carouselData.map((_, index) => (
+                <DotButton
+                  key={index}
+                  onClick={() => scrollTo(index)}
+                  className={"after:bg-foreground embla__dot".concat(
+                    index === selectedIndex ? " embla__dot--selected" : ""
+                  )}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

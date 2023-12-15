@@ -18,7 +18,7 @@ export const getTerapias = cache(async () => {
   const docSnaps = await getDocs(terapiasRef);
   let terapias = [];
   docSnaps.forEach((terapia) => {
-    terapias.push(terapia.data());
+    terapias.push({ ...terapia.data(), id: terapia.id });
   });
   let terapiasWithUrls = await Promise.all(
     terapias.map(async (data) => {
@@ -98,6 +98,7 @@ export const getTerapia = cache(async (id) => {
     return {};
   }
 });
+
 export const getBio = cache(async () => {
   const docRef = doc(db, "info", "daniela");
   const docSnap = await getDoc(docRef);
@@ -135,3 +136,12 @@ export const getCarouselData = cache(async () => {
   );
   return responseWithUrls;
 });
+
+// utils/getURL.ts
+const IS_SERVER = typeof window === "undefined";
+export default function getURL(path) {
+  const baseURL = IS_SERVER
+    ? process.env.NEXT_PUBLIC_SITE_URL
+    : window.location.origin;
+  return new URL(path, baseURL).toString();
+}

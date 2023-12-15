@@ -10,6 +10,7 @@ export interface TerapiaType {
   imageDescription: string;
   longDescription: string;
   description: string;
+  id: string;
 }
 export interface CarouselResponseType {
   image?: string;

@@ -8,12 +8,15 @@ const Contact = async () => {
   const webData = (await getWebData()) as WebDataType;
 
   return (
-    <section id="contactame" className="dark:bg-gray-800 dark:text-gray-50">
-      <div className="relative px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl pt-4 sm:pt-20">
-          <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
+    <section
+      id="contactame"
+      className=" dark:bg-gray-800 dark:text-gray-50  pb-10"
+    >
+      <div className="relative px-6 lg:px-8 ">
+        <div className="mx-auto max-w-7xl pt-4 sm:pt-20 ">
+          <h1 className="text-4xl font-bold text-center">Contactame</h1>
+          <div className=" grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
             <div className="py-6 md:py-0 md:px-6">
-              <h1 className="text-4xl font-bold">Contactame</h1>
               <p className="pt-2 pb-4">
                 Llama o manda un mensaje por alguna de mis redes sociales.
               </p>
