@@ -7,20 +7,16 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
 
   return <div>SERVICIO</div>;
 };
-export async function getStaticPaths() {
+
+export async function generateStaticParams() {
   const areasTerapias: TerapiasResponseType =
     (await getTerapias()) as TerapiasResponseType;
   let terapias = Object.keys(areasTerapias)
     .map((key) => areasTerapias[key])
     .flat();
-  let array = terapias.map((terapia) => {
-    console.log(encodeURIComponent(terapia.name!));
-    return { params: { id: encodeURIComponent(terapia.name!) } };
+  return terapias.map((terapia) => {
+    return { id: encodeURIComponent(terapia.name!) };
   });
-  return {
-    paths: array,
-    fallback: false,
-  };
 }
 
 export default page;
