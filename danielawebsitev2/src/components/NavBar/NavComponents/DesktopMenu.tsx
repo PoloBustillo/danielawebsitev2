@@ -49,7 +49,7 @@ export const DesktopMenu = ({
     <>
       <NavbarItem
         isActive={path == "/procesos"}
-        className=" data-[active=true]:font-extrabold"
+        className="hidden sm:flex data-[active=true]:font-extrabold "
       >
         <Button
           role="button"
@@ -158,7 +158,7 @@ export const DesktopMenu = ({
       >
         <Button
           role="button"
-          aria-label="Enlace a Blog"
+          aria-label="Reserva tu cita"
           color={"primary"}
           variant={"ghost"}
           className="capitalize font-extrabold"

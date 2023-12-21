@@ -5,9 +5,9 @@ import { BannerResponse } from "@/lib/types";
 const Newsletter = async () => {
   const banners = (await getBannerImages()) as BannerResponse[];
   return (
-    <section className="mx-[5vw] max-w-[90vw] top-28 relative">
+    <section className="md:mx-[5vw] md:max-w-[90vw] top-28 relative">
       <div id="join-section" className="-mt-30 relative z-10">
-        <div className="mx-auto max-w-2xl py-16 md:py-24 px-4 sm:px-6 md:max-w-7xl lg:px-24 dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500     bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 rounded-lg bg-newsletter">
+        <div className="mx-auto max-w-2xl py-16 md:py-24 md:px-4 px-8 sm:px-6 md:max-w-7xl lg:px-24 dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500     bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 rounded-lg bg-newsletter">
           <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 xl:gap-x-8">
             <div className=" flex flex-col justify-evenly">
               <div>

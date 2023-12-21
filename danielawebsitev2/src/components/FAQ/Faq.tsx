@@ -14,7 +14,7 @@ const Faq = async () => {
     <section className="dark bg-[#37354b] dark:bg-background dark:text-foreground text-gray-100">
       <div className="relative px-6 lg:px-8">
         <div className="mx-auto max-w-7xl mt-4 sm:mt-20">
-          <div className="container flex flex-col justify-center px-10 py-8 mx-auto md:p-20">
+          <div className="container flex flex-col justify-center md:px-10 py-8 mx-auto md:p-20">
             <h1 className="text-4xl font-bold">Preguntas Frecuentes</h1>
             <p className="mt-4 mb-8 text-gray-400">
               Si tienes más preguntas no dudes en contactarme...{" "}

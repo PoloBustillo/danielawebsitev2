@@ -10,7 +10,7 @@ const Bio = async () => {
   return (
     <Card
       isBlurred
-      className="border-none bg-[#37354b]  dark:bg-default-100/50  min-h-[650px] m-4 pt-3 p-10 "
+      className="border-none bg-[#37354b]  dark:bg-default-100/50  min-h-[650px] m-4 pt-3 "
       //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
     >
       <CardBody className="flex flex-col my-3 justify-center">
@@ -31,10 +31,10 @@ const Bio = async () => {
           Psicóloga Daniela Diaz Merino
         </p>
 
-        <div className="flex md:mt-20 sm:mt-5 w-full flex-row items-center justify-center">
+        <div className="flex mt-10 lg:px-12  w-full flex-row items-center justify-center">
           <div className="animate-border inline-block rounded-md bg-foreground bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-[length:400%_400%] p-1">
             <span className="block rounded-md leading-8 p-1 dark:bg-[#1B1B1B] bg-[#37354b] px-5 py-3 justify-center text-center text-small text-[whitesmoke] text-white">
-              <Markdown rehypePlugins={[rehypeRaw]} className="   ">
+              <Markdown rehypePlugins={[rehypeRaw]}>
                 {bioData.shortDescription}
               </Markdown>
             </span>

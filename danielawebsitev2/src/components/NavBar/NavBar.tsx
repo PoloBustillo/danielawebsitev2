@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import {
+  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -16,7 +17,7 @@ import { TerapiasResponseType } from "@/lib/types";
 import UserAvatar from "./NavComponents/UserAvatar";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { DesktopMenu } from "./NavComponents/DesktopMenu";
-
+import { useRouter } from "next/navigation";
 interface NavBarProps {
   areasTerapias: TerapiasResponseType;
   pageName: string;
@@ -25,6 +26,7 @@ interface NavBarProps {
 export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const router = useRouter();
   return (
     <Navbar
       isBordered
@@ -45,6 +47,22 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           {pageName}
         </Link>
       </NavbarBrand>
+      <NavbarContent className="sm:hidden flex gap-4" justify="center">
+        <NavbarItem>
+          <Button
+            role="button"
+            aria-label="Reserva tu cita"
+            color={"secondary"}
+            variant={"ghost"}
+            className="capitalize font-extrabold"
+            onClick={() => {
+              router.push("/cita");
+            }}
+          >
+            Reserva tu cita
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <DesktopMenu areasTerapias={areasTerapias}></DesktopMenu>
       </NavbarContent>
