@@ -163,7 +163,7 @@
         display: none !important;
     }
 
-    #carousel, .sub-title{
+    .sub-title{
         display: none !important;
     }
 }

@@ -12,6 +12,7 @@ import Newsletter from "@/components/Footer/Newsletter/Newsletter";
 import Contact from "@/components/ContactSection/Contact";
 import Faq from "@/components/FAQ/Faq";
 import Carousel from "@/components/Carousel/Carousel";
+import DesktopWrapper from "@/wrappers/desktopWrapper";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +34,9 @@ const page = async () => {
       <main>
         <Banner lema={lema} frase={frase} />
         <Cards terapias={terapias}></Cards>
-        {/* <Carousel carouselData={carouselData}></Carousel> */}
+        <DesktopWrapper>
+          <Carousel carouselData={carouselData}></Carousel>
+        </DesktopWrapper>
         <Contact></Contact>
         <Faq></Faq>
       </main>
