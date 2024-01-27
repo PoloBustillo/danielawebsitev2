@@ -1,29 +1,25 @@
 import Banner from "@/components/Banner/Banner";
-
-import React from "react";
-import { getMensajes, getTerapias, getCarouselData } from "../lib/api";
+import Cards from "@/components/Cards/Cards";
+import Carousel from "@/components/Carousel/Carousel";
+import Contact from "@/components/ContactSection/Contact";
+import Faq from "@/components/FAQ/Faq";
+import Newsletter from "@/components/Footer/Newsletter/Newsletter";
 import {
   CarouselResponseType,
   MensajesResponseType,
   TerapiasResponseType,
 } from "@/lib/types";
-import Cards from "@/components/Cards/Cards";
-import Newsletter from "@/components/Footer/Newsletter/Newsletter";
-import Contact from "@/components/ContactSection/Contact";
-import Faq from "@/components/FAQ/Faq";
-import Carousel from "@/components/Carousel/Carousel";
 import DesktopWrapper from "@/wrappers/desktopWrapper";
+import { getCarouselData, getMensajes, getTerapias } from "../lib/api";
 
 export const dynamic = "force-dynamic";
 
 const page = async () => {
-  const { frase, lema }: MensajesResponseType =
-    (await getMensajes()) as MensajesResponseType;
-  const areasTerapias: TerapiasResponseType =
-    (await getTerapias()) as TerapiasResponseType;
-
-  const carouselData: CarouselResponseType[] =
-    (await getCarouselData()) as CarouselResponseType[];
+  const [carouselData, mensajes, areasTerapias]: [
+    carouselData: CarouselResponseType[],
+    mensajes: MensajesResponseType,
+    areasTerapias: TerapiasResponseType
+  ] = await Promise.all([getCarouselData(), getMensajes(), getTerapias()]);
 
   let terapias = Object.keys(areasTerapias)
     .map((key) => areasTerapias[key])
@@ -32,7 +28,7 @@ const page = async () => {
   return (
     <>
       <main>
-        <Banner lema={lema} frase={frase} />
+        <Banner lema={mensajes.lema} frase={mensajes.frase} />
         <Cards terapias={terapias}></Cards>
         <DesktopWrapper>
           <Carousel carouselData={carouselData}></Carousel>
