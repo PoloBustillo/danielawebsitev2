@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 export const metadataPsic: Metadata = {
   title: "Psicologa Daniela Diaz",
   description: "Servicios de Terapias psicológicas al mejor precio.",
