@@ -1,6 +1,5 @@
 "use client";
 import { useTheme } from "next-themes";
-import React from "react";
 
 const SocialLink = ({
   socialData,
@@ -16,11 +15,11 @@ const SocialLink = ({
         if (socialLink.red === "facebook")
           return (
             <a
+              key={socialLink.red}
               className="text-gray-700 transition hover:text-gray-700/75"
               href={socialLink.values}
               target="_blank"
               rel="noreferrer"
-              key={index}
             >
               <span className="sr-only"> {socialLink.red} </span>
 
@@ -41,6 +40,7 @@ const SocialLink = ({
         if (socialLink.red === "instagram")
           return (
             <a
+              key={socialLink.red}
               className="text-gray-700 transition hover:text-gray-700/75"
               href={socialLink.values}
               target="_blank"
@@ -65,6 +65,7 @@ const SocialLink = ({
         if (socialLink.red === "twitter")
           return (
             <a
+              key={socialLink.red}
               className="text-gray-700 transition hover:text-gray-700/75"
               href=""
               target="_blank"
@@ -85,6 +86,7 @@ const SocialLink = ({
         if (socialLink.red === "whatsapp")
           return (
             <a
+              key={socialLink.red}
               className="text-gray-700 transition hover:text-gray-700/75"
               href={socialLink.values}
               target="_blank"
@@ -112,6 +114,7 @@ const SocialLink = ({
         if (socialLink.red === "linkedin")
           return (
             <a
+              key={socialLink.red}
               className="text-gray-700 transition hover:text-gray-700/75"
               href={socialLink.values}
               target="_blank"

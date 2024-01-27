@@ -1,7 +1,6 @@
 import { getPreguntas } from "@/lib/api";
 import { PreguntasResponseType } from "@/lib/types";
 import { Link } from "@nextui-org/react";
-import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
@@ -28,7 +27,10 @@ const Faq = async () => {
             </p>
             <div className="space-y-4">
               {preguntas.map((pregunta) => (
-                <details className="w-full border rounded-lg">
+                <details
+                  key={pregunta.pregunta}
+                  className="w-full border rounded-lg"
+                >
                   <summary className="px-4 py-6 focus:outline-none focus-visible:ri">
                     {pregunta.pregunta}
                   </summary>

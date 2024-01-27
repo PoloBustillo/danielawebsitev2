@@ -1,6 +1,5 @@
 import { getWebData } from "@/lib/api";
 import { WebDataType } from "@/lib/types";
-import React from "react";
 import { Link } from "@nextui-org/react";
 import SocialLink from "../SocialLinks/SocialLink";
 
@@ -21,7 +20,7 @@ const Contact = async () => {
                 Llama o manda un mensaje por alguna de mis redes sociales.
               </p>
               <div className="space-y-4">
-                <p className="flex items-center flex-row">
+                <div className="flex items-center flex-row">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -37,14 +36,14 @@ const Contact = async () => {
                   <div>
                     {webData.address.map((address) => {
                       return (
-                        <div className="capitalize">
+                        <div className="capitalize" key={address.values}>
                           <span className="font-bold">{address.type}</span>
                           {`:   ${address.values}`}
                         </div>
                       );
                     })}
                   </div>
-                </p>
+                </div>
                 <p className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +86,7 @@ const Contact = async () => {
 
                 {webData.extraData?.length ? <h3>Información extra:</h3> : null}
                 {webData.extraData?.map((extraData) => (
-                  <p className="flex items-center">
+                  <p key={extraData.name} className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5 mr-2 sm:mr-6"
