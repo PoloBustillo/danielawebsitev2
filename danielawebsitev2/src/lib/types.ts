@@ -50,3 +50,9 @@ export interface WebDataType {
   website: string;
   socialNetwork: [{ values: string; red: string }];
 }
+
+export interface InstitutionType {
+  events: [{ type: string; values: string }];
+  image: string;
+  shortDescription: string;
+}
