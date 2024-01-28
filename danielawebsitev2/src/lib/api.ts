@@ -119,7 +119,7 @@ export const getBannerImages: () => Promise<BannerResponse[]> = cache(
   }
 );
 
-export const getWebData: () => Promise<WebDataType | {}> = cache(async () => {
+export const getWebData: () => Promise<WebDataType> = cache(async () => {
   try {
     const docRef = doc(db, "data", "psicologa");
     const docSnap = await getDoc(docRef);
@@ -127,11 +127,33 @@ export const getWebData: () => Promise<WebDataType | {}> = cache(async () => {
     if (docSnap.exists()) {
       return docSnap.data() as WebDataType;
     } else {
-      return {};
+      return {
+        email: "",
+        telefono: "",
+        slogan: "",
+        name: "",
+        tags: [""],
+        extraData: [{ name: "", value: "", icon: "" }],
+        googleMapUrl: "",
+        address: [{ values: "", type: "" }],
+        website: "",
+        socialNetwork: [{ values: "", red: "" }],
+      };
     }
   } catch (error) {
     console.error("Error fetching web data:", error);
-    return {};
+    return {
+      email: "",
+      telefono: "",
+      slogan: "",
+      name: "",
+      tags: [""],
+      extraData: [{ name: "", value: "", icon: "" }],
+      googleMapUrl: "",
+      address: [{ values: "", type: "" }],
+      website: "",
+      socialNetwork: [{ values: "", red: "" }],
+    };
   }
 });
 

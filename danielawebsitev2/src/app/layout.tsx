@@ -1,22 +1,37 @@
-import type { Metadata } from "next";
 import type {
   MensajesResponseType,
   TerapiasResponseType,
   WebDataType,
 } from "@/lib/types";
+import type { Metadata } from "next";
 
-import { Roboto_Condensed } from "next/font/google";
+import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
+import Footer from "@/components/Footer/Footer";
+import NavBar from "@/components/NavBar/NavBar";
+import { getMensajes, getTerapias, getWebData } from "@/lib/api";
+import { metadataPsic } from "@/utils/constants";
+import {
+  Italianno,
+  Roboto_Condensed,
+  Yanone_Kaffeesatz,
+} from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import NavBar from "@/components/NavBar/NavBar";
-import Footer from "@/components/Footer/Footer";
-import { getMensajes, getTerapias, getWebData } from "@/lib/api";
-import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
-import { metadataPsic } from "@/utils/constants";
 
 const roboto_condensed = Roboto_Condensed({
   weight: "400",
   subsets: ["latin"],
+  variable: "--font-inter",
+});
+const italliano = Italianno({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-hand",
+});
+const barlow = Yanone_Kaffeesatz({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-barlow",
 });
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = metadataPsic;
@@ -26,15 +41,18 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const areasTerapias: TerapiasResponseType =
-    (await getTerapias()) as TerapiasResponseType;
-  const { mensaje }: MensajesResponseType =
-    (await getMensajes()) as MensajesResponseType;
-  const webData = (await getWebData()) as WebDataType;
+  const [webData, mensajes, areasTerapias]: [
+    webData: WebDataType,
+    mensajes: MensajesResponseType,
+    areasTerapias: TerapiasResponseType
+  ] = await Promise.all([getWebData(), getMensajes(), getTerapias()]);
+  const { mensaje } = mensajes;
 
   return (
     <html lang="es">
-      <body className={roboto_condensed.className}>
+      <body
+        className={`${roboto_condensed.variable} ${italliano.variable} ${barlow.variable} font-sans`}
+      >
         <Providers>
           <MsgBanner messageData={mensaje}></MsgBanner>
           <NavBar

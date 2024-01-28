@@ -11,6 +11,9 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
+      italliano: ["var(--font-hand)"],
+      barlow: ["var(--font-barlow)"],
+      sans: ["var(--font-inter)"],
       inter: ["Inter", "sans-serif"],
       roboto: ["Roboto Condensed"],
     },

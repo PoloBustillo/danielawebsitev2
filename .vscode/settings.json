@@ -1,3 +1,5 @@
 {
-    "mos.port": ""
+    "mos.port": "",
+    "tailwind-fold.unfoldIfLineSelected": true,
+    "tailwind-fold.foldedText": "tailwind"
 }

@@ -1,6 +1,4 @@
 "use client";
-import React from "react";
-import Link from "next/link";
 import {
   Button,
   Navbar,
@@ -9,15 +7,17 @@ import {
   NavbarItem,
   NavbarMenuToggle,
 } from "@nextui-org/react";
+import Link from "next/link";
+import React from "react";
 
 import { Logo } from "../icons/Logo";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 
 import { TerapiasResponseType } from "@/lib/types";
-import UserAvatar from "./NavComponents/UserAvatar";
-import MenuMobile from "./NavComponents/MenuMobile";
-import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import { useRouter } from "next/navigation";
+import { DesktopMenu } from "./NavComponents/DesktopMenu";
+import MenuMobile from "./NavComponents/MenuMobile";
+import UserAvatar from "./NavComponents/UserAvatar";
 interface NavBarProps {
   areasTerapias: TerapiasResponseType;
   pageName: string;
@@ -40,21 +40,24 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
       />
       <NavbarBrand>
         <Logo />
-        <Link
-          href="/"
-          className="ml-1 font-bold hidden md:block text-content1-foreground"
-        >
-          {pageName}
-        </Link>
+        <div>
+          <span className="dark:border-white border-gray-600 border-b-1 w-[100%] top-6  relative block"></span>
+          <Link
+            href="/"
+            className="hidden ml-1 text-2xl font-bold md:block text-content1-foreground font-italliano"
+          >
+            {pageName}
+          </Link>
+        </div>
       </NavbarBrand>
-      <NavbarContent className="sm:hidden flex gap-4" justify="center">
+      <NavbarContent className="flex gap-4 sm:hidden" justify="center">
         <NavbarItem>
           <Button
             role="button"
             aria-label="Reserva tu cita"
             color={"secondary"}
             variant={"ghost"}
-            className="capitalize font-extrabold"
+            className="font-extrabold capitalize"
             onClick={() => {
               router.push("/cita");
             }}
@@ -63,7 +66,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           </Button>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <DesktopMenu areasTerapias={areasTerapias}></DesktopMenu>
       </NavbarContent>
 

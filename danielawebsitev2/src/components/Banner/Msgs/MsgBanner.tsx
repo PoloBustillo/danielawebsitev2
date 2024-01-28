@@ -5,7 +5,7 @@ import rehypeRaw from "rehype-raw";
 
 export const MsgBanner: React.FunctionComponent<{
   messageData: MensajeType;
-}> = async ({ messageData }: { messageData: MensajeType }) => {
+}> = ({ messageData }: { messageData: MensajeType }) => {
   return (
     messageData?.enable && (
       <div className="md:animate-none animate-hideMe bg-purple px-4 py-3 text-slate-100 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] dark:from-yellow-200 dark:via-red-500 dark:to-fuchsia-500">
