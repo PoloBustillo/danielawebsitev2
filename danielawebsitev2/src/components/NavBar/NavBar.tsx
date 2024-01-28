@@ -39,7 +39,10 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         className="sm:hidden"
       />
       <NavbarBrand>
-        <Logo />
+        <div className="hidden md:block">
+          <Logo />
+        </div>
+
         <div>
           <span className="dark:border-white border-gray-600 border-b-1 w-[100%] top-6  relative block"></span>
           <Link

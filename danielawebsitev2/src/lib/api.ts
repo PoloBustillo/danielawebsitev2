@@ -59,7 +59,7 @@ export const getTerapias: () => Promise<TerapiasResponseType | {}> = cache(
 
       const terapias: TerapiaType[] = docSnaps.docs.map((terapia) => {
         const data = terapia.data();
-        console.log(data);
+
         return {
           id: terapia.id,
           name: data.name,
