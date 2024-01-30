@@ -12,8 +12,8 @@ export const MessengerTagScript = `
 export const MessengerSDKScript = `
   window.fbAsyncInit = function() {
     FB.init({
-      xfbml: true,
-      version: 'v18.0'
+      xfbml            : true,
+      version          : 'v19.0'
     });
   };
 
