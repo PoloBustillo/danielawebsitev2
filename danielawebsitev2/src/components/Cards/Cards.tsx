@@ -1,9 +1,23 @@
 "use client";
-import React from "react";
-import { Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { TerapiaType } from "@/lib/types";
+import { Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
+import { useTheme } from "next-themes";
+
+function getRandomColor() {
+  const colors = [
+    "#403E32",
+    "#7D92CE",
+    "#630C2D",
+    "#2E66FF",
+    "#38004D",
+    "#483237",
+    "#C70CEC",
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 
 export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
+  const { theme } = useTheme();
   return (
     <section id="servicios">
       <div className="relative px-6 lg:px-8">
@@ -17,7 +31,12 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
                 isHoverable
                 shadow="sm"
                 onPress={() => console.log("item pressed")}
-                className="h-[300px] dark:bg-[#1B1B1B] bg-[#1B1B1B] hover:text-[#37354b]"
+                style={
+                  theme == "dark"
+                    ? { backgroundColor: "#1B1B1B" }
+                    : { backgroundColor: getRandomColor() }
+                }
+                className={`h-[300px] dark:bg-[#1B1B1B] bg-[${getRandomColor()}] hover:text-[#37354b]`}
               >
                 <CardHeader className="absolute z-10 top-1 flex-col items-start hover:text-[#1B1B1B]">
                   <p className="text-tiny text-white/60 uppercase font-bold ">

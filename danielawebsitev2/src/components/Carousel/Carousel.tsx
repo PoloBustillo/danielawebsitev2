@@ -1,14 +1,18 @@
 "use client";
-import React, { PropsWithChildren } from "react";
-import { useState, useEffect, useCallback } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, {
   EmblaCarouselType,
   EmblaOptionsType,
 } from "embla-carousel-react";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
-import BannerCarousel from "../BannerCarousel/BannerCarousel";
 import { CarouselResponseType } from "@/lib/types";
+import BannerCarousel from "../BannerCarousel/BannerCarousel";
 
 const options: EmblaOptionsType = { loop: false };
 
@@ -59,7 +63,7 @@ const Carousel = ({ carouselData }: CarouselProps) => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section id="carousel">
+    <section id="carousel" className="overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <div className="embla">
           <div className="embla__viewport" ref={emblaRef}>
