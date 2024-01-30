@@ -27,7 +27,7 @@ const Bio = async () => {
             </div>
           </div>
         </div>
-        <p className="flex  justify-center text-medium text-[whitesmoke] font-extrabold leading-8">
+        <p className="flex  justify-center text-4xl mt-4 text-[whitesmoke]  leading-8 font-italliano">
           Psicóloga Daniela Diaz Merino
         </p>
 

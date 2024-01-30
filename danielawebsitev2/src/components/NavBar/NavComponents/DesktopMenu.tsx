@@ -1,3 +1,5 @@
+import getURL from "@/lib/api";
+import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 import {
   Button,
   Dropdown,
@@ -7,21 +9,17 @@ import {
   DropdownTrigger,
   NavbarItem,
 } from "@nextui-org/react";
+import { usePathname, useRouter } from "next/navigation";
 import {
-  ChevronDown,
-  Lock,
   Activity,
+  Books,
+  ChevronDown,
   Flash,
+  Lock,
+  Scale,
   Server,
   TagUser,
-  Scale,
-  Books,
 } from "../../icons/Icons";
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
-import { TerapiaType, TerapiasResponseType } from "@/lib/types";
-import Link from "next/link";
-import getURL from "@/lib/api";
 
 const icons = {
   books: <Books className="text-success" fill="currentColor" size={16} />,
@@ -108,6 +106,13 @@ export const DesktopMenu = ({
                     return (
                       <DropdownItem
                         aria-label={terapia.name}
+                        onClick={() => {
+                          router.push(
+                            getURL(
+                              `terapia/${encodeURIComponent(terapia.name!)}`
+                            )
+                          );
+                        }}
                         key={terapia.type + terapia.name!}
                         startContent={
                           area === "Educativa"
@@ -117,15 +122,9 @@ export const DesktopMenu = ({
                             : icons.flash
                         }
                       >
-                        <Link
-                          href={getURL(
-                            `terapia/${encodeURIComponent(terapia.name!)}`
-                          )}
-                        >
-                          <span className="block rounded-lg px-4 py-2 text-sm font-bold text-current  hover:bg-gray-100 hover:text-gray-700">
-                            {terapia.name}
-                          </span>
-                        </Link>
+                        <span className="block rounded-lg px-4 py-2 text-sm font-bold text-current  hover:bg-gray-100 hover:text-gray-700">
+                          {terapia.name}
+                        </span>
                       </DropdownItem>
                     );
                   })}
