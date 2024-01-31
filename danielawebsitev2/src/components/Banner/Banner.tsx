@@ -24,7 +24,7 @@ const Banner: React.FC<BannerProps> = ({ lema, frase }: BannerProps) => {
                 <span className="relative text-xl">❞</span>
               </p>
             </div>
-            <div className="flex flex-col items-center md:px-6 lg:px-8 md:mt-10 md:flex-row">
+            <div className="flex flex-col m-auto md:px-6 lg:px-8 md:mt-10 md:flex-row">
               <Bio></Bio>
               <Reviews></Reviews>
             </div>

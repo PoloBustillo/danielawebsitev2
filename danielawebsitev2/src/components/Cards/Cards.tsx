@@ -21,7 +21,25 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
   return (
     <section id="servicios">
       <div className="relative px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl pt-4 sm:pt-20">
+        <div className="m-auto max-w-7xl pt-4 sm:pt-20">
+          <div className="text-center">
+            <h1 className="hidden md:block mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+              Empieza tu camino al bienestar... Selecciona uno de{" "}
+              <span className="text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-7xl font-bold tracking-tight sm:text-75px md:4px">
+                Nuestros Servicios
+              </span>{" "}
+              Terapeuticos.
+            </h1>
+            <p className="hidden md:block text-xl mb-6 font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+              Puedes checar sus caracteristicas, costos, y duración.
+            </p>
+            <span className="md:hidden text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-7xl font-bold tracking-tight sm:text-75px md:4px">
+              Nuestros Servicios
+            </span>
+            <p className="md:hidden text-xl mb-10 font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+              Puedes checar sus caracteristicas, costos, y duración.
+            </p>
+          </div>
           <div className="gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {terapias.map((terapia, index) => (
               <Card
