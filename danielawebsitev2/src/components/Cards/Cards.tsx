@@ -1,34 +1,27 @@
 "use client";
+import getURL from "@/lib/api";
 import { TerapiaType } from "@/lib/types";
 import { Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-
-function getRandomColor() {
-  const colors = [
-    "#403E32",
-    "#7D92CE",
-    "#630C2D",
-    "#2E66FF",
-    "#38004D",
-    "#483237",
-    "#C70CEC",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+import { useRouter } from "next/navigation";
 
 export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
-  const { theme } = useTheme();
+  const router = useRouter();
+
   return (
     <section id="servicios">
       <div className="relative px-6 lg:px-8">
-        <div className="m-auto max-w-7xl pt-4 sm:pt-20">
+        <div className="m-auto max-w-7xl pt-4 sm:pt-14">
           <div className="text-center">
-            <h1 className="hidden md:block mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+            <h1 className="hidden md:block mb-4 text-4xl font-extrabold leading-none tracking-tight text-[#37354b] md:text-5xl lg:text-6xl dark:text-white">
               Empieza tu camino al bienestar... Selecciona uno de{" "}
-              <span className="text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] dark:from-red-900 dark:via-violet-200 dark:to-orange-500 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-7xl font-bold tracking-tight sm:text-75px md:4px">
+              <span
+                className="underline underline-offset-3 decoration-8 decoration-pink-400
+               dark:decoration-pink-600 text-transparent bg-clip-text dark:bg-[conic-gradient(at_right,_var(--tw-gradient-stops))]
+                dark:from-red-900 dark:via-violet-200 dark:to-orange-500 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))]
+                 from-slate-900 via-purple-900 to-slate-900 text-7xl font-bold tracking-tight sm:text-75px md:4px"
+              >
                 Nuestros Servicios
               </span>{" "}
-              Terapeuticos.
             </h1>
             <p className="hidden md:block text-xl mb-6 font-normal text-gray-500 lg:text-xl dark:text-gray-400">
               Puedes checar sus caracteristicas, costos, y duración.
@@ -46,15 +39,13 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
                 isFooterBlurred
                 key={index}
                 isPressable
-                isHoverable
                 shadow="sm"
-                onPress={() => console.log("item pressed")}
-                style={
-                  theme == "dark"
-                    ? { backgroundColor: "#1B1B1B" }
-                    : { backgroundColor: getRandomColor() }
+                onPress={() =>
+                  router.push(
+                    getURL(`terapia/${encodeURIComponent(terapia.name!)}`)
+                  )
                 }
-                className={`h-[300px] dark:bg-[#1B1B1B] bg-[${getRandomColor()}] hover:text-[#37354b]`}
+                className={`h-[300px] dark:bg-[#1B1B1B] dark:hover:bg-[#d6297b] bg-[#d6297b] hover:text-[#37354b] hover:bg-[#1B1B1B]`}
               >
                 <CardHeader className="absolute z-10 top-1 flex-col items-start hover:text-[#1B1B1B]">
                   <p className="text-tiny text-white/60 uppercase font-bold ">

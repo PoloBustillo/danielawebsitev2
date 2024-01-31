@@ -10,7 +10,7 @@ const Bio = async () => {
   return (
     <Card
       isBlurred
-      className="border-none bg-[#37354b]  dark:bg-default-100/50  min-h-[650px] m-4 p-3 "
+      className="border-none bg-[#37354b]  dark:bg-default-100/50  min-h-[650px] mx-10 mb-5 p-3 "
       //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
     >
       <CardBody className="flex flex-col justify-center my-3">
