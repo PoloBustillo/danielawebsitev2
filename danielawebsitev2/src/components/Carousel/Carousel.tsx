@@ -1,17 +1,14 @@
 "use client";
+import { CarouselResponseType } from "@/lib/types";
+import { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
-import useEmblaCarousel, {
-  EmblaCarouselType,
-  EmblaOptionsType,
-} from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react";
 import React, {
   PropsWithChildren,
   useCallback,
   useEffect,
   useState,
 } from "react";
-
-import { CarouselResponseType } from "@/lib/types";
 import BannerCarousel from "../BannerCarousel/BannerCarousel";
 
 const options: EmblaOptionsType = { loop: false };
