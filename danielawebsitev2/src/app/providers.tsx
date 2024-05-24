@@ -1,8 +1,9 @@
 "use client";
+
 // Providers.js
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Script from "next/script";
 import { ReactNode } from "react";
 
@@ -15,9 +16,9 @@ import {
 
 export function Providers(props: { children: ReactNode }) {
   const path = usePathname();
-
+  const router = useRouter();
   return (
-    <NextUIProvider>
+    <NextUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class" defaultTheme="light">
         {props.children}
         {/* <!-- Messenger Chat plugin Code --> */}

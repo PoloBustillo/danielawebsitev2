@@ -1,3 +1,4 @@
+import DesktopWrapper from "@/app/wrappers/desktopWrapper";
 import Banner from "@/components/Banner/Banner";
 import Cards from "@/components/Cards/Cards";
 import Carousel from "@/components/Carousel/Carousel";
@@ -9,7 +10,6 @@ import {
   MensajesResponseType,
   TerapiasResponseType,
 } from "@/lib/types";
-import DesktopWrapper from "@/wrappers/desktopWrapper";
 import { getCarouselData, getMensajes, getTerapias } from "../lib/api";
 
 export const dynamic = "force-dynamic";
