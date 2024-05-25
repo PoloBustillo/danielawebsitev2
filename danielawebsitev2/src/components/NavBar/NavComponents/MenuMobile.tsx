@@ -15,8 +15,17 @@ const MenuMobile = ({
   return (
     <NavbarMenu>
       <div className="flex mr-10 h-screen flex-col justify-between bg-transparent">
-        <div className="px-4 py-6">
-          <ul className="mt-10">
+        <div className="px-4 py-10">
+          <ul>
+            <li>
+              <Link
+                href="/"
+                onClick={() => closeMenu(false)}
+                className="block rounded-lg px-4  py-2 text-lg font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              >
+                Inicio
+              </Link>
+            </li>
             <li>
               <Link
                 href="/cita"
@@ -48,10 +57,7 @@ const MenuMobile = ({
               (item: keyof typeof areasTerapias, index: number) => {
                 return (
                   <li key={item + index.toString()}>
-                    <details
-                      className="group [&_summary::-webkit-details-marker]:hidden"
-                      open
-                    >
+                    <details className="group [&_summary::-webkit-details-marker]:hidden">
                       <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500">
                         <span className="text-lg font-medium">{item}</span>
 
