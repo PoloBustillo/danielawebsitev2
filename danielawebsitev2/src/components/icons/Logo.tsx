@@ -19,7 +19,7 @@ export const Logo = ({
         alt="Logo de Psicologa en Puebla Daniela Diaz"
         as={NextImage}
         radius="full"
-        loading="lazy"
+        loading="eager"
         isZoomed
         height={width}
         width={height}

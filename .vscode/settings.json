@@ -1,5 +1,12 @@
 {
     "mos.port": "",
     "tailwind-fold.unfoldIfLineSelected": true,
-    "tailwind-fold.foldedText": "tailwind"
+    "tailwind-fold.foldedText": "tailwind",
+    "editor.fontSize": 12,
+    "terminal.integrated.fontSize": 12,
+    "scm.inputFontSize": 12,
+    "debug.console.fontSize": 12,
+    "markdown.preview.fontSize": 12,
+    "tailwindCSS.rootFontSize": 12,
+    "pgsql.resultsFontSize": 12
 }

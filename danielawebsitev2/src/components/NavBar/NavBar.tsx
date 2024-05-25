@@ -5,14 +5,13 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
-
 import { Logo } from "../icons/Logo";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
-
 import { TerapiasResponseType } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { DesktopMenu } from "./NavComponents/DesktopMenu";
@@ -30,14 +29,22 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   return (
     <Navbar
       isBordered
+      shouldHideOnScroll
       isBlurred={true}
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarMenuToggle
+        //icon={isMenuOpen ? "close" : "menu"}
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         className="sm:hidden"
       />
+      <NavbarMenu>
+        <MenuMobile
+          closeMenu={setIsMenuOpen}
+          areasTerapias={areasTerapias}
+        ></MenuMobile>
+      </NavbarMenu>
       <NavbarBrand>
         <div>
           <Logo />
@@ -88,10 +95,6 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           </Button>
         </NavbarItem>
       </NavbarContent>
-      <MenuMobile
-        closeMenu={setIsMenuOpen}
-        areasTerapias={areasTerapias}
-      ></MenuMobile>
     </Navbar>
   );
 }
