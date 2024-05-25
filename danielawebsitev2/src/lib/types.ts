@@ -1,5 +1,5 @@
 export interface MensajeType {
-  message?: string;
+  message: string;
   enable?: boolean;
 }
 export interface TerapiaType {

@@ -1,13 +1,12 @@
 "use client";
 import { Image } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import Link from "next/link";
-import React from "react";
 import NextImage from "next/image";
+import Link from "next/link";
 
 export const Logo = ({
-  width = 50,
-  height = 50,
+  width = 60,
+  height = 60,
 }: {
   width?: number;
   height?: number;
@@ -16,9 +15,11 @@ export const Logo = ({
   return (
     <Link href={"/"}>
       <Image
+        classNames={{ zoomedWrapper: ["w-[50px]"] }}
         alt="Logo de Psicologa en Puebla Daniela Diaz"
         as={NextImage}
         radius="full"
+        loading="lazy"
         isZoomed
         height={width}
         width={height}

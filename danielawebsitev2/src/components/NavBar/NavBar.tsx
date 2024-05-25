@@ -39,7 +39,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         className="sm:hidden"
       />
       <NavbarBrand>
-        <div className="hidden md:block">
+        <div>
           <Logo />
         </div>
 
@@ -47,7 +47,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           <span className="dark:border-white border-gray-600 border-b-1 w-[100%] top-6  relative block"></span>
           <Link
             href="/"
-            className="hidden ml-1 text-2xl font-bold md:block text-content1-foreground font-italliano"
+            className="hidden ml-1 text-2xl font-bold lg:block text-content1-foreground font-italliano"
           >
             {pageName}
           </Link>
@@ -78,6 +78,15 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           <ThemeSwitcher></ThemeSwitcher>
         </NavbarItem>
         <UserAvatar></UserAvatar>
+
+        <NavbarItem className="hidden lg:flex">
+          <Link href="#">Login</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Button as={Link} color="primary" href="#" variant="flat">
+            Sign Up
+          </Button>
+        </NavbarItem>
       </NavbarContent>
       <MenuMobile
         closeMenu={setIsMenuOpen}

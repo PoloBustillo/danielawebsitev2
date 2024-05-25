@@ -1,15 +1,14 @@
+import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
+import Footer from "@/components/Footer/Footer";
+import NavBar from "@/components/NavBar/NavBar";
+import { getMensajes, getTerapias, getWebData } from "@/lib/api";
 import type {
   MensajesResponseType,
   TerapiasResponseType,
   WebDataType,
 } from "@/lib/types";
-import type { Metadata } from "next";
-
-import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
-import Footer from "@/components/Footer/Footer";
-import NavBar from "@/components/NavBar/NavBar";
-import { getMensajes, getTerapias, getWebData } from "@/lib/api";
 import { metadataPsic } from "@/utils/constants";
+import type { Metadata } from "next";
 import {
   Italianno,
   Roboto_Condensed,
@@ -54,7 +53,9 @@ export default async function RootLayout({
         className={`${roboto_condensed.variable} ${italliano.variable} ${barlow.variable} font-sans`}
       >
         <Providers>
-          <MsgBanner messageData={mensaje}></MsgBanner>
+          {mensaje?.enable && (
+            <MsgBanner messageData={mensaje.message}></MsgBanner>
+          )}
           <NavBar
             areasTerapias={areasTerapias}
             pageName={webData.name}
