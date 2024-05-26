@@ -78,10 +78,7 @@ export default function NavBar({
           </Link>
         </div>
       </NavbarBrand>
-      <NavbarContent
-        className=" max-[450px]:hidden flex gap-4 sm:hidden"
-        justify="center"
-      >
+      <NavbarContent className=" max-[450px]:hidden flex gap-4 sm:hidden">
         <NavbarItem>
           <Button
             role="button"
@@ -93,7 +90,7 @@ export default function NavBar({
               router.push("/cita");
             }}
           >
-            Reserva tu cita
+            Citas
           </Button>
         </NavbarItem>
       </NavbarContent>
