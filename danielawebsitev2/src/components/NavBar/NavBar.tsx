@@ -9,16 +9,16 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
 } from "@nextui-org/react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { HomeIcon } from "../icons/Home";
 import { Logo } from "../icons/Logo";
 import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
-import { HomeIcon } from "../icons/Home";
-import { useTheme } from "next-themes";
 interface NavBarProps {
   areasTerapias: TerapiasResponseType;
   pageName: string;
@@ -79,7 +79,7 @@ export default function NavBar({
         </div>
       </NavbarBrand>
       <NavbarContent
-        className=" max-[400px]:hidden flex gap-4 sm:hidden"
+        className=" max-[450px]:hidden flex gap-4 sm:hidden"
         justify="center"
       >
         <NavbarItem>
