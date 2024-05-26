@@ -59,6 +59,7 @@ export default async function RootLayout({
           <NavBar
             areasTerapias={areasTerapias}
             pageName={webData.name}
+            logged={false}
           ></NavBar>
           {children}
           <Footer webData={webData} />
