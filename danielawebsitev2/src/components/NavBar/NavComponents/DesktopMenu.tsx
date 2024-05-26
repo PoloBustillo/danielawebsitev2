@@ -20,6 +20,8 @@ import {
   Server,
   TagUser,
 } from "../../icons/Icons";
+import { HomeIcon } from "../../icons/Home";
+import Link from "next/link";
 
 const icons = {
   books: <Books className="text-success" fill="currentColor" size={16} />,
@@ -47,7 +49,7 @@ export const DesktopMenu = ({
     <>
       <NavbarItem
         isActive={path == "/procesos"}
-        className="hidden sm:flex data-[active=true]:font-extrabold "
+        className="hidden sm:flex data-[active=true]:font-extrabold"
       >
         <Button
           role="button"
@@ -72,7 +74,7 @@ export const DesktopMenu = ({
       >
         <NavbarItem
           isActive={path == "/"}
-          className=" data-[active=true]:font-extrabold"
+          className=" data-[active=true]:font-extrabold  gap-4 hidden sm:flex"
         >
           <DropdownTrigger>
             <Button
@@ -136,7 +138,7 @@ export const DesktopMenu = ({
       </Dropdown>
       <NavbarItem
         isActive={path == "/blogs"}
-        className=" data-[active=true]:font-extrabold"
+        className=" data-[active=true]:font-extrabold hidden lg:flex"
       >
         <Button
           role="button"

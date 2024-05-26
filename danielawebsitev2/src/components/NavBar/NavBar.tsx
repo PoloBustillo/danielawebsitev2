@@ -17,13 +17,21 @@ import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
+import { HomeIcon } from "../icons/Home";
+import { useTheme } from "next-themes";
 interface NavBarProps {
   areasTerapias: TerapiasResponseType;
   pageName: string;
+  logged: boolean;
 }
 
-export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
+export default function NavBar({
+  areasTerapias,
+  pageName,
+  logged,
+}: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { theme } = useTheme();
 
   const router = useRouter();
   return (
@@ -48,6 +56,13 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           </div>
         </div>
       </NavbarMenu>
+      <Link href={"/"} className="pointer hidden md:flex">
+        <HomeIcon
+          width="34px"
+          height="34px"
+          color={theme == "dark" ? "#f69a67" : "#d42984"}
+        ></HomeIcon>
+      </Link>
       <NavbarBrand>
         <div>
           <Logo />
@@ -63,7 +78,10 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           </Link>
         </div>
       </NavbarBrand>
-      <NavbarContent className="flex gap-4 sm:hidden" justify="center">
+      <NavbarContent
+        className=" max-[400px]:hidden flex gap-4 sm:hidden"
+        justify="center"
+      >
         <NavbarItem>
           <Button
             role="button"
@@ -87,16 +105,20 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         <NavbarItem>
           <ThemeSwitcher></ThemeSwitcher>
         </NavbarItem>
-        <UserAvatar></UserAvatar>
-
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
+        {logged == false ? (
+          <UserAvatar></UserAvatar>
+        ) : (
+          <>
+            <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-secondary-600 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
+              <Link href="#">Login</Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" href="#" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
     </Navbar>
   );

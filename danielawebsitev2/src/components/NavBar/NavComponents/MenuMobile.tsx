@@ -3,7 +3,7 @@ import { TerapiaType, TerapiasResponseType } from "@/lib/types";
 import { NavbarMenuItem } from "@nextui-org/react";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
-
+import { HomeIcon } from "../../icons/Home";
 const MenuMobile = ({
   areasTerapias,
   closeMenu,
@@ -20,7 +20,10 @@ const MenuMobile = ({
           onClick={() => closeMenu(false)}
           className="block rounded-lg px-4  py-2 text-lg font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         >
-          Inicio
+          <div className="flex content-start gap-2">
+            <HomeIcon></HomeIcon>
+            Inicio
+          </div>
         </Link>
       </NavbarMenuItem>
       <NavbarMenuItem>
