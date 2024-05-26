@@ -1,6 +1,7 @@
 import { getPreguntas } from "@/lib/api";
 import { PreguntasResponseType } from "@/lib/types";
-import { Link } from "@nextui-org/react";
+import { Link as LinkUI } from "@nextui-org/link";
+import Link from "next/link";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
@@ -19,10 +20,9 @@ const Faq = async () => {
               Si tienes más preguntas no dudes en contactarme...{" "}
               <Link
                 className="text-[#FDFDFD] text-md font-normal mb-6 space-links"
-                showAnchorIcon
-                href="/#contactame"
+                href={"/#contactame"}
               >
-                Aquí
+                <LinkUI showAnchorIcon>Aquí</LinkUI>
               </Link>
             </p>
             <div className="space-y-4">

@@ -1,5 +1,5 @@
 "use client";
-import { TerapiasResponseType } from "@/lib/types";
+import { NavBarProps } from "@/lib/types";
 import {
   Button,
   Navbar,
@@ -19,11 +19,6 @@ import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
-interface NavBarProps {
-  areasTerapias: TerapiasResponseType;
-  pageName: string;
-  logged: boolean;
-}
 
 export default function NavBar({
   areasTerapias,

@@ -2,6 +2,13 @@ export interface MensajeType {
   message: string;
   enable?: boolean;
 }
+
+export interface NavBarProps {
+  areasTerapias: TerapiasResponseType;
+  pageName: string;
+  logged: boolean;
+}
+
 export interface TerapiaType {
   imageBanner?: string;
   name?: string;

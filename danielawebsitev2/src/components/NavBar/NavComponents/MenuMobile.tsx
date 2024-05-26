@@ -4,6 +4,7 @@ import { NavbarMenuItem } from "@nextui-org/react";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { HomeIcon } from "../../icons/Home";
+
 const MenuMobile = ({
   areasTerapias,
   closeMenu,
