@@ -102,7 +102,7 @@ export default function NavBar({
         <NavbarItem>
           <ThemeSwitcher></ThemeSwitcher>
         </NavbarItem>
-        {logged == false ? (
+        {logged == true ? (
           <UserAvatar></UserAvatar>
         ) : (
           <>
