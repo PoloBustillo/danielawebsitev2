@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-export const BASE_PATH = "/api/auth";
+export const BASE_PATH = "/";
 
 const options: NextAuthConfig = {
   providers: [
@@ -14,8 +14,10 @@ const options: NextAuthConfig = {
           type: "password",
           placeholder: "Password",
         },
+        token: { label: "Token", type: "text", placeholder: "Token" },
       },
       async authorize(credentials): Promise<User | null> {
+        console.log("credentials", credentials.token);
         if (
           credentials.email === "admin@admin.com" &&
           credentials.password === "123"
@@ -26,7 +28,8 @@ const options: NextAuthConfig = {
       },
     }),
   ],
-  basePath: BASE_PATH,
+  pages: { signIn: "/" },
+
   secret: process.env.NEXTAUTH_SECRET,
 };
 

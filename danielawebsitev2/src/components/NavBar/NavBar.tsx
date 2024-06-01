@@ -2,12 +2,20 @@
 import { NavBarProps } from "@/lib/types";
 import {
   Button,
+  Checkbox,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
+  useDisclosure,
 } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -19,6 +27,7 @@ import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
+import { signIn, useSession } from "next-auth/react";
 
 export default function NavBar({
   areasTerapias,
@@ -27,7 +36,9 @@ export default function NavBar({
 }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { theme } = useTheme();
-
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data: session, status } = useSession();
+  console.log(session, status);
   const router = useRouter();
   return (
     <Navbar
@@ -37,6 +48,66 @@ export default function NavBar({
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  // endContent={
+                  //   <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                  // }
+                  label="Email"
+                  placeholder="Enter your email"
+                  variant="bordered"
+                />
+                <Input
+                  // endContent={
+                  //   <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                  // }
+                  label="Password"
+                  placeholder="Enter your password"
+                  type="password"
+                  variant="bordered"
+                />
+                <div className="flex py-2 px-1 justify-between">
+                  <Checkbox
+                    classNames={{
+                      label: "text-small",
+                    }}
+                  >
+                    Remember me
+                  </Checkbox>
+                  <Link color="primary" href="#" size="sm">
+                    Forgot password?
+                  </Link>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button
+                  color="primary"
+                  onPress={async () => {
+                    let res = await signIn("credentials", {
+                      redirect: false,
+                      password: "123",
+                      token: "alsldasd",
+                      email: "admin@admin.com",
+                    });
+                    console.log(res);
+                  }}
+                >
+                  Sign in
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         className="sm:hidden"
@@ -102,7 +173,9 @@ export default function NavBar({
         ) : (
           <>
             <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-secondary-600 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
-              <Link href="#">Login</Link>
+              <Link onClick={onOpen} href="#">
+                Login
+              </Link>
             </NavbarItem>
             <NavbarItem>
               <Button as={Link} color="primary" href="#" variant="flat">
