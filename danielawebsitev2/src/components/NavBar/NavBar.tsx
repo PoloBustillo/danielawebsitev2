@@ -28,7 +28,7 @@ import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
 import { signIn, useSession } from "next-auth/react";
-import ModalSign from "../ModalSignIn/Modal";
+import ModalSign from "@/components/ModalSignIn/ModalSign";
 
 export default function NavBar({
   areasTerapias,
