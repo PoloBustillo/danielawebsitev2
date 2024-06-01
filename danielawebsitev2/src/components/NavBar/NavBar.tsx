@@ -80,7 +80,7 @@ export default function NavBar({
                   >
                     Remember me
                   </Checkbox>
-                  <Link color="primary" href="#" size="sm">
+                  <Link href="#" className="text-sm text-secondary-500">
                     Forgot password?
                   </Link>
                 </div>
