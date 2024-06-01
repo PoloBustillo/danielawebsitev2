@@ -28,6 +28,7 @@ import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
 import { signIn, useSession } from "next-auth/react";
+import ModalSign from "../ModalSignIn/Modal";
 
 export default function NavBar({
   areasTerapias,
@@ -35,6 +36,7 @@ export default function NavBar({
   logged,
 }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [tabSelected, setTabSelected] = React.useState("");
   const { theme } = useTheme();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session, status } = useSession();
@@ -52,7 +54,14 @@ export default function NavBar({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Bienvenido
+              </ModalHeader>
+              <ModalBody>
+                <ModalSign tabInit={tabSelected}></ModalSign>
+              </ModalBody>
+              {
+                /* <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus
@@ -84,26 +93,27 @@ export default function NavBar({
                     Forgot password?
                   </Link>
                 </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
-                </Button>
-                <Button
-                  color="primary"
-                  onPress={async () => {
-                    let res = await signIn("credentials", {
-                      redirect: false,
-                      password: "123",
-                      token: "alsldasd",
-                      email: "admin@admin.com",
-                    });
-                    console.log(res);
-                  }}
-                >
-                  Sign in
-                </Button>
-              </ModalFooter>
+              </ModalBody>*/
+                <ModalFooter>
+                  <Button color="danger" variant="flat" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button
+                    color="primary"
+                    onPress={async () => {
+                      let res = await signIn("credentials", {
+                        redirect: false,
+                        password: "123",
+                        token: "alsldasd",
+                        email: "admin@admin.com",
+                      });
+                      console.log(res);
+                    }}
+                  >
+                    Sign in
+                  </Button>
+                </ModalFooter>
+              }
             </>
           )}
         </ModalContent>
@@ -173,12 +183,27 @@ export default function NavBar({
         ) : (
           <>
             <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-secondary-600 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
-              <Link onClick={onOpen} href="#">
+              <Link
+                onClick={() => {
+                  setTabSelected("login");
+                  onOpen();
+                }}
+                href="#"
+              >
                 Login
               </Link>
             </NavbarItem>
             <NavbarItem>
-              <Button as={Link} color="primary" href="#" variant="flat">
+              <Button
+                onPress={() => {
+                  setTabSelected("sign-up");
+                  onOpen();
+                }}
+                as={Link}
+                color="primary"
+                href="#"
+                variant="flat"
+              >
                 Sign Up
               </Button>
             </NavbarItem>
