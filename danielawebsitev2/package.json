@@ -24,11 +24,13 @@
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.51.5",
     "react-live-chat-loader": "^2.9.1",
     "react-markdown": "^9.0.1",
     "react-responsive": "^10.0.0",
     "rehype-raw": "^7.0.0",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.13.0",
