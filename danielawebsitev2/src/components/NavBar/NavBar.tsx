@@ -59,7 +59,10 @@ export default function NavBar({
                 Bienvenido
               </ModalHeader>
               <ModalBody>
-                <ModalSign tabInit={tabSelected}></ModalSign>
+                <ModalSign
+                  closeModal={() => onClose()}
+                  tabInit={tabSelected}
+                ></ModalSign>
               </ModalBody>
             </>
           )}

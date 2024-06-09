@@ -20,7 +20,7 @@ const options: NextAuthConfig = {
         console.log("credentials", credentials.token);
         if (
           credentials.email === "admin@admin.com" &&
-          credentials.password === "123"
+          credentials.password === "123456789"
         ) {
           return { email: credentials.email };
         }

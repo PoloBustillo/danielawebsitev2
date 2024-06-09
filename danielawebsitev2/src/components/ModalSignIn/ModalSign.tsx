@@ -2,37 +2,44 @@ import React, { useState } from "react";
 import { User, loginSchema } from "../../schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  Tabs,
-  Tab,
-  Input,
-  Link,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-} from "@nextui-org/react";
+import { Tabs, Tab, Input, Link, Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
-import { error } from "console";
+import { ErrorAlert } from "../Alerts/ErrorAlert";
 
-export default function ModalSign({ tabInit = "login" }: { tabInit: string }) {
+export default function ModalSign({
+  tabInit = "login",
+  closeModal,
+}: {
+  tabInit: string;
+  closeModal: Function;
+}) {
   const [selected, setSelected] = useState(tabInit);
-
+  const [loginServiceError, setLoginServiceError] = useState(
+    "Error en servicio de inicio de sesión."
+  );
+  const [loginErrorModal, setLoginErrorModal] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<User>({ resolver: zodResolver(loginSchema) });
 
-  async function onSubmit(data: User) {
-    console.log(data);
+  async function onSubmitLogin(data: User) {
+    setLoginErrorModal(false);
     let res = await signIn("credentials", {
       redirect: false,
-      password: "123",
-      token: "alsldasd",
-      email: "admin@admin.com",
+      password: data.password,
+      token: null,
+      email: data.email,
     });
     console.log(res);
+    if (res?.error != null || res?.status != 200) {
+      if (res?.error == "CredentialsSignin")
+        setLoginServiceError("Error en credenciales para iniciar sesión");
+      setLoginErrorModal(true);
+    } else {
+      closeModal();
+    }
   }
   console.log(errors);
 
@@ -47,8 +54,16 @@ export default function ModalSign({ tabInit = "login" }: { tabInit: string }) {
         onSelectionChange={(key) => setSelected(key as string)}
       >
         <Tab key="login" title="Acceder">
+          {loginErrorModal && (
+            <ErrorAlert
+              onClose={() => {
+                setLoginErrorModal(false);
+              }}
+              msg={loginServiceError}
+            ></ErrorAlert>
+          )}
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmitLogin)}
             className="flex flex-col gap-4"
           >
             <Input
