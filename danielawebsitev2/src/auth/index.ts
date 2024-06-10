@@ -1,5 +1,7 @@
-import NextAuth, { NextAuthConfig, User } from "next-auth";
+import NextAuth, { CredentialsSignin, NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { FirestoreAdapter } from "@auth/firebase-adapter";
+import { cert } from "firebase-admin/app";
 
 export const BASE_PATH = "/";
 
@@ -29,8 +31,14 @@ const options: NextAuthConfig = {
     }),
   ],
   pages: { signIn: "/", error: "/" },
-
   secret: process.env.NEXTAUTH_SECRET,
+  adapter: FirestoreAdapter({
+    credential: cert({
+      projectId: process.env.AUTH_FIREBASE_PROJECT_ID,
+      clientEmail: process.env.AUTH_FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.AUTH_FIREBASE_PRIVATE_KEY,
+    }),
+  }),
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(options);
