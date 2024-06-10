@@ -40,7 +40,8 @@ export default function NavBar({
   const { theme } = useTheme();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session, status } = useSession();
-  // console.log(session, status);
+
+  console.log(session, status);
   const router = useRouter();
 
   return (
@@ -51,11 +52,11 @@ export default function NavBar({
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-center">
                 Bienvenido
               </ModalHeader>
               <ModalBody>
@@ -140,21 +141,20 @@ export default function NavBar({
                 }}
                 href="#"
               >
-                Login
+                Accede
               </Link>
             </NavbarItem>
             <NavbarItem>
               <Button
-                onPress={() => {
+                onClick={() => {
                   setTabSelected("sign-up");
                   onOpen();
                 }}
-                as={Link}
                 color="primary"
                 href="#"
                 variant="flat"
               >
-                Sign Up
+                Registrate
               </Button>
             </NavbarItem>
           </>
