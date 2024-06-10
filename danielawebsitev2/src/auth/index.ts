@@ -17,7 +17,7 @@ const options: NextAuthConfig = {
         token: { label: "Token", type: "text", placeholder: "Token" },
       },
       async authorize(credentials): Promise<User | null> {
-        console.log("credentials", credentials.token);
+        console.log("credentials", credentials);
         if (
           credentials.email === "admin@admin.com" &&
           credentials.password === "123456789"
@@ -28,7 +28,7 @@ const options: NextAuthConfig = {
       },
     }),
   ],
-  pages: { signIn: "/" },
+  pages: { signIn: "/", error: "/" },
 
   secret: process.env.NEXTAUTH_SECRET,
 };
