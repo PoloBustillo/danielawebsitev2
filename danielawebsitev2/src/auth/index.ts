@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 import { FirestoreAdapter, initFirestore } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 
@@ -8,6 +9,10 @@ export const BASE_PATH = "/";
 
 const options: NextAuthConfig = {
   providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -41,6 +46,18 @@ const options: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    // signIn: async ({ user, account }) => {
+    //   // const { error } = user; // Defined by google provider profile callback
+    //   console.log("CALBACK", user);
+    //   console.log("CALBACK", account);
+    //   // if (!error) return true; // User is good to go
+    //   // switch (account?.provider) {
+    //   //   case "google":
+    //   //   default:
+    //   //     return `/signin?error=ZXZX`; // This is where you set your error
+    //   // }
+    //   return true;
+    // },
     jwt: async ({ token, user }) => {
       console.log("jwt", token, user);
       return token;

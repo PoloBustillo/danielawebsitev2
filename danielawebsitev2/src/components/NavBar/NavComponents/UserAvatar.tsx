@@ -6,9 +6,12 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Calendar, Question, Settings, Task } from "../../icons/Icons";
 
 const UserAvatar = () => {
+  const { data: session, status } = useSession();
+
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -17,16 +20,16 @@ const UserAvatar = () => {
           as="button"
           className="transition-all"
           color="secondary"
-          name="Jason Hughes"
+          name={session?.user?.name!}
           size="md"
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+          src={session?.user?.image!}
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownItem key="profile" className="h-14 gap-2 ">
           <p className="font-semibold">Accediste como:</p>
           <p className="font-semibold text-bgpurple dark:text-success">
-            zoey@example.com
+            {session?.user?.email!}
           </p>
         </DropdownItem>
         <DropdownItem
@@ -56,6 +59,9 @@ const UserAvatar = () => {
         <DropdownItem key="logout">
           <Button
             role="button"
+            onPress={() => {
+              signOut();
+            }}
             className="w-full bg-danger-400 border-none text-white justify-center flex"
           >
             Salir

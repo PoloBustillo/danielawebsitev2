@@ -2,8 +2,7 @@
 import { NavBarProps } from "@/lib/types";
 import {
   Button,
-  Checkbox,
-  Input,
+  Image,
   Modal,
   ModalBody,
   ModalContent,
@@ -29,20 +28,24 @@ import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import ModalSign from "@/components/ModalSignIn/ModalSign";
+import { cn } from "@/utils/functions";
 
-export default function NavBar({
-  areasTerapias,
-  pageName,
-  logged,
-}: NavBarProps) {
+export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [tabSelected, setTabSelected] = React.useState("");
   const { theme } = useTheme();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   console.log(session, status);
-  const router = useRouter();
+  async function onProviderLogin(provider: string) {
+    let res = await signIn(provider, { redirect: false });
+    console.log("ASDASDSADSADASD", res);
+    if (res?.error != null || res?.status != 200) {
+      console.log("Error en inicio de sesión");
+    }
+  }
 
   return (
     <Navbar
@@ -52,11 +55,25 @@ export default function NavBar({
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
+      <Modal
+        backdrop="opaque"
+        classNames={{
+          backdrop:
+            "bg-gradient-to-t from-zinc-900 to-blue-900/10 backdrop-opacity-20 dark:from-zinc-700 dark:to-pink-900/60 dark:backdrop-opacity-40",
+        }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 text-center">
+              <ModalHeader
+                className={cn(
+                  "flex flex-col gap-1 text-center",
+                  "dark:bg-background dark:text-white bg-white text-black"
+                )}
+              >
                 Bienvenido
               </ModalHeader>
               <ModalBody>
@@ -65,13 +82,64 @@ export default function NavBar({
                   tabInit={tabSelected}
                 ></ModalSign>
               </ModalBody>
-              <ModalFooter></ModalFooter>
-              <Button onClick={() => signIn("google")} variant="flat">
-                Google
-              </Button>
-              <Button onClick={() => signOut()} variant="flat">
-                SignOut
-              </Button>
+              <ModalFooter>
+                <div
+                  id="third-party-auth"
+                  className="flex items-center justify-center m-auto gap-2 w-full"
+                >
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    onPress={() => {
+                      onProviderLogin("google");
+                    }}
+                    className="hover:scale-105 hover:bg-transparent w-[40px] ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
+                  >
+                    <Image
+                      className="max-w-[25px]"
+                      src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
+                      alt="Google"
+                    />
+                  </Button>
+
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    onPress={() => {
+                      onProviderLogin("github");
+                    }}
+                    className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
+                  >
+                    <Image
+                      className="max-w-[25px] filter dark:invert"
+                      src="https://ucarecdn.com/be5b0ffd-85e8-4639-83a6-5162dfa15a16/"
+                      alt="Github"
+                    />
+                  </Button>
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
+                  >
+                    <Image
+                      className="max-w-[25px]"
+                      src="https://ucarecdn.com/6f56c0f1-c9c0-4d72-b44d-51a79ff38ea9/"
+                      alt="Facebook"
+                    />
+                  </Button>
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
+                  >
+                    <Image
+                      className="max-w-[25px] dark:gray-100"
+                      src="https://ucarecdn.com/82d7ca0a-c380-44c4-ba24-658723e2ab07/"
+                      alt="twitter"
+                    />
+                  </Button>
+                </div>
+              </ModalFooter>
             </>
           )}
         </ModalContent>
@@ -90,19 +158,30 @@ export default function NavBar({
           </div>
         </div>
       </NavbarMenu>
-      <Link href={"/"} className="pointer hidden md:flex">
+
+      <Button
+        isIconOnly
+        onClick={(event) => {
+          event.preventDefault();
+          router.push("/");
+        }}
+        className={cn("bg-[#016fee] pointer hidden md:flex dark:bg-[#3f3f46]")}
+        aria-label={pageName}
+        radius="full"
+      >
         <HomeIcon
-          width="34px"
-          height="34px"
-          color={theme == "dark" ? "#f69a67" : "#d42984"}
+          width="24px"
+          height="24px"
+          color={theme == "dark" ? "#d4d4d8" : "white"}
         ></HomeIcon>
-      </Link>
+      </Button>
+
       <NavbarBrand>
         <div>
           <Logo />
         </div>
 
-        <div>
+        {/* <div>
           <span className="dark:border-white border-gray-600 border-b-1 w-[100%] top-6  relative block"></span>
           <Link
             href="/"
@@ -110,7 +189,7 @@ export default function NavBar({
           >
             {pageName}
           </Link>
-        </div>
+        </div> */}
       </NavbarBrand>
       <NavbarContent className=" max-[450px]:hidden flex gap-4 sm:hidden">
         <NavbarItem>
@@ -136,17 +215,18 @@ export default function NavBar({
         <NavbarItem>
           <ThemeSwitcher></ThemeSwitcher>
         </NavbarItem>
-        {logged == true ? (
+        {status == "authenticated" ? (
           <UserAvatar></UserAvatar>
         ) : (
           <>
             <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-secondary-600 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
               <Link
-                onClick={() => {
+                onClick={(event) => {
+                  event.preventDefault();
                   setTabSelected("login");
                   onOpen();
                 }}
-                href="#"
+                href={"#"}
               >
                 Accede
               </Link>
