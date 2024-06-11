@@ -1,12 +1,17 @@
-import NextAuth, { CredentialsSignin, NextAuthConfig, User } from "next-auth";
+import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { FirestoreAdapter } from "@auth/firebase-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import { FirestoreAdapter, initFirestore } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 
 export const BASE_PATH = "/";
 
 const options: NextAuthConfig = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     Credentials({
       name: "Credentials",
       credentials: {
@@ -19,7 +24,12 @@ const options: NextAuthConfig = {
         token: { label: "Token", type: "text", placeholder: "Token" },
       },
       async authorize(credentials): Promise<User | null> {
-        console.log("credentials", credentials);
+        console.log(
+          "credentials",
+          credentials,
+          process.env.AUTH_FIREBASE_PROJECT_ID
+        );
+
         if (
           credentials.email === "admin@admin.com" &&
           credentials.password === "123456789"
@@ -30,13 +40,22 @@ const options: NextAuthConfig = {
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      console.log("jwt", token, user);
+      return token;
+    },
+  },
+  session: {
+    strategy: "jwt",
+  },
   pages: { signIn: "/", error: "/" },
   secret: process.env.NEXTAUTH_SECRET,
   adapter: FirestoreAdapter({
     credential: cert({
       projectId: process.env.AUTH_FIREBASE_PROJECT_ID,
       clientEmail: process.env.AUTH_FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.AUTH_FIREBASE_PRIVATE_KEY,
+      privateKey: process.env.AUTH_FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
     }),
   }),
 };

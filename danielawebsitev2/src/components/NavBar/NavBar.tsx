@@ -27,7 +27,7 @@ import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import ModalSign from "@/components/ModalSignIn/ModalSign";
 
 export default function NavBar({
@@ -65,6 +65,13 @@ export default function NavBar({
                   tabInit={tabSelected}
                 ></ModalSign>
               </ModalBody>
+              <ModalFooter></ModalFooter>
+              <Button onClick={() => signIn("google")} variant="flat">
+                Google
+              </Button>
+              <Button onClick={() => signOut()} variant="flat">
+                SignOut
+              </Button>
             </>
           )}
         </ModalContent>
