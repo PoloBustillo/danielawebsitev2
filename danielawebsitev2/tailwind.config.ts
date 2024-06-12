@@ -57,10 +57,10 @@ const config = {
       keyframes: {
         hideMe: {
           to: {
-            width: 0,
-            height: 0,
+            width: "0",
+            height: "0",
             visibility: "hidden",
-            padding: 0,
+            padding: "0",
           },
         },
         "caret-blink": {
