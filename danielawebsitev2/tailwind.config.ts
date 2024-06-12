@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 import { nextui } from "@nextui-org/react";
-module.exports = {
+import type { Config } from "tailwindcss";
+
+const config = {
   darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -34,12 +36,14 @@ module.exports = {
       "15px": ["15px", { lineHeight: "1" }],
       "75px": ["75px", { lineHeight: "1" }],
     },
-
     extend: {
       lineHeight: {
         "4px": "85px",
       },
       animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 3s ease-in-out forwards",
         title: "title 6s ease-out forwards",
         "fade-left": "fade-left 3s ease-in-out forwards",
@@ -58,6 +62,10 @@ module.exports = {
             visibility: "hidden",
             padding: 0,
           },
+        },
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
         },
         border: {
           "0%, 100%": { backgroundPosition: "0% 50%" },
@@ -146,10 +154,19 @@ module.exports = {
             opacity: "100%",
           },
         },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
     },
   },
   plugins: [
+    require("tailwindcss-animate"),
     nextui({
       themes: {
         light: {
@@ -172,4 +189,6 @@ module.exports = {
       },
     }),
   ],
-};
+} satisfies Config;
+
+export default config;

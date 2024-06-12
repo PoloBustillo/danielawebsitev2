@@ -5,6 +5,12 @@ import { useForm } from "react-hook-form";
 import { Tabs, Tab, Input, Link, Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { ErrorAlert } from "../Alerts/ErrorAlert";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 export default function ModalSign({
   tabInit = "login",
@@ -107,20 +113,33 @@ export default function ModalSign({
           <form className="flex flex-col gap-4 h-[300px]">
             <Input
               isRequired
-              label="Name"
-              placeholder="Enter your name"
-              type="password"
-            />
-            <Input
-              isRequired
               label="Email"
               placeholder="Enter your email"
               type="email"
             />
+            <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+              <InputOTPGroup>
+                <InputOTPSlot
+                  className="dark:bg-white dark:text-black bg-black  text-white"
+                  index={0}
+                />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
             <Input
               isRequired
-              label="Password"
-              placeholder="Enter your password"
+              label="Contraseña"
+              placeholder="Enter your contraseña"
+              type="password"
+            />
+            <Input
+              isRequired
+              label="Confirme contraseña"
+              placeholder="Confirme su contraseña"
               type="password"
             />
             <p className="text-center text-small">
