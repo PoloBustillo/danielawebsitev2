@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import TwitterProvider from "next-auth/providers/twitter";
+import FacebookProvider from "next-auth/providers/facebook";
 import { FirestoreAdapter, initFirestore } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 
@@ -10,6 +11,10 @@ export const BASE_PATH = "/";
 
 const options: NextAuthConfig = {
   providers: [
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+    }),
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,

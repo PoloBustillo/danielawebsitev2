@@ -119,6 +119,9 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
                   </Button>
                   <Button
                     isIconOnly
+                    onPress={() => {
+                      onProviderLogin("facebook");
+                    }}
                     variant="light"
                     className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
                   >
