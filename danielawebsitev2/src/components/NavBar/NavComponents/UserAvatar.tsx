@@ -29,7 +29,9 @@ const UserAvatar = () => {
         <DropdownItem key="profile" className="h-14 gap-2 ">
           <p className="font-semibold">Accediste como:</p>
           <p className="font-semibold text-bgpurple dark:text-success">
-            {session?.user?.email!}
+            {session?.user?.email != undefined
+              ? session?.user?.email
+              : session?.user?.name!}
           </p>
         </DropdownItem>
         <DropdownItem
