@@ -223,7 +223,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           <UserAvatar></UserAvatar>
         ) : (
           <>
-            <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-secondary-600 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
+            <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-zinc-300 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
               <Link
                 onClick={(event) => {
                   event.preventDefault();
@@ -232,7 +232,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
                 }}
                 href={"#"}
               >
-                Accede
+                Ingresa
               </Link>
             </NavbarItem>
             <NavbarItem>

@@ -71,7 +71,7 @@ const options: NextAuthConfig = {
   session: {
     strategy: "jwt",
   },
-  pages: { signIn: "/", error: "/" },
+  pages: { signIn: BASE_PATH, error: BASE_PATH },
   secret: process.env.NEXTAUTH_SECRET,
   adapter: FirestoreAdapter({
     credential: cert({
