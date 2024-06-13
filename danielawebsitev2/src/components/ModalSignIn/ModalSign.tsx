@@ -9,6 +9,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import {
   InputOTP,
   InputOTPGroup,
+  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
@@ -110,26 +111,34 @@ export default function ModalSign({
           </form>
         </Tab>
         <Tab key="sign-up" title="Crear cuenta">
-          <form className="flex flex-col gap-4 h-[300px]">
+          <form className="flex flex-col gap-4">
+            <div className="m-auto p-4">
+              <div className="mb-4">Código de verificación:</div>
+              <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
+
             <Input
               isRequired
               label="Email"
               placeholder="Enter your email"
               type="email"
             />
-            <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-              <InputOTPGroup>
-                <InputOTPSlot
-                  className="dark:bg-white dark:text-black bg-black  text-white"
-                  index={0}
-                />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
+
             <Input
               isRequired
               label="Contraseña"

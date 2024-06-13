@@ -29,6 +29,7 @@ import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import ModalSign from "@/components/ModalSignIn/ModalSign";
+
 import { cn } from "@/utils/functions";
 
 export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
@@ -59,6 +60,8 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
       <Modal
         backdrop="opaque"
         classNames={{
+          closeButton:
+            "text-white bg-transparent hover:bg-black dark:hover:bg-white dark:hover:text-black",
           backdrop:
             "bg-gradient-to-t from-zinc-900 to-blue-900/10 backdrop-opacity-20 dark:from-zinc-700 dark:to-pink-900/60 dark:backdrop-opacity-40",
         }}
@@ -66,28 +69,25 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         onOpenChange={onOpenChange}
         placement="center"
       >
-        <ModalContent>
+        <ModalContent className="flex flex-col">
           {(onClose) => (
             <>
               <ModalHeader
                 className={cn(
                   "flex flex-col gap-1 text-center",
-                  "dark:bg-background dark:text-white bg-white text-black"
+                  "dark:bg-[#d6297b] text-white bg-primary-600"
                 )}
               >
                 Bienvenido
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="pt-6">
                 <ModalSign
                   closeModal={() => onClose()}
                   tabInit={tabSelected}
                 ></ModalSign>
               </ModalBody>
               <ModalFooter>
-                <div
-                  id="third-party-auth"
-                  className="flex items-center justify-center m-auto gap-2 w-full"
-                >
+                <div className="flex items-center justify-center m-auto gap-2 w-full">
                   <Button
                     isIconOnly
                     variant="light"
@@ -140,8 +140,8 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
                     className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
                   >
                     <Image
-                      className="max-w-[25px] dark:gray-100"
-                      src="https://ucarecdn.com/82d7ca0a-c380-44c4-ba24-658723e2ab07/"
+                      className="max-w-[45px] dark:gray-100"
+                      src="/assets/icons/x.webp"
                       alt="twitter"
                     />
                   </Button>
