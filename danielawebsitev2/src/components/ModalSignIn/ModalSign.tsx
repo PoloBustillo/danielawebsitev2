@@ -5,13 +5,8 @@ import { useForm } from "react-hook-form";
 import { Tabs, Tab, Input, Link, Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { ErrorAlert } from "../Alerts/ErrorAlert";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
+import { NewUser, signupSchema } from "@/schemas/signupSchema";
+import { log } from "console";
 
 export default function ModalSign({
   tabInit = "login",
@@ -31,6 +26,12 @@ export default function ModalSign({
     formState: { errors },
   } = useForm<User>({ resolver: zodResolver(loginSchema) });
 
+  const {
+    register: registerSignup,
+    handleSubmit: handleSubmitSignup,
+    formState: { errors: errorsSignup },
+  } = useForm<NewUser>({ resolver: zodResolver(signupSchema) });
+
   async function onSubmitLogin(data: User) {
     setLoginErrorModal(false);
     let res = await signIn("credentials", {
@@ -48,8 +49,26 @@ export default function ModalSign({
       closeModal();
     }
   }
-  console.log(errors);
+  async function onSubmitCreateUser(data: NewUser) {
+    console.log("CREATE USER", data);
 
+    setLoginErrorModal(false);
+    let res = await signIn("credentials", {
+      redirect: false,
+      password: data.password,
+      isSignup: true,
+      confirmPassword: data.passwordConfirm,
+      email: data.email,
+    });
+    console.log(res);
+    if (res?.error != null || res?.status != 200) {
+      if (res?.error == "CredentialsSignin")
+        setLoginServiceError("Error en credenciales para iniciar sesión");
+      setLoginErrorModal(true);
+    } else {
+      closeModal();
+    }
+  }
   return (
     <div className="flex flex-col w-full">
       <Tabs
@@ -111,45 +130,40 @@ export default function ModalSign({
           </form>
         </Tab>
         <Tab key="sign-up" title="Crear cuenta">
-          <form className="flex flex-col gap-4">
-            <div className="m-auto p-4">
-              <div className="mb-4">Código de verificación:</div>
-              <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-                <InputOTPGroup>
-                  <InputOTPSlot index={0} />
-                  <InputOTPSlot index={1} />
-                </InputOTPGroup>
-                <InputOTPSeparator />
-                <InputOTPGroup>
-                  <InputOTPSlot index={2} />
-                  <InputOTPSlot index={3} />
-                </InputOTPGroup>
-                <InputOTPSeparator />
-                <InputOTPGroup>
-                  <InputOTPSlot index={4} />
-                  <InputOTPSlot index={5} />
-                </InputOTPGroup>
-              </InputOTP>
-            </div>
-
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={handleSubmitSignup(onSubmitCreateUser)}
+          >
             <Input
+              {...registerSignup("email")}
               isRequired
               label="Email"
-              placeholder="Enter your email"
+              placeholder="Introduce tu email"
               type="email"
+              isInvalid={errorsSignup?.email ? true : false}
+              color={errorsSignup?.email ? "danger" : "default"}
+              errorMessage={errorsSignup?.email?.message}
             />
 
             <Input
+              {...registerSignup("password")}
               isRequired
               label="Contraseña"
-              placeholder="Enter your contraseña"
+              placeholder="Introduce tu contraseña"
               type="password"
+              isInvalid={errorsSignup?.password ? true : false}
+              color={errorsSignup?.password ? "danger" : "default"}
+              errorMessage={errorsSignup?.password?.message}
             />
             <Input
+              {...registerSignup("passwordConfirm")}
               isRequired
               label="Confirme contraseña"
               placeholder="Confirme su contraseña"
               type="password"
+              isInvalid={errorsSignup?.passwordConfirm ? true : false}
+              color={errorsSignup?.passwordConfirm ? "danger" : "default"}
+              errorMessage={errorsSignup?.passwordConfirm?.message}
             />
             <p className="text-center text-small">
               Ya tienes cuenta creada?{" "}
@@ -158,19 +172,7 @@ export default function ModalSign({
               </Link>
             </p>
             <div className="flex gap-2 justify-end">
-              <Button
-                onPress={async () => {
-                  let res = await signIn("credentials", {
-                    redirect: false,
-                    password: "123",
-                    token: "alsldasd",
-                    email: "admin@admin.com",
-                  });
-                  console.log(res);
-                }}
-                fullWidth
-                color="primary"
-              >
+              <Button type="submit" fullWidth color="primary">
                 Crear cuenta nueva
               </Button>
             </div>

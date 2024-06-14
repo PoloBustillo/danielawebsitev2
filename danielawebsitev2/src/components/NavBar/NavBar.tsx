@@ -120,15 +120,15 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
                   <Button
                     isIconOnly
                     onPress={() => {
-                      onProviderLogin("facebook");
+                      onProviderLogin("spotify");
                     }}
                     variant="light"
                     className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1"
                   >
                     <Image
-                      className="max-w-[25px]"
-                      src="https://ucarecdn.com/6f56c0f1-c9c0-4d72-b44d-51a79ff38ea9/"
-                      alt="Facebook"
+                      className="max-w-[30px]"
+                      src="/assets/icons/spotify.png"
+                      alt="Spotify"
                     />
                   </Button>
                   <Button
