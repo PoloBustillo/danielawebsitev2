@@ -6,7 +6,6 @@ import { Tabs, Tab, Input, Link, Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { ErrorAlert } from "../Alerts/ErrorAlert";
 import { NewUser, signupSchema } from "@/schemas/signupSchema";
-import { log } from "console";
 
 export default function ModalSign({
   tabInit = "login",
