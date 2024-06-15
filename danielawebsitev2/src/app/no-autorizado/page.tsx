@@ -9,9 +9,7 @@ const NotFound = () => {
           <h2 className="mb-8 font-extrabold text-9xl dark:text-focus">
             <span className="sr-only">No Autorizado</span>401
           </h2>
-          <p className="text-2xl font-semibold md:text-3xl">
-            Accede a tu cuenta para ver este recurso
-          </p>
+          <p className="text-2xl font-semibold md:text-3xl">No Autorizado</p>
           <p className="mt-4 mb-8 dark:text-gray-400">
             Para hacer uso de este recurso, por favor inicia sesión
           </p>

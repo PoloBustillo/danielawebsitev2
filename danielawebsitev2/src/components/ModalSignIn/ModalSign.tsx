@@ -19,7 +19,12 @@ export default function ModalSign({
   const [loginServiceError, setLoginServiceError] = useState(
     "Error en servicio de inicio de sesión."
   );
+  const [signupServiceError, setSingupServiceError] = useState(
+    "Error en crear usuario: Revise los datos. Usario ya existe o problemas de conexión"
+  );
   const [loginErrorModal, setLoginErrorModal] = useState(false);
+  const [signupErrorModal, setSignupErrorModal] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -50,21 +55,20 @@ export default function ModalSign({
     }
   }
   async function onSubmitCreateUser(data: NewUser) {
-    console.log("CREATE USER", data);
-
-    setLoginErrorModal(false);
+    setSignupErrorModal(false);
     let res = await signIn("credentials", {
       redirect: false,
       password: data.password,
       isSignup: true,
-      confirmPassword: data.passwordConfirm,
+      passwordConfirmation: data.passwordConfirm,
       email: data.email,
     });
     console.log(res);
     if (res?.error != null || res?.status != 200) {
-      if (res?.error == "CredentialsSignin")
-        setLoginServiceError("Error en credenciales para iniciar sesión");
-      setLoginErrorModal(true);
+      setSingupServiceError(
+        "Error en crear usuario: Revise los datos. Usario ya existe o problemas de conexión"
+      );
+      setSignupErrorModal(true);
     } else {
       closeModal();
     }
@@ -130,6 +134,14 @@ export default function ModalSign({
           </form>
         </Tab>
         <Tab key="sign-up" title="Crear cuenta">
+          {signupErrorModal && (
+            <ErrorAlert
+              onClose={() => {
+                setSignupErrorModal(false);
+              }}
+              msg={signupServiceError}
+            ></ErrorAlert>
+          )}
           <form
             className="flex flex-col gap-4"
             onSubmit={handleSubmitSignup(onSubmitCreateUser)}

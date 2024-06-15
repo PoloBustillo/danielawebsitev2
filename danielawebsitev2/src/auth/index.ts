@@ -5,10 +5,11 @@ import GithubProvider from "next-auth/providers/github";
 import TwitterProvider from "next-auth/providers/twitter";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { FirestoreAdapter } from "@auth/firebase-adapter";
+import { randomUUID } from "crypto";
 import { cert } from "firebase-admin/app";
 import admin from "firebase-admin";
 import { authConfig } from "./auth.config";
-import { getFirestore } from "firebase/firestore";
+import bcrypt from "bcrypt";
 
 const config = {
   credential: cert({
@@ -62,21 +63,49 @@ const options: NextAuthConfig = {
         },
       },
       async authorize(credentials): Promise<User | null> {
-        // const db = getFirestore(firebase);
+        const db = admin.firestore();
         if (credentials.isSignup == "true") {
-          // firebase.firestore().collection("users").add({}, credentials);
-        }
-        console.log(
-          "credentials",
-          credentials,
-          process.env.AUTH_FIREBASE_PROJECT_ID
-        );
+          let query = db
+            .collection("users")
+            .where("email", "==", credentials.email);
+          let querySnapshot = await query.get();
+          querySnapshot.forEach((documentSnapshot) => {
+            throw new Error("Usuario ya existe");
+          });
 
-        if (
-          credentials.email === "admin@admin.com" &&
-          credentials.password === "123456789"
-        ) {
-          return { email: credentials.email };
+          const hashedPassword = await bcrypt.hash(credentials.password, 10);
+          let userID = randomUUID();
+          let user = {
+            email: credentials.email,
+            password: hashedPassword,
+            id: userID,
+            role: "user",
+          };
+          let account = {
+            provider: "credentials",
+            user: userID,
+          };
+
+          db.collection("users").doc(userID).set(user);
+          db.collection("accounts").doc().set(account);
+          return { email: String(credentials.email) };
+        } else {
+          let query = db
+            .collection("users")
+            .where("email", "==", credentials.email);
+          let querySnapshot = await query.get();
+          let password;
+          querySnapshot.forEach(async (documentSnapshot) => {
+            let user = documentSnapshot.data();
+            password = user.password;
+          });
+          let matchedPassword = await bcrypt.compare(
+            credentials.password,
+            password
+          );
+          if (matchedPassword) {
+            return { email: String(credentials.email) };
+          }
         }
         return null;
       },

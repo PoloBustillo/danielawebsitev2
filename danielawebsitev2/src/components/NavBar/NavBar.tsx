@@ -1,5 +1,6 @@
 "use client";
 import { NavBarProps } from "@/lib/types";
+import { Home } from "lucide-react";
 import {
   Button,
   Image,
@@ -16,19 +17,17 @@ import {
   NavbarMenuToggle,
   useDisclosure,
 } from "@nextui-org/react";
-
+import ModalSign from "@/components/ModalSignIn/ModalSign";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { HomeIcon } from "../icons/Home";
 import { Logo } from "../icons/Logo";
 import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
 import { signIn, signOut, useSession } from "next-auth/react";
-import ModalSign from "@/components/ModalSignIn/ModalSign";
 
 import { cn } from "@/utils/functions";
 
@@ -43,7 +42,6 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   console.log(session, status);
   async function onProviderLogin(provider: string) {
     let res = await signIn(provider, { redirect: false });
-    console.log("ASDASDSADSADASD", res);
     if (res?.error != null || res?.status != 200) {
       console.log("Error en inicio de sesión");
     }
@@ -176,11 +174,13 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         aria-label={pageName}
         radius="full"
       >
-        <HomeIcon
+        <Home
           width="24px"
           height="24px"
+          strokeWidth={1}
+          className="hover:w-4 hover:stroke-2"
           color={theme == "dark" ? "#d4d4d8" : "white"}
-        ></HomeIcon>
+        ></Home>
       </Button>
 
       <NavbarBrand>
