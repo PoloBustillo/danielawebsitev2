@@ -73,7 +73,10 @@ const options: NextAuthConfig = {
             throw new Error("Usuario ya existe");
           });
 
-          const hashedPassword = await bcrypt.hash(credentials.password, 10);
+          const hashedPassword = await bcrypt.hash(
+            String(credentials.password),
+            10
+          );
           let userID = randomUUID();
           let user = {
             email: credentials.email,
@@ -100,8 +103,8 @@ const options: NextAuthConfig = {
             password = user.password;
           });
           let matchedPassword = await bcrypt.compare(
-            credentials.password,
-            password
+            String(credentials.password),
+            String(password)
           );
           if (matchedPassword) {
             return { email: String(credentials.email) };
