@@ -11,11 +11,12 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
-import { CameraIcon, SaveAllIcon, SaveIcon } from "lucide-react";
+import { SaveIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
+import { useSearchParams } from "next/navigation";
 
 const page = () => {
   const {
@@ -50,17 +51,14 @@ const page = () => {
               <h4 className="font-bold text-large">Mi Foto:</h4>
               <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
 
-              {/* <Button
+              <Button
                 color="success"
                 isIconOnly
                 type="submit"
                 className="text-center  absolute right-[5%] w-[10%] top-[5%] h-14"
                 endContent={<SaveIcon className="w-8 h-8" />}
-                onPress={() => {
-                  console.log("save");
-                  handleSubmit(onSubmit);
-                }}
-              ></Button> */}
+                onClick={handleSubmit(onSubmit)}
+              ></Button>
             </CardHeader>
             <CardBody className="pb-0 pt-2 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 align-middle justify-around content-center">
               <div className="grid justify-center h-36px">
@@ -106,19 +104,7 @@ const page = () => {
               <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
             </CardHeader>
             <CardBody className="overflow-visible py-4">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  console.log("SUBMIT", errors, isValid, isDirty);
-                  handleSubmit(onSubmit);
-                }}
-                className="w-full"
-              >
-                <div className="flex gap-2 justify-end">
-                  <Button type="submit" fullWidth color="primary">
-                    Guardar
-                  </Button>
-                </div>
+              <form onSubmit={handleSubmit(onSubmit)} className="w-full">
                 <div className="grid grid-col-1 sm:grid-cols-2 gap-4 content-center">
                   <div>
                     <p className="text-tiny uppercase font-bold">Email</p>
@@ -268,7 +254,7 @@ const page = () => {
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="music" title="Music">
+        <Tab key="preferences" title="Preferencias">
           <Card>
             <CardBody>
               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -278,7 +264,7 @@ const page = () => {
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="videos" title="Videos">
+        <Tab key="account" title="Cuenta y Reportes">
           <Card>
             <CardBody>
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui

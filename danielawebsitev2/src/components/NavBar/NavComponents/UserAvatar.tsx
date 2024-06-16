@@ -39,7 +39,7 @@ const UserAvatar = () => {
           startContent={<Settings fill="currentColor" size={30}></Settings>}
           key="settings"
           onPress={() => {
-            route.push(`/protected/profile/${session?.user?.id}`);
+            route.push(`/protected/profile/${session?.user?.id}?tab=settings`);
           }}
         >
           Mis configuraciones

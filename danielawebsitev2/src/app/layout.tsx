@@ -53,14 +53,14 @@ export default async function RootLayout({
         className={`${roboto_condensed.variable} ${italliano.variable} ${barlow.variable} font-sans`}
       >
         <Providers>
-          {mensaje?.enable && (
-            <MsgBanner messageData={mensaje.message}></MsgBanner>
-          )}
           <NavBar
             areasTerapias={areasTerapias}
             pageName={webData.name}
             logged={false}
           ></NavBar>
+          {mensaje?.enable && (
+            <MsgBanner messageData={mensaje.message}></MsgBanner>
+          )}
           {children}
           <Footer webData={webData} />
         </Providers>

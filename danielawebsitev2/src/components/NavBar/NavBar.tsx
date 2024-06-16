@@ -20,7 +20,7 @@ import {
 import ModalSign from "@/components/ModalSignIn/ModalSign";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { Logo } from "../icons/Logo";
 import { DesktopMenu } from "./NavComponents/DesktopMenu";
@@ -38,8 +38,8 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session, status } = useSession();
   const router = useRouter();
+  const path = usePathname();
 
-  console.log(session, status);
   async function onProviderLogin(provider: string) {
     let res = await signIn(provider, { redirect: false });
     if (res?.error != null || res?.status != 200) {
@@ -204,8 +204,8 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
             role="button"
             aria-label="Reserva tu cita"
             color={"secondary"}
-            variant={"ghost"}
-            className="font-extrabold capitalize"
+            variant={path.includes("cita") ? "shadow" : "ghost"}
+            className={"font-extrabold capitalize"}
             onClick={() => {
               router.push("/cita");
             }}
