@@ -24,8 +24,7 @@ export default auth((req) => {
   const isAuthenticated = !!req.auth;
 
   const isProtectedRoute = nextUrl.pathname.includes(PROTECTED_ROUTES);
-  console.log("isProtectedRoute", isProtectedRoute);
-  console.log("isAuthenticated", isAuthenticated);
+
   if (!isAuthenticated && isProtectedRoute)
     return Response.redirect(new URL(NO_AUTHORIZED, nextUrl));
 });

@@ -11,12 +11,9 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, account, profile }) {
-      console.log("JWT Callback", token, account, profile);
-
       return token;
     },
     async session({ session, token, user }) {
-      console.log("Session Callback", session, token, user);
       session.user.id = token.sub!;
       return session;
     },
