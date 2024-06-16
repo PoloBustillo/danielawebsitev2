@@ -10,6 +10,7 @@ import {
   Input,
   Tab,
   Tabs,
+  image,
 } from "@nextui-org/react";
 import { SaveIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -17,20 +18,43 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import { useSearchParams } from "next/navigation";
+import { useDropzone } from "react-dropzone";
 
 const page = () => {
+  const { data: session, status } = useSession();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isDirty },
-  } = useForm<UserProfile>({ resolver: zodResolver(profileSchema) });
+    formState: { errors, isValid, isDirty, defaultValues },
+  } = useForm<UserProfile>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      email: session?.user?.email!,
+      image: session?.user?.image!,
+    },
+    // values: { email: session?.user?.email! },
+  });
   const xs = useMediaQuery({ query: "(max-width: 640px)" });
+  const [selected, setSelected] = useState("settings");
 
+  const [imageAvatar, setImageAvatar] = useState(session?.user?.image!);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "image/*": [],
+    },
+    onDrop: (acceptedFiles) => {
+      let files = acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      );
+      register("image", { value: files[0].preview });
+      setImageAvatar(files[0].preview);
+    },
+  });
   const onSubmit = (data: UserProfile) => {
     console.log(data);
   };
-  const [selected, setSelected] = useState("settings");
-  const { data: session, status } = useSession();
 
   return (
     <div className="m-auto p-8">
@@ -68,33 +92,38 @@ const page = () => {
                   className="transition-all w-32 h-32 text-large"
                   color="secondary"
                   name={session?.user?.name!}
-                  src={session?.user?.image!}
+                  src={imageAvatar}
                 />
               </div>
               <div className="grid">
-                <label className="flex flex-col items-center w-[100%] p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-8 h-8 text-gray-500 dark:text-gray-400"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
-                    />
-                  </svg>
-                  <h2 className="mt-1 font-medium tracking-wide text-gray-700 dark:text-gray-200">
-                    Da click o arrastra tu foto aquí.
-                  </h2>
-                  <p className="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400">
-                    SVG, PNG, JPG or GIF (MAX. 5MB)
-                  </p>
-                  <input id="dropzone-file" type="file" className="hidden" />
-                </label>
+                <div {...getRootProps({ className: "dropzone" })}>
+                  <label className="flex flex-col items-center w-[100%] p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-8 h-8 text-gray-500 dark:text-gray-400"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+                      />
+                    </svg>
+                    <h2 className="mt-1 font-medium tracking-wide text-gray-700 dark:text-gray-200">
+                      Da click o arrastra tu foto aquí.
+                    </h2>
+                    <p className="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400">
+                      SVG, PNG, JPG or GIF (MAX. 5MB)
+                    </p>
+
+                    <input {...getInputProps()} />
+
+                    {/* <input id="dropzone-file" type="file" className="hidden" /> */}
+                  </label>
+                </div>
               </div>
             </CardBody>
           </Card>
