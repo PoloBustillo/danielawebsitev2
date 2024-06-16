@@ -44,7 +44,7 @@ export default function ModalSign({
       token: null,
       email: data.email,
     });
-    console.log(res);
+
     if (res?.error != null || res?.status != 200) {
       if (res?.error == "CredentialsSignin")
         setLoginServiceError("Error en credenciales para iniciar sesión");
@@ -62,7 +62,7 @@ export default function ModalSign({
       passwordConfirmation: data.passwordConfirm,
       email: data.email,
     });
-    console.log(res);
+
     if (res?.error != null || res?.status != 200) {
       setSingupServiceError(
         "Error en crear usuario: Revise los datos. Usario ya existe o problemas de conexión"

@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/react";
 import { CameraIcon, SaveAllIcon, SaveIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 
@@ -21,13 +21,14 @@ const page = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isDirty },
   } = useForm<UserProfile>({ resolver: zodResolver(profileSchema) });
   const xs = useMediaQuery({ query: "(max-width: 640px)" });
+
   const onSubmit = (data: UserProfile) => {
     console.log(data);
   };
-
+  const [selected, setSelected] = useState("settings");
   const { data: session, status } = useSession();
 
   return (
@@ -35,17 +36,21 @@ const page = () => {
       <Tabs
         aria-label="Configuraciones"
         isVertical={xs ? false : true}
+        size="md"
+        color="secondary"
+        selectedKey={selected}
+        onSelectionChange={(key) => setSelected(key as string)}
         classNames={{
           tab: "md:w-[200px]",
         }}
       >
-        <Tab key="photos" title="Perfil de usuario">
+        <Tab key="settings" title="Perfil de usuario">
           <Card className="my-4 p-4">
             <CardHeader className="pb-0 py-2 p-4 flex-col items-start">
               <h4 className="font-bold text-large">Mi Foto:</h4>
               <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
 
-              <Button
+              {/* <Button
                 color="success"
                 isIconOnly
                 type="submit"
@@ -55,7 +60,7 @@ const page = () => {
                   console.log("save");
                   handleSubmit(onSubmit);
                 }}
-              ></Button>
+              ></Button> */}
             </CardHeader>
             <CardBody className="pb-0 pt-2 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 align-middle justify-around content-center">
               <div className="grid justify-center h-36px">
@@ -90,12 +95,7 @@ const page = () => {
                   <p className="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400">
                     SVG, PNG, JPG or GIF (MAX. 5MB)
                   </p>
-                  <input
-                    {...register("image")}
-                    id="dropzone-file"
-                    type="file"
-                    className="hidden"
-                  />
+                  <input id="dropzone-file" type="file" className="hidden" />
                 </label>
               </div>
             </CardBody>
@@ -107,7 +107,9 @@ const page = () => {
             </CardHeader>
             <CardBody className="overflow-visible py-4">
               <form
-                onSubmit={() => {
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  console.log("SUBMIT", errors, isValid, isDirty);
                   handleSubmit(onSubmit);
                 }}
                 className="w-full"
@@ -124,7 +126,6 @@ const page = () => {
                       {...register("email")}
                       isClearable
                       type="email"
-                      value={session?.user?.email!}
                       variant="bordered"
                       placeholder="Introduzca su email"
                       className=" md:w-[30vw] w-[100%]"
