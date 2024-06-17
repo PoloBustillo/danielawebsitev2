@@ -20,8 +20,8 @@ import {
 import ModalSign from "@/components/ModalSignIn/ModalSign";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
 import { Logo } from "../icons/Logo";
 import { DesktopMenu } from "./NavComponents/DesktopMenu";
 import MenuMobile from "./NavComponents/MenuMobile";
@@ -39,6 +39,15 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const path = usePathname();
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
+  useEffect(() => {
+    if (error) {
+      console.log("Error en la página: ", error);
+      onOpen();
+    }
+  }, [error]);
 
   async function onProviderLogin(provider: string) {
     let res = await signIn(provider, { redirect: false });
@@ -228,27 +237,27 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
           <>
             <NavbarItem className="hidden lg:flex me-3  rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-zinc-300 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
               <Link
-                onClick={(event) => {
-                  event.preventDefault();
-                  setTabSelected("login");
+                onClick={() => {
+                  setTabSelected("sign-up");
                   onOpen();
                 }}
                 href={"#"}
               >
-                Ingresa
+                Registro
               </Link>
             </NavbarItem>
             <NavbarItem>
               <Button
-                onClick={() => {
-                  setTabSelected("sign-up");
+                onClick={(event) => {
+                  event.preventDefault();
+                  setTabSelected("login");
                   onOpen();
                 }}
                 color="primary"
                 href="#"
                 variant="flat"
               >
-                Registrate
+                Ingresa
               </Button>
             </NavbarItem>
           </>
