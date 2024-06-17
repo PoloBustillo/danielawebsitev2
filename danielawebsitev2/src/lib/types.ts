@@ -3,6 +3,15 @@ export interface MensajeType {
   enable?: boolean;
 }
 
+export interface UserWithAttributes {
+  email: string | undefined;
+  id?: string | undefined;
+  role?: string | undefined;
+  name?: string | undefined;
+  apellidoPaterno?: string | undefined;
+  apellidoMaterno?: string | undefined;
+  celular?: string | undefined;
+}
 export interface NavBarProps {
   areasTerapias: TerapiasResponseType;
   pageName: string;

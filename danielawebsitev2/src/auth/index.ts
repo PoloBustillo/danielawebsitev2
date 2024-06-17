@@ -10,6 +10,7 @@ import { cert } from "firebase-admin/app";
 import admin from "firebase-admin";
 import { authConfig } from "./auth.config";
 import bcrypt from "bcrypt";
+import { UserWithAttributes } from "@/lib/types";
 
 const config = {
   credential: cert({
@@ -98,16 +99,35 @@ const options: NextAuthConfig = {
             .where("email", "==", credentials.email);
           let querySnapshot = await query.get();
           let password;
+          let user: User = {
+            name: undefined,
+            apellidoPaterno: undefined,
+            fechaNacimiento: undefined,
+            apellidoMaterno: undefined,
+            celular: undefined,
+            id: undefined,
+            role: undefined,
+            email: undefined,
+          };
           querySnapshot.forEach(async (documentSnapshot) => {
-            let user = documentSnapshot.data();
-            password = user.password;
+            user = documentSnapshot.data() as User;
+            password = documentSnapshot.data().password as string;
           });
           let matchedPassword = await bcrypt.compare(
             String(credentials.password),
             String(password)
           );
           if (matchedPassword) {
-            return { email: String(credentials.email) };
+            return {
+              email: String(credentials.email),
+              name: user.name,
+              apellidoPaterno: user.apellidoPaterno,
+              fechaNacimiento: user.fechaNacimiento,
+              apellidoMaterno: user.apellidoMaterno,
+              celular: user.celular,
+              id: user.id,
+              role: user.role,
+            };
           }
         }
         return null;

@@ -10,33 +10,51 @@ import {
   Input,
   Tab,
   Tabs,
-  image,
+  DateInput,
+  DateValue,
 } from "@nextui-org/react";
 import { SaveIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useSearchParams } from "next/navigation";
 import { useDropzone } from "react-dropzone";
+import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
+// @ts-ignore
+import dobToAge from "dob-to-age";
 
 const page = () => {
-  const { data: session, status } = useSession();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid, isDirty, defaultValues },
-  } = useForm<UserProfile>({
-    resolver: zodResolver(profileSchema),
-    defaultValues: {
-      email: session?.user?.email!,
-      image: session?.user?.image!,
-    },
-    // values: { email: session?.user?.email! },
+  const { data: session, status, update: sessionUpdate } = useSession();
+  const [date, setDate] = useState(null as DateValue | null);
+  const [formData, setFormData] = useState({
+    name: "",
+    celular: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    edad: "",
+    sexo: "",
+    religion: "",
+    ocupacion: "",
+    escolaridad: "",
+    image: "",
   });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const fieldName = event.target.name;
+    const fieldValue = event.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: fieldValue,
+    }));
+  };
+
+  const handleSubmit = (event: SyntheticEvent) => {
+    event.preventDefault();
+    console.log(formData);
+    sessionUpdate({ ...session, user: { ...session?.user, ...formData } });
+  };
+
   const xs = useMediaQuery({ query: "(max-width: 640px)" });
   const [selected, setSelected] = useState("settings");
-
   const [imageAvatar, setImageAvatar] = useState(session?.user?.image!);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -48,13 +66,30 @@ const page = () => {
           preview: URL.createObjectURL(file),
         })
       );
-      register("image", { value: files[0].preview });
+      setFormData((prevState) => ({
+        ...prevState,
+        image: files[0].preview,
+      }));
       setImageAvatar(files[0].preview);
     },
   });
-  const onSubmit = (data: UserProfile) => {
-    console.log(data);
-  };
+
+  useEffect(() => {
+    console.log("USE EFFECT2");
+    if (session?.user && status == "authenticated") {
+      setFormData({
+        ...formData,
+        name: session?.user?.name!,
+        celular: session?.user?.celular!,
+        image: session?.user?.image!,
+      });
+      if (session.user.fechaNacimiento) {
+        console.log(session.user.fechaNacimiento);
+        setDate(parseDate(session?.user?.fechaNacimiento!));
+      }
+      setImageAvatar(session?.user?.image!);
+    }
+  }, [session]);
 
   return (
     <div className="m-auto p-8">
@@ -74,14 +109,13 @@ const page = () => {
             <CardHeader className="pb-0 py-2 p-4 flex-col items-start">
               <h4 className="font-bold text-large">Mi Foto:</h4>
               <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
-
               <Button
                 color="success"
                 isIconOnly
                 type="submit"
                 className="text-center  absolute right-[5%] w-[10%] top-[5%] h-14"
                 endContent={<SaveIcon className="w-8 h-8" />}
-                onClick={handleSubmit(onSubmit)}
+                onClick={handleSubmit}
               ></Button>
             </CardHeader>
             <CardBody className="pb-0 pt-2 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 align-middle justify-around content-center">
@@ -130,34 +164,48 @@ const page = () => {
           <Card className="my-4 p-4 w-70wv">
             <CardHeader className="pb-0 p-4 flex-col items-start">
               <h4 className="font-bold text-large">Mi Perfil:</h4>
-              <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
+              <small className="text-default-500">
+                {`ID:${session?.user?.id!}`}
+              </small>
             </CardHeader>
             <CardBody className="overflow-visible py-4">
-              <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <div className="grid grid-col-1 sm:grid-cols-2 gap-4 content-center">
                   <div>
                     <p className="text-tiny uppercase font-bold">Email</p>
                     <Input
-                      {...register("email")}
-                      isClearable
                       type="email"
-                      variant="bordered"
+                      name="email"
+                      color="primary"
+                      disabled={true}
+                      variant="flat"
+                      value={session?.user?.email!}
+                      onChange={handleChange}
                       placeholder="Introduzca su email"
                       className=" md:w-[30vw] w-[100%]"
-                      isInvalid={errors?.email ? true : false}
-                      color={errors?.email ? "danger" : "default"}
-                      errorMessage={errors?.email?.message}
+                      // isInvalid={errors?.email ? true : false}
+                      // color={errors?.email ? "danger" : "default"}
+                      // errorMessage={errors?.email?.message}
                     />
                   </div>
                   <div>
                     <p className="text-tiny uppercase font-bold">Nombre</p>
                     <Input
                       isClearable
-                      type="email"
+                      type="text"
                       variant="bordered"
                       placeholder="Introduzca su nombre"
-                      defaultValue=""
                       className=" w-[30vw]"
+                      name="name"
+                      color="secondary"
+                      onClear={() => {
+                        setFormData({ ...formData, name: "" });
+                      }}
+                      value={formData.name}
+                      onChange={handleChange}
+                      // isInvalid={errors?.name ? true : false}
+                      // color={errors?.name ? "danger" : "default"}
+                      // errorMessage={errors?.name?.message}
                     />
                   </div>
                   <div>
@@ -166,12 +214,18 @@ const page = () => {
                     </p>
                     <Input
                       isClearable
-                      type="email"
+                      type="text"
                       variant="bordered"
-                      placeholder="Introduzca su nombre"
+                      placeholder="Introduzca su apelllido paterno"
                       defaultValue=""
-                      onClear={() => console.log("input cleared")}
+                      onClear={() =>
+                        setFormData({ ...formData, apellidoPaterno: "" })
+                      }
                       className=" w-[30vw]"
+                      name="apellidoPaterno"
+                      color="secondary"
+                      value={formData.apellidoPaterno}
+                      onChange={handleChange}
                     />
                   </div>
                   <div>
@@ -180,12 +234,16 @@ const page = () => {
                     </p>
                     <Input
                       isClearable
-                      type="email"
+                      type="text"
                       variant="bordered"
-                      placeholder="Introduzca su nombre"
+                      placeholder="Introduzca su apelllido materno"
                       defaultValue=""
                       onClear={() => console.log("input cleared")}
                       className=" w-[30vw]"
+                      name="apellidoMaterno"
+                      color="secondary"
+                      value={formData.apellidoMaterno}
+                      onChange={handleChange}
                     />
                   </div>
                   <div>
@@ -194,37 +252,41 @@ const page = () => {
                     </p>
                     <Input
                       isClearable
-                      type="email"
+                      type="text"
                       variant="bordered"
-                      placeholder="Introduzca su nombre"
-                      defaultValue=""
+                      placeholder="Introduzca su número de telefono"
                       onClear={() => console.log("input cleared")}
                       className=" w-[30vw]"
+                      name="celular"
+                      color="secondary"
+                      value={formData.celular}
+                      onChange={handleChange}
                     />
                   </div>
                   <div>
                     <p className="text-tiny uppercase font-bold">
                       Fecha de nacimiento:
                     </p>
-                    <Input
-                      isClearable
-                      type="email"
+                    <DateInput
+                      name="fechaNacimiento"
+                      maxValue={today(getLocalTimeZone()).subtract({
+                        days: 2000,
+                      })}
+                      value={date}
+                      onChange={setDate}
                       variant="bordered"
-                      placeholder="Introduzca su nombre"
-                      defaultValue=""
-                      onClear={() => console.log("input cleared")}
                       className=" w-[30vw]"
                     />
                   </div>
                   <div>
                     <p className="text-tiny uppercase font-bold">Edad:</p>
                     <Input
-                      isClearable
-                      type="email"
-                      variant="bordered"
-                      placeholder="Introduzca su nombre"
-                      defaultValue=""
-                      onClear={() => console.log("input cleared")}
+                      disabled={true}
+                      type="text"
+                      color="primary"
+                      variant="flat"
+                      placeholder="Introduzca su edad"
+                      value={date != null ? dobToAge(date) : "N/A"}
                       className=" w-[30vw]"
                     />
                   </div>
