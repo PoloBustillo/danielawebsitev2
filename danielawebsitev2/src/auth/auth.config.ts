@@ -11,14 +11,11 @@ export const authConfig = {
   },
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
-      console.log("trigger", trigger);
       if (trigger === "update") {
-        console.log("session1", session);
         if (session) {
           token.user = session.user;
         }
       }
-      console.log("jwt token", token, user);
       if (user) {
         token.sub = user.id;
         token.user = user;
@@ -26,7 +23,6 @@ export const authConfig = {
       return token;
     },
     session: async ({ session, token }) => {
-      console.log("session", token, session);
       session.user.apellidoMaterno = (token.user as User).apellidoMaterno;
       session.user.apellidoPaterno = (token.user as User).apellidoPaterno;
       session.user.fechaNacimiento = (token.user as User).fechaNacimiento;

@@ -4,7 +4,7 @@ import React from "react";
 
 const page = async ({ params: { id } }: { params: { id: string } }) => {
   const artist = await getTerapia(id);
-  console.log(artist);
+
   return (
     <div className="max-w-3xl px-6 py-16 mx-auto space-y-12">
       <article className="space-y-8 ">

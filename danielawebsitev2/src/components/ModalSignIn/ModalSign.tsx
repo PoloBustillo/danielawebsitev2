@@ -6,7 +6,7 @@ import { Tabs, Tab, Input, Link, Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { ErrorAlert } from "../Alerts/ErrorAlert";
 import { NewUser, signupSchema } from "@/schemas/signupSchema";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function ModalSign({
   tabInit = "login",
@@ -27,11 +27,11 @@ export default function ModalSign({
 
   const searchParams = useSearchParams();
   const router = useRouter();
+  const path = usePathname();
   const error = searchParams.get("error");
 
   useEffect(() => {
     if (error) {
-      console.log("Error en la página: ", error);
       setLoginServiceError(
         "Error al iniciar sesión, problamente problemas en la conexión. Intentalo de nuevo."
       );
@@ -63,7 +63,6 @@ export default function ModalSign({
       token: null,
       email: data.email,
     });
-    console.log(res);
     if (res?.error != null || res?.status != 200) {
       if (res?.error == "CredentialsSignin")
         setLoginServiceError("Error en credenciales para iniciar sesión");
@@ -89,6 +88,7 @@ export default function ModalSign({
       setSignupErrorModal(true);
     } else {
       closeModal();
+      if (path.includes("no-autorizado")) router.push("/");
     }
   }
   return (

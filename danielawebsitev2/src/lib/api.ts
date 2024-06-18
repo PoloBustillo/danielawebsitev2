@@ -33,7 +33,6 @@ export async function saveAvatarImageToStorage(url: any, path: string) {
   try {
     const storageRef = ref(storage, `avatars/${path}.jpg`);
     const res = await uploadBytes(storageRef, url);
-    console.log(res.metadata.fullPath);
     return res.metadata.fullPath;
   } catch (error) {
     throw error;
@@ -111,7 +110,6 @@ export const getTerapias: () => Promise<TerapiasResponseType | {}> = cache(
 
       return terapiasReduced;
     } catch (error) {
-      console.error("Error fetching terapias:", error);
       return {};
     }
   }
@@ -170,7 +168,6 @@ export const getWebData: () => Promise<WebDataType> = cache(async () => {
       };
     }
   } catch (error) {
-    console.error("Error fetching web data:", error);
     return {
       email: "",
       telefono: "",
@@ -200,7 +197,6 @@ export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
         return {};
       }
     } catch (error) {
-      console.error(`Error fetching terapia with ID ${id}:`, error);
       return {};
     }
   }
@@ -219,7 +215,6 @@ export const getBio: () => Promise<InstitutionType | {}> = cache(async () => {
       return {};
     }
   } catch (error) {
-    console.error("Error fetching bio data:", error);
     return {};
   }
 });
@@ -251,7 +246,6 @@ export const getCarouselData: () => Promise<CarouselResponseType[]> = cache(
 
       return responseWithUrls;
     } catch (error) {
-      console.error("Error fetching carousel data:", error);
       return [];
     }
   }

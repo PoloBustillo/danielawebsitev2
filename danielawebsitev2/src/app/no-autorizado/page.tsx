@@ -1,7 +1,18 @@
+"use client";
 import { Button, Link as LinkUI } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const NotFound = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/");
+    }
+  }, [session]);
   return (
     <section className="flex items-center h-full p-16 bg-background dark:text-gray-100">
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">

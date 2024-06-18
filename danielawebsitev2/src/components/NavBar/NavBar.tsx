@@ -44,7 +44,6 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
 
   useEffect(() => {
     if (error) {
-      console.log("Error en la página: ", error);
       onOpen();
     }
   }, [error]);
@@ -52,6 +51,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   async function onProviderLogin(provider: string) {
     let res = await signIn(provider, { redirect: false });
     if (res?.error != null || res?.status != 200) {
+      //TODO: Implementar alerta de error
       console.log("Error en inicio de sesión");
     }
   }
