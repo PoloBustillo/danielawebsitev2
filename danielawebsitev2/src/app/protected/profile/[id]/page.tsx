@@ -21,10 +21,15 @@ import { useDropzone } from "react-dropzone";
 import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 // @ts-ignore
 import dobToAge from "dob-to-age";
+import { getFile, saveAvatarImageToStorage, saveImageForUser } from "@/lib/api";
+import { firebase } from "@/auth";
 
 const page = () => {
   const { data: session, status, update: sessionUpdate } = useSession();
   const [date, setDate] = useState(null as DateValue | null);
+  const xs = useMediaQuery({ query: "(max-width: 640px)" });
+  const [selected, setSelected] = useState("settings");
+  const [imageAvatar, setImageAvatar] = useState(session?.user?.image!);
   const [formData, setFormData] = useState({
     name: "",
     celular: "",
@@ -35,7 +40,7 @@ const page = () => {
     religion: "",
     ocupacion: "",
     escolaridad: "",
-    image: "",
+    image: {},
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -47,15 +52,23 @@ const page = () => {
     }));
   };
 
-  const handleSubmit = (event: SyntheticEvent) => {
+  const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
-    console.log(formData);
-    sessionUpdate({ ...session, user: { ...session?.user, ...formData } });
+    let user = { ...session?.user, ...formData };
+    if (formData.image) {
+      let imagePath = await saveAvatarImageToStorage(
+        formData.image,
+        session?.user?.id!
+      );
+      let imageUrl = await getFile(imagePath);
+      saveImageForUser(session?.user?.id!, imageUrl);
+      console.log("IAMGE", imageUrl);
+      user = { ...user, image: imageUrl };
+    }
+    console.log(user);
+    sessionUpdate({ ...session, user: { ...user } });
   };
 
-  const xs = useMediaQuery({ query: "(max-width: 640px)" });
-  const [selected, setSelected] = useState("settings");
-  const [imageAvatar, setImageAvatar] = useState(session?.user?.image!);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [],
@@ -68,14 +81,13 @@ const page = () => {
       );
       setFormData((prevState) => ({
         ...prevState,
-        image: files[0].preview,
+        image: files[0],
       }));
       setImageAvatar(files[0].preview);
     },
   });
-
+  console.log("SESSION", session);
   useEffect(() => {
-    console.log("USE EFFECT2");
     if (session?.user && status == "authenticated") {
       setFormData({
         ...formData,
@@ -136,7 +148,7 @@ const page = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-8 h-8 text-gray-500 dark:text-gray-400"
                     >

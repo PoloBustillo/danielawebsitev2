@@ -10,7 +10,6 @@ import { cert } from "firebase-admin/app";
 import admin from "firebase-admin";
 import { authConfig } from "./auth.config";
 import bcrypt from "bcrypt";
-import { UserWithAttributes } from "@/lib/types";
 
 const config = {
   credential: cert({

@@ -32,6 +32,7 @@ export const authConfig = {
       session.user.fechaNacimiento = (token.user as User).fechaNacimiento;
       session.user.celular = (token.user as User).celular;
       session.user.name = (token.user as User).name;
+      session.user.image = (token.user as User).image;
       session.user.role = (token.user as User).role;
       session.user.id = (token.user as User).id!.toString();
       return session;

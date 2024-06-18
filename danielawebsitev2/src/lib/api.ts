@@ -1,5 +1,6 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { getDownloadURL, ref } from "firebase/storage";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 import { cache } from "react";
 import { db, storage } from "./firebase-config";
 import {
@@ -18,6 +19,26 @@ const MESSAGE_INITIAL_STATE: MensajesResponseType = {
   lema: { enable: false, message: "" },
   mensaje: { enable: false, message: "" },
 };
+
+export const getFile = async (path: string) => {
+  try {
+    const fileRef = ref(storage, path);
+    return getDownloadURL(fileRef);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export async function saveAvatarImageToStorage(url: any, path: string) {
+  try {
+    const storageRef = ref(storage, `avatars/${path}.jpg`);
+    const res = await uploadBytes(storageRef, url);
+    console.log(res.metadata.fullPath);
+    return res.metadata.fullPath;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // Extract common logic for fetching data from a Firestore collection
 async function fetchDataFromCollection<T>(
@@ -119,6 +140,14 @@ export const getBannerImages: () => Promise<BannerResponse[]> = cache(
   }
 );
 
+export const saveImageForUser = async (userId: string, urlImage: string) => {
+  try {
+    const docRef = doc(db, "users", userId);
+    await setDoc(docRef, { image: urlImage }, { merge: true });
+  } catch (error) {
+    throw error;
+  }
+};
 export const getWebData: () => Promise<WebDataType> = cache(async () => {
   try {
     const docRef = doc(db, "data", "psicologa");
