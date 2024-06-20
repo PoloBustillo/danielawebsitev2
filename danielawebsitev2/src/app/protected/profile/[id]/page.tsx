@@ -1,33 +1,27 @@
 "use client";
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
   CardHeader,
   Tab,
   Tabs,
-  RadioGroup,
-  Checkbox,
-  Chip,
 } from "@nextui-org/react";
-import { Rss, SaveIcon } from "lucide-react";
+import { SaveIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { CustomRadio } from "@/components/CustomRadio/CustomRadio";
-import { cn } from "@/lib/utils";
+
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
+import PreferencesCard from "@/components/PreferencesCard/PreferencesCard";
 
 const page = () => {
   const { data: session, status, update: sessionUpdate } = useSession();
   const xs = useMediaQuery({ query: "(max-width: 640px)" });
   const [selected, setSelected] = useState("settings");
 
-  const [isSelected, setIsSelected] = React.useState(false);
-
   return (
-    <div className="m-auto p-8 flex justify-evenly">
+    <div className="m-auto md:p-8 flex justify-evenly">
       <Tabs
         aria-label="Configuraciones"
         isVertical={xs ? false : true}
@@ -37,159 +31,14 @@ const page = () => {
         onSelectionChange={(key) => setSelected(key as string)}
         classNames={{
           tab: "md:w-[200px]",
-          panel: "w-[70vw]",
+          panel: "md:w-[70vw]",
         }}
       >
         <Tab key="settings" title="Perfil">
           <ProfileCard></ProfileCard>
         </Tab>
         <Tab key="preferences" title="Preferencias">
-          <Card className="my-4 p-4 w-70wv">
-            <CardHeader className="pb-0 py-2 p-4 flex-col items-start">
-              <h4 className="font-bold text-large">Preferencias:</h4>
-              <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
-            </CardHeader>
-            <CardBody className="pb-0 pt-2 p-4 grid grid-cols-1 gap-4 align-middle justify-around content-center">
-              <div className="grid grid-cols-2 gap-20 p-6">
-                <Checkbox
-                  aria-label={"notificaciones"}
-                  classNames={{
-                    base: cn(
-                      "inline-flex w-full max-w-md bg-content1",
-                      "hover:bg-content2 items-center justify-start",
-                      "cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-primary"
-                    ),
-                    label: "w-full",
-                  }}
-                  isSelected={isSelected}
-                  onValueChange={setIsSelected}
-                >
-                  <div className="w-full flex justify-between">
-                    <span>
-                      <Rss /> Subscripcion al blog
-                    </span>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-tiny text-default-500">
-                        Recibe notificaciones de nuevos post.
-                      </span>
-                      <Chip color="success" size="sm" variant="flat">
-                        Habilitado
-                      </Chip>
-                    </div>
-                  </div>
-                </Checkbox>
-                <Checkbox
-                  aria-label={"notificaciones"}
-                  classNames={{
-                    base: cn(
-                      "inline-flex w-full max-w-md bg-content1",
-                      "hover:bg-content2 items-center justify-start",
-                      "cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-primary"
-                    ),
-                    label: "w-full",
-                  }}
-                  isSelected={isSelected}
-                  onValueChange={setIsSelected}
-                >
-                  <div className="w-full flex justify-between">
-                    <span>
-                      <Rss /> Subscripcion al blog
-                    </span>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-tiny text-default-500">
-                        Recibe notificaciones de nuevos post.
-                      </span>
-                      <Chip color="success" size="sm" variant="flat">
-                        Habilitado
-                      </Chip>
-                    </div>
-                  </div>
-                </Checkbox>
-                <Checkbox
-                  aria-label={"notificaciones"}
-                  classNames={{
-                    base: cn(
-                      "inline-flex w-full max-w-md bg-content1",
-                      "hover:bg-content2 items-center justify-start",
-                      "cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-primary"
-                    ),
-                    label: "w-full",
-                  }}
-                  isSelected={isSelected}
-                  onValueChange={setIsSelected}
-                >
-                  <div className="w-full flex justify-between">
-                    <span>
-                      <Rss /> Subscripcion al blog
-                    </span>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-tiny text-default-500">
-                        Recibe notificaciones de nuevos post.
-                      </span>
-                      <Chip color="success" size="sm" variant="flat">
-                        Habilitado
-                      </Chip>
-                    </div>
-                  </div>
-                </Checkbox>
-                <Checkbox
-                  aria-label={"notificaciones"}
-                  classNames={{
-                    base: cn(
-                      "inline-flex w-full max-w-md bg-content1",
-                      "hover:bg-content2 items-center justify-start",
-                      "cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-primary"
-                    ),
-                    label: "w-full",
-                  }}
-                  isSelected={isSelected}
-                  onValueChange={setIsSelected}
-                >
-                  <div className="w-full flex justify-between">
-                    <span>
-                      <Rss /> Subscripcion al blog
-                    </span>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-tiny text-default-500">
-                        Recibe notificaciones de nuevos post.
-                      </span>
-                      <Chip color="success" size="sm" variant="flat">
-                        Habilitado
-                      </Chip>
-                    </div>
-                  </div>
-                </Checkbox>
-              </div>
-              <RadioGroup
-                label="Notificaciones"
-                className="w-full"
-                description="Selecciona por que medio te gustaría recibir notificaciones."
-              >
-                <CustomRadio
-                  description="Correo electrónico, usando el correo principal del perfil."
-                  value="email"
-                >
-                  Email
-                </CustomRadio>
-                <CustomRadio
-                  description="Notificaciones en la aplicación de mensajería Whatsapp."
-                  value="whatsapp"
-                >
-                  Whatsapp
-                </CustomRadio>
-                <CustomRadio
-                  description="Se notificará por medio de una llamada telefónica."
-                  value="llamada"
-                >
-                  Llamada
-                </CustomRadio>
-              </RadioGroup>
-            </CardBody>
-          </Card>
+          <PreferencesCard></PreferencesCard>
         </Tab>
         <Tab key="account" title="Cuenta">
           <Card className="my-4 p-4 w-70wv">

@@ -1,17 +1,22 @@
 import { getFile, saveAvatarImageToStorage, saveImageForUser } from "@/lib/api";
 import { Avatar, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
-import { SaveIcon } from "lucide-react";
+import { ImageUpIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 function PhotoCard() {
   const { data: session, status, update: sessionUpdate } = useSession();
+  const [touched, setTouched] = useState<boolean>(false);
   const [imageAvatarURL, setImageAvatarURL] = useState<string>(
     session?.user?.image!
   );
   const [imageAvatar, setImageAvatar] = useState<File>();
-  const { getRootProps, getInputProps } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    open: dragOpen,
+  } = useDropzone({
     accept: {
       "image/*": [],
     },
@@ -24,6 +29,10 @@ function PhotoCard() {
       setImageAvatarURL(files[0].preview);
       setImageAvatar(files[0]);
     },
+  });
+
+  useEffect(() => {
+    if (imageAvatar) setTouched(true);
   });
 
   const handleSubmit = async () => {
@@ -43,25 +52,41 @@ function PhotoCard() {
           image: imageUrl,
         },
       });
+      setTouched(false);
+      setImageAvatar(undefined);
     }
   };
   return (
     <Card className="my-4 p-4">
       <CardHeader className="pb-0 py-2 p-4 flex-col items-start">
         <h4 className="font-bold text-large">Mi Foto:</h4>
-        <small className="text-default-500">{`ID:${session?.user?.id}`}</small>
-        <Button
-          color={"secondary"}
-          isIconOnly
-          type="submit"
-          className="text-center  absolute right-[5%] w-[10%] top-[5%] h-14"
-          endContent={<SaveIcon className="w-8 h-8" />}
-          onClick={handleSubmit}
-        ></Button>
+        <small className="text-default-500">
+          {session?.user.name
+            ? `Nombre:${session?.user?.name}`
+            : `ID:${session?.user?.id}`}
+        </small>
+        <div className="text-center  absolute right-[10%] md:right-[5%] w-[10%] top-[5%]">
+          <Button
+            color={touched ? "success" : "secondary"}
+            isIconOnly
+            type="submit"
+            className=" h-12 w-12"
+            endContent={<ImageUpIcon className="w-8 h-8" />}
+            onClick={handleSubmit}
+          ></Button>
+          {touched && (
+            <small className="hidden lg:block text-default-500">
+              No olvides guardar
+            </small>
+          )}
+        </div>
       </CardHeader>
       <CardBody className="pb-0 pt-2 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 align-middle justify-around content-center">
         <div className="grid justify-center h-36px">
           <Avatar
+            onClick={() => {
+              dragOpen();
+            }}
             isBordered
             as="button"
             className="transition-all w-32 h-32 text-large"
