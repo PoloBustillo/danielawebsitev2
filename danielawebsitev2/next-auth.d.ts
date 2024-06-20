@@ -9,6 +9,10 @@ declare module "next-auth" {
       fechaNacimiento?: string | undefined;
       celular?: string | undefined;
       role?: string | undefined;
+      ocupacion?: string | undefined;
+      sexo?: string | undefined;
+      religion?: string | undefined;
+      escolaridad?: string | undefined;
     } & DefaultSession["user"];
   }
   interface User {
@@ -17,6 +21,10 @@ declare module "next-auth" {
     fechaNacimiento?: string | undefined;
     celular?: string | undefined;
     role?: string | undefined;
+    ocupacion?: string | undefined;
+    sexo?: string | undefined;
+    religion?: string | undefined;
+    escolaridad?: string | undefined;
     emailVerified?: string | undefined;
   }
 }

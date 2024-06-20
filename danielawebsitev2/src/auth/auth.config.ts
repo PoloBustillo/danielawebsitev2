@@ -11,8 +11,11 @@ export const authConfig = {
   },
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
+      console.log("session", session);
+      console.log("trigger", trigger);
       if (trigger === "update") {
         if (session) {
+          console.log("session", session);
           token.user = session.user;
         }
       }
@@ -26,6 +29,10 @@ export const authConfig = {
       session.user.apellidoMaterno = (token.user as User).apellidoMaterno;
       session.user.apellidoPaterno = (token.user as User).apellidoPaterno;
       session.user.fechaNacimiento = (token.user as User).fechaNacimiento;
+      session.user.escolaridad = (token.user as User).escolaridad;
+      session.user.religion = (token.user as User).religion;
+      session.user.sexo = (token.user as User).sexo;
+      session.user.ocupacion = (token.user as User).ocupacion;
       session.user.celular = (token.user as User).celular;
       session.user.name = (token.user as User).name;
       session.user.image = (token.user as User).image;
