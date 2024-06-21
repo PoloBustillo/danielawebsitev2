@@ -36,7 +36,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -53,7 +53,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -70,7 +70,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -107,7 +107,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -124,7 +124,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -141,7 +141,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -179,7 +179,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -196,7 +196,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -213,7 +213,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -230,7 +230,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -267,7 +267,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -284,7 +284,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -301,7 +301,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />
@@ -318,7 +318,7 @@ const Procesos = () => {
                 >
                   <path
                     stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
                   />

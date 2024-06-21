@@ -61,7 +61,7 @@ export const DesktopMenu = ({
             router.push("/servicios");
           }}
         >
-          Servicios
+          Empresarial
         </Button>
       </NavbarItem>
       <Dropdown
