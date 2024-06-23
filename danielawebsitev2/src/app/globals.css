@@ -8,6 +8,21 @@
   }
 }
 
+.sk-google-review-button-more {
+
+  display: flex;
+  justify-content: center;
+}
+
+.sk_branding {
+  visibility: hidden !important;
+}
+
+.sk-arrow.sk-arrow-left {
+  position: absolute !important;
+  left: 60% !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

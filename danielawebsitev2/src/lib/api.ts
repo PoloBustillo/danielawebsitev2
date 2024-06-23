@@ -1,4 +1,12 @@
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { cache } from "react";
@@ -84,6 +92,7 @@ export const getTerapias: () => Promise<TerapiasResponseType | {}> = cache(
           id: terapia.id,
           name: data.name,
           type: data.type,
+          duration: data.duration,
           costos: data.costos,
           imageDescription: data.imageDescription,
           longDescription: data.longDescription,
@@ -195,16 +204,31 @@ export const getWebData: () => Promise<WebDataType> = cache(async () => {
 export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
   async (id: string) => {
     try {
-      const docRef = doc(db, "terapias", id);
-      const docSnap = await getDoc(docRef);
+      let terapiasCollection = collection(db, "terapias");
+      const queryTerapia = query(
+        terapiasCollection,
+        where("name", "==", decodeURIComponent(id))
+      );
+      const docSnap = await getDocs(queryTerapia);
 
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        const image = await getDownloadURL(ref(storage, data?.image));
-        return { ...data, image };
-      } else {
-        return {};
-      }
+      let terapia = {};
+      docSnap.forEach(async (docData) => {
+        terapia = docData.data();
+
+        terapia = { ...terapia };
+      });
+      let imageUrl = await getFile((terapia as TerapiaType).imageDescription!);
+      console.log(imageUrl);
+      terapia = { ...terapia, imageDescription: imageUrl };
+      console.log(terapia);
+      return terapia;
+      // if (docSnap.exists()) {
+      //   const data = docSnap.data();
+      //   const image = await getDownloadURL(ref(storage, data?.image));
+      //   return { ...data, image };
+      // } else {
+      //   return {};
+      // }
     } catch (error) {
       return {};
     }

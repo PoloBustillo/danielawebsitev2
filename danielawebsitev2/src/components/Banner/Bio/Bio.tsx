@@ -21,13 +21,13 @@ const Bio = async () => {
               relative inline-flex items-center justify-center 
               h-[30-vh] text-gray-900 animate-morphdiv"
           >
-            <div className="p-2">
+            <div className="p-8">
               <Avatar
                 radius="full"
                 color="secondary"
                 src={bioData.image}
                 title="Psicologa Daniela Diaz"
-                className="w-[70vw] h-[70vw] md:w-[40vh] md:h-[40vh] text-large "
+                className="w-[40vw] h-[40vw] sm:w-[30vh] sm:h-[30vh] text-large "
               />
             </div>
           </div>

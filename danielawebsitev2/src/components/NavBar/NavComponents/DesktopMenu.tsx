@@ -48,20 +48,20 @@ export const DesktopMenu = ({
   return (
     <>
       <NavbarItem
-        isActive={path == "/servicios"}
-        className="hidden sm:flex data-[active=true]:font-extrabold"
+        isActive={path == "/blogs"}
+        className=" data-[active=true]:font-extrabold"
       >
         <Button
           role="button"
-          aria-label="Procesos"
+          aria-label="Reserva tu cita"
           color={"primary"}
-          variant={path.includes("servicios") ? "solid" : "ghost"}
+          variant={path.includes("cita") ? "solid" : "ghost"}
           className="capitalize font-extrabold"
           onClick={() => {
-            router.push("/servicios");
+            router.push("/cita");
           }}
         >
-          Empresarial
+          Reserva tu cita
         </Button>
       </NavbarItem>
       <Dropdown
@@ -154,20 +154,20 @@ export const DesktopMenu = ({
         </Button>
       </NavbarItem>
       <NavbarItem
-        isActive={path == "/blogs"}
-        className=" data-[active=true]:font-extrabold"
+        isActive={path == "/servicios"}
+        className="hidden sm:flex data-[active=true]:font-extrabold"
       >
         <Button
           role="button"
-          aria-label="Reserva tu cita"
+          aria-label="Procesos"
           color={"primary"}
-          variant={path.includes("cita") ? "solid" : "ghost"}
+          variant={path.includes("servicios") ? "solid" : "ghost"}
           className="capitalize font-extrabold"
           onClick={() => {
-            router.push("/cita");
+            router.push("/servicios");
           }}
         >
-          Reserva tu cita
+          Empresarial
         </Button>
       </NavbarItem>
     </>

@@ -50,7 +50,7 @@ const config = {
         "enter-right": "enter-right 3s ease-in-out forwards",
         "fade-right": "fade-right 3s ease-in-out forwards",
         "enter-line": "fade-in 3s ease-in-out forwards",
-        morphdiv: "blob 12s linear infinite alternate",
+        morphdiv: "blob 40s linear infinite alternate",
         border: "border 4s ease infinite",
         hideMe: "hideMe 0s ease-in 5s forwards",
       },
@@ -72,12 +72,11 @@ const config = {
           "50%": { backgroundPosition: "100% 50%" },
         },
         blob: {
-          "0%": { "border-radius": "77% 47% 61% 49%" },
-          "20%": { "border-radius": "89% 46% 70% 30%" },
-          "40%": { "border-radius": " 56% 93% 56% 94%" },
-          "60%": { "border-radius": "68% 60% 94% 96%" },
-          "80%": { "border-radius": "34% 74% 59% 82%" },
-          "100%": { "border-radius": "77% 47% 61% 49%" },
+          "0%": { "border-radius": "90% 90% 90% 30%" },
+          "20%": { "border-radius": "30% 90% 90% 90%" },
+          "40%": { "border-radius": "90% 30% 90% 90%" },
+          "80%": { "border-radius": " 40% 40% 40% 40%" },
+          "100%": { "border-radius": "90% 90% 30% 80%" },
         },
         "fade-in": {
           "0%": {

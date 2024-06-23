@@ -57,18 +57,19 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
                 </CardHeader>
                 <Image
                   removeWrapper
+                  isZoomed
                   alt="Terapia familiar"
-                  className="z-0 w-full h-full object-cover"
+                  className="z-0 m-auto h-[70%] w-full object-scale-down"
                   src={terapia.imageBanner}
                 />
 
-                <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+                <CardFooter className="absolute mix-blend-plus-darker bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                   <div className="flex flex-grow gap-2 items-center">
-                    <div className="flex flex-col">
-                      <p className="text-tiny text-white">
+                    <div className="flex flex-col ">
+                      <p className="text-tiny hover:text-medium text-white mb-4">
                         {terapia.description}
                       </p>
-                      <div className="flex items-center justify-between">
+                      {/* <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <button
                             type="button"
@@ -123,22 +124,29 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
                             <path d="M424,496H388.75L256.008,381.19,123.467,496H88V16H424ZM120,48V456.667l135.992-117.8L392,456.5V48Z"></path>
                           </svg>
                         </button>
+                      </div> */}
+                      <div>
+                        {terapia.costos.map((costo, index) => {
+                          return (
+                            <div
+                              key={costo + index.toString()}
+                              className="flex gap-1"
+                            >
+                              <p className="capitalize text-white text-small">
+                                {costo.type}
+                              </p>
+                              <p className="capitalize font-semibold text-white text-md">
+                                {`$${costo.values}`}
+                              </p>
+                            </div>
+                          );
+                        })}
+                        <div>
+                          <p className="capitalize text-white text-small">
+                            Duración: {`${terapia.duration} min.`}
+                          </p>
+                        </div>
                       </div>
-                      {terapia.costos.map((costo, index) => {
-                        return (
-                          <div
-                            key={costo + index.toString()}
-                            className="flex gap-1"
-                          >
-                            <p className="capitalize text-white text-small">
-                              {costo.type}
-                            </p>
-                            <p className="capitalize font-semibold text-white text-small">
-                              {costo.values}
-                            </p>
-                          </div>
-                        );
-                      })}
                     </div>
                   </div>
                 </CardFooter>
