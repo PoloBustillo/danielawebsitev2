@@ -4,7 +4,7 @@ import React from "react";
 import { WhatsappShareButton, FacebookShareButton } from "react-share";
 
 const Buttons = ({ pageUrl }: { pageUrl: string }) => {
-  const shareUrl = `${process.env.VERCEL_URL}/tratamiento/${pageUrl}`;
+  const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/terapia/${pageUrl}`;
   return (
     <div className="flex flex-wrap py-6 gap-2 border-t border-dashed dark:border-gray-400">
       <a
