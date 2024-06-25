@@ -16,11 +16,11 @@ const Buttons = ({ pageUrl }: { pageUrl: string }) => {
       <a
         rel="noopener noreferrer"
         href="/cita"
-        className="px-2 cursor-pointer py-2 flex rounded-sm hover:underline bg-rose-400 text-gray-900"
+        className="px-2 cursor-pointer py-2 flex rounded-sm hover:underline bg-transparent hover:bg-rose-300 hover:text-black text-white"
       >
         <CalendarCheck2 />
       </a>
-      <p className="px-2 flex justify-center rounded-sm hover:underline bg-rose-400 text-gray-900">
+      <p className="px-2 flex justify-center rounded-sm hover:underline bg-transparent hover:bg-rose-300 hover:text-black text-white hover:text-black">
         <WhatsappShareButton title="Mejor Psicologo de Puebla" url={shareUrl}>
           <span className="sr-only"> Whatsapp </span>
           <svg
@@ -30,7 +30,7 @@ const Buttons = ({ pageUrl }: { pageUrl: string }) => {
             height="24"
             viewBox="0 0 24 24"
             strokeWidth="2"
-            stroke={"black"}
+            stroke={"currentColor"}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -41,12 +41,12 @@ const Buttons = ({ pageUrl }: { pageUrl: string }) => {
           </svg>
         </WhatsappShareButton>
       </p>
-      <p className="flex px-2 py-2 rounded-sm hover:underline bg-rose-400 text-gray-900">
+      <p className="flex px-2 py-2 rounded-sm hover:underline hover:bg-rose-300 hover:text-black text-white">
         <FacebookShareButton hashtag="Psicologo Puebla" url={shareUrl}>
           <Facebook></Facebook>
         </FacebookShareButton>
       </p>
-      <p className="flex px-2 py-2 rounded-sm hover:underline bg-rose-400 text-gray-900">
+      <p className="flex px-2 py-2 rounded-sm hover:underline hover:bg-rose-300 hover:text-black text-white">
         <EmailShareButton
           subject="Te comparato información del mejor psicologo de puebla"
           body={`Info acerca de: ${pageUrl}`}
@@ -55,7 +55,7 @@ const Buttons = ({ pageUrl }: { pageUrl: string }) => {
           <Mail></Mail>
         </EmailShareButton>
       </p>
-      <p className="flex px-2 py-2 rounded-sm hover:underline bg-rose-400 text-gray-900">
+      <p className="flex px-2 py-2 rounded-sm hover:underline hover:bg-rose-300 hover:text-black text-white">
         <TelegramShareButton
           title="Te comparato información del mejor psicologo de puebla"
           url={shareUrl}
@@ -64,7 +64,7 @@ const Buttons = ({ pageUrl }: { pageUrl: string }) => {
             alt="telgram"
             width={25}
             height={25}
-            src={"/assets/icons/telegram2.png"}
+            src={"/assets/icons/telegramwhite.png"}
           ></Image>
         </TelegramShareButton>
       </p>
