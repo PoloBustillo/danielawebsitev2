@@ -32,7 +32,6 @@ const page = async () => {
     getTerapias(),
     getPageSkeleton(),
   ]);
-  console.log(pageData);
 
   let terapias = Object.keys(areasTerapias)
     .map((key) => areasTerapias[key])
@@ -57,11 +56,11 @@ const page = async () => {
               );
 
               break;
-            case "fqa":
+            case "contact":
               return <Contact></Contact>;
 
               break;
-            case "contact":
+            case "fqa":
               return <Faq></Faq>;
               break;
 

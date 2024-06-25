@@ -9,7 +9,7 @@ import remarkGfm from "remark-gfm";
 
 const page = async ({ params: { id } }: { params: { id: string } }) => {
   const terapia = (await getTerapia(id)) as TerapiaType;
-  console.log(terapia);
+
   return (
     <div className="max-w-3xl px-6 py-16 mx-auto space-y-12">
       <article className="space-y-8 ">

@@ -3,6 +3,7 @@ import { CarouselResponseType } from "@/lib/types";
 import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 interface BannerProps {
   data: CarouselResponseType;
 }
@@ -14,7 +15,9 @@ const BannerCarousel = ({ data }: BannerProps) => {
           <div className="flex flex-col px-6 py-8 space-y-6 rounded-sm sm:p-8 lg:p-12 lg:w-1/2 xl:w-2/5 dark:bg-rose-400 dark:text-gray-900">
             <h1 className="mb-6 text-4xl font-bold">{data.title}</h1>
             <div className="flex space-x-2 sm:space-x-4">
-              <Markdown rehypePlugins={[rehypeRaw]}>{data.content}</Markdown>
+              <Markdown rehypePlugins={[rehypeRaw, remarkGfm]}>
+                {data.content}
+              </Markdown>
             </div>
           </div>
           <div className="lg:w-1/2 xl:w-3/5 dark:bg-gray-800">

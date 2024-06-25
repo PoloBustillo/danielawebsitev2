@@ -165,7 +165,6 @@ const PreferencesCard = () => {
             <RadioGroup
               defaultValue={notificationType}
               onChange={(value) => {
-                console.log(value.target.value);
                 setNotificationType(value.target.value);
                 setDoc(
                   doc(db, "accounts", accountId as string),

@@ -238,9 +238,7 @@ export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
         terapia = { ...terapia };
       });
       let imageUrl = await getFile((terapia as TerapiaType).imageDescription!);
-      console.log(imageUrl);
       terapia = { ...terapia, imageDescription: imageUrl };
-      console.log(terapia);
       return terapia;
       // if (docSnap.exists()) {
       //   const data = docSnap.data();
