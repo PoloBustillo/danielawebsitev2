@@ -16,6 +16,7 @@ import {
   CarouselResponseType,
   InstitutionType,
   MensajesResponseType,
+  PageDataType,
   PreguntasResponseType,
   TerapiaType,
   TerapiasResponseType,
@@ -78,6 +79,25 @@ export const getMensajes: () => Promise<MensajesResponseType> = cache(
     return mensajes;
   }
 );
+
+export const getPageSkeleton: () => Promise<(PageDataType & { id: string })[]> =
+  cache(async () => {
+    const pageSkeleton = collection(db, "page-configs");
+    const pageSkeletonDocs = await getDocs(pageSkeleton);
+    let pageData = new Array<PageDataType & { id: string }>();
+    pageSkeletonDocs.forEach((doc) => {
+      const data = doc.data() as PageDataType;
+      const id = doc.id;
+      pageData.push({ enabled: data.enabled, priority: data.priority, id: id });
+    });
+    pageData = pageData.filter((data) => {
+      return data.enabled;
+    });
+    pageData.sort((data, data2) => {
+      return data2.priority - data.priority;
+    });
+    return pageData;
+  });
 
 export const getTerapias: () => Promise<TerapiasResponseType | {}> = cache(
   async () => {

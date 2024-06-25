@@ -34,7 +34,10 @@ export interface CarouselResponseType {
   content?: string;
   title?: string;
 }
-
+export interface PageDataType {
+  enabled: boolean;
+  priority: number;
+}
 export interface TerapiasResponseType {
   [key: string]: TerapiaType[];
 }

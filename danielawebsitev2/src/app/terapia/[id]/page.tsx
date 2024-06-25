@@ -1,9 +1,11 @@
 import Buttons from "@/components/Share/Buttons";
 import { getTerapia, getTerapias } from "@/lib/api";
 import { TerapiaType, TerapiasResponseType } from "@/lib/types";
-
+import rehypeRaw from "rehype-raw";
 import Image from "next/image";
 import React from "react";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const page = async ({ params: { id } }: { params: { id: string } }) => {
   const terapia = (await getTerapia(id)) as TerapiaType;
@@ -46,7 +48,9 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
               <Buttons pageUrl={id}></Buttons>
             </div>
             <div className="text-white text-justify">
-              <p>{terapia.longDescription}</p>
+              <Markdown rehypePlugins={[rehypeRaw, remarkGfm]}>
+                {terapia.longDescription}
+              </Markdown>
             </div>
           </div>
         </div>
