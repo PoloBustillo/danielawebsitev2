@@ -59,7 +59,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   return (
     <Navbar
       isBordered
-      shouldHideOnScroll
+      // shouldHideOnScroll
       isBlurred={true}
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}

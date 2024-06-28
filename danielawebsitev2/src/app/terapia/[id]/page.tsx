@@ -27,7 +27,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
             </p>
           </p>
         </div>
-        <div className="relative bottom-6">
+        <div className="relative bottom-3 sm:bottom-6">
           <div className="flex flex-row items-start justify-between w-full md:flex-row md:items-center dark:text-gray-400">
             <div className="flex items-center md:space-x-2">
               <Image
@@ -40,7 +40,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
               {/* <p className="text-sm">{`${terapia.name} • ${terapia.type}`}</p> */}
             </div>
             <p className="flex-shrink-0 mt-3 text-sm md:mt-0">
-              {`${terapia.duration} min  • $${terapia.costos[0].values} pesos`}
+              {`${terapia.duration} min  •`}
             </p>
           </div>
         </div>

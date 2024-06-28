@@ -56,7 +56,7 @@ const PreferencesCard = () => {
   }, []);
 
   return (
-    <Card className="my-4 p-4 w-70wv">
+    <Card className="my-4 p-4 w-[80vw] sm:w-full">
       <CardHeader className="pb-0 py-2 p-4 flex-col items-start">
         <h4 className="font-bold text-large">Preferencias:</h4>
         <small className="text-default-500">{`ACCOUNT ID:${accountId}`}</small>
@@ -160,7 +160,7 @@ const PreferencesCard = () => {
         </div>
 
         {notificationCheck && (
-          <div className="m-auto  mx-24">
+          <div className="m-auto  md:mx-24">
             <Spacer y={2} />
             <RadioGroup
               defaultValue={notificationType}
