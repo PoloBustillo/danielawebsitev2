@@ -3,7 +3,7 @@ import React from "react";
 const Blogs = () => {
   return (
     <div>
-      <section className="px-5 py-10 dark:bg-gray-800 dark:text-gray-100">
+      <section className="px-5 py-10 bg-background">
         <div className="container grid grid-cols-12 mx-auto gap-y-6 md:gap-10">
           <div className="flex flex-col justify-between col-span-12 py-2 space-y-8 md:space-y-16 md:col-span-3">
             <div className="flex flex-col space-y-8 md:space-y-12">
@@ -117,9 +117,17 @@ const Blogs = () => {
             }}
           >
             <span className="absolute px-1 pb-2 text-xs font-bold uppercase border-b-2 left-6 top-6 dark:border-rose-400 dark:text-gray-100">
-              paris, france
+              Puebla, Mexico
             </span>
-            <a className="flex flex-col items-center justify-end p-6 text-center sm:p-8 group dark:via-transparent flex-grow-1 bg-gradient-to-b dark:from-gray-900 dark:to-gray-900">
+            <a className="flex flex-col items-center justify-end p-6 text-center sm:p-8 group dark:via-transparent flex-grow-1 bg-gradient-to-b from-gray-900 to-gray-900">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/nUkgaWY3eiQ?autoplay=1&mute=1"
+                title="¿Por qué es importante ir al psicólogo?"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+              ></iframe>
               <span className="flex items-center mb-4 space-x-2 dark:text-rose-400">
                 <span className="relative flex-shrink-0 w-2 h-2 rounded-full dark:bg-rose-400">
                   <span className="absolute flex-shrink-0 w-3 h-3 rounded-full -left-1 -top-1 animate-ping dark:bg-rose-400"></span>
@@ -259,7 +267,7 @@ const Blogs = () => {
           </div>
         </div>
       </section>
-      <section className="py-6 sm:py-12 dark:bg-gray-800 dark:text-gray-100">
+      <section className="py-6 sm:py-12 bg-background">
         <div className="container p-6 mx-auto space-y-8">
           <div className="space-y-2 text-center">
             <h2 className="text-3xl font-bold">Partem reprimique an pro</h2>

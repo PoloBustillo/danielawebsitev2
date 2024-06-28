@@ -51,7 +51,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
             alt=""
             className="w-full h-60 sm:h-96 dark:bg-gray-500"
           />
-          <div className="p-6 pb-12 m-4 mx-auto -mt-16 space-y-6 lg:max-w-4xl sm:px-10 sm:mx-12 lg:rounded-md bg-[#0b3d64e8] dark:bg-[#1c1c1c]">
+          <div className="p-6 pb-12 w-full sm:w-auto m-4 mx-auto -mt-16 space-y-6 lg:max-w-4xl sm:px-10 sm:mx-12 lg:rounded-md bg-[#0b3d64e8] dark:bg-[#1c1c1c]">
             <div className="space-y-2">
               <blockquote className="relative text-center max-w-lg mx-auto pt-6">
                 <div className="relative z-10">
