@@ -116,11 +116,12 @@ const Blogs = () => {
                 "url('https://source.unsplash.com/random/239x319');",
             }}
           >
-            <span className="absolute px-1 pb-2 text-xs font-bold uppercase border-b-2 left-6 top-6 dark:border-rose-400 dark:text-gray-100">
+            <span className="absolute px-1 pb-2 text-xs font-bold uppercase border-b-2 left-6 top-6 border-white text-white dark:border-rose-400 dark:text-gray-100">
               Puebla, Mexico
             </span>
-            <a className="flex flex-col items-center justify-end p-6 text-center sm:p-8 group dark:via-transparent flex-grow-1 bg-gradient-to-b from-gray-900 to-gray-900">
+            <div className="flex mt-4 flex-col items-center justify-end p-6 text-center sm:p-8 group dark:via-transparent flex-grow-1 bg-gradient-to-b from-gray-900 to-gray-900">
               <iframe
+                className="mt-4"
                 width="100%"
                 height="100%"
                 src="https://www.youtube.com/embed/nUkgaWY3eiQ?autoplay=1&mute=1"
@@ -128,20 +129,19 @@ const Blogs = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
               ></iframe>
-              <span className="flex items-center mb-4 space-x-2 dark:text-rose-400">
-                <span className="relative flex-shrink-0 w-2 h-2 rounded-full dark:bg-rose-400">
-                  <span className="absolute flex-shrink-0 w-3 h-3 rounded-full -left-1 -top-1 animate-ping dark:bg-rose-400"></span>
+              <span className="flex items-center mb-4 space-x-2 text-yellow-100 dark:text-rose-400">
+                <span className="relative flex-shrink-0 w-2 h-2 rounded-full bg-yellow-50 dark:bg-rose-400">
+                  <span className="absolute flex-shrink-0 w-3 h-3 rounded-full -left-1 -top-1 animate-ping bg-white dark:bg-rose-400"></span>
                 </span>
                 <span className="text-sm font-bold">Live</span>
               </span>
               <h1
                 rel="noopener noreferrer"
-                className="font-serif text-2xl font-semibold group-hover:underline dark:text-gray-100"
+                className="font-serif text-2xl font-semibold group-hover:underline text-white dark:text-gray-100"
               >
-                Morbi mattis justo est, ac consectetur dui eleifend vitae. Donec
-                venenatis?
+                Lorem ipsum klasldalsdlasdmn asdkasdk
               </h1>
-            </a>
+            </div>
           </div>
           <div className="hidden py-2 xl:col-span-3 lg:col-span-4 md:hidden lg:block">
             <div className="mb-8 space-x-5 border-b-2 border-opacity-10 dark:border-rose-400">

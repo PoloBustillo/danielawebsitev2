@@ -75,7 +75,8 @@ const UserAvatar = () => {
           <Button
             role="button"
             onPress={() => {
-              signOut();
+              signOut({ callbackUrl: "/" });
+              route.push("/");
             }}
             className="w-full bg-danger-400 border-none text-white justify-center flex"
           >
