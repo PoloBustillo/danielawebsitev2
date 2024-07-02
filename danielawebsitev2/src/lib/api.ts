@@ -13,6 +13,8 @@ import { cache } from "react";
 import { db, storage } from "./firebase-config";
 import {
   BannerResponse,
+  BlogArticleType,
+  BlogDataType,
   CarouselResponseType,
   InstitutionType,
   MensajesResponseType,
@@ -221,6 +223,56 @@ export const getWebData: () => Promise<WebDataType> = cache(async () => {
   }
 });
 
+export const getBlogsData: () => Promise<BlogDataType | {}> = cache(
+  async () => {
+    try {
+      const docRef = doc(db, "blogs", "blog");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+
+        return data;
+      } else {
+        return {};
+      }
+    } catch (error) {
+      return {};
+    }
+  }
+);
+
+export const getBlogs: () => Promise<BlogArticleType[] | []> = cache(
+  async () => {
+    try {
+      let blogsCollection = collection(db, "blog");
+      const queryblogs = query(
+        blogsCollection,
+        where("status", "==", "published")
+      );
+      const docSnap = await getDocs(queryblogs);
+
+      let blogs = [] as any;
+      docSnap.forEach(async (docData) => {
+        let blog = docData.data();
+        blogs.push(blog);
+      });
+      blogs = await Promise.all(
+        blogs.map(async (blog: BlogArticleType) => {
+          return {
+            ...blog,
+            header_image: await getFile(blog.header_image!),
+            card_image: await getFile(blog.card_image!),
+          };
+        })
+      );
+      return blogs;
+    } catch (error) {
+      return [];
+    }
+  }
+);
+
 export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
   async (id: string) => {
     try {
@@ -240,13 +292,6 @@ export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
       let imageUrl = await getFile((terapia as TerapiaType).imageDescription!);
       terapia = { ...terapia, imageDescription: imageUrl };
       return terapia;
-      // if (docSnap.exists()) {
-      //   const data = docSnap.data();
-      //   const image = await getDownloadURL(ref(storage, data?.image));
-      //   return { ...data, image };
-      // } else {
-      //   return {};
-      // }
     } catch (error) {
       return {};
     }

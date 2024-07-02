@@ -1,13 +1,6 @@
 "use client";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Tab,
-  Tabs,
-} from "@nextui-org/react";
-import { SaveIcon } from "lucide-react";
+import { Tab, Tabs } from "@nextui-org/react";
+
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";

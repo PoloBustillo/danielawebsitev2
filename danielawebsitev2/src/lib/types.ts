@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface MensajeType {
   message: string;
   enable?: boolean;
@@ -28,6 +30,18 @@ export interface TerapiaType {
   longDescription: string;
   description: string;
   id: string;
+}
+
+export interface BlogArticleType {
+  header_image?: string;
+  created_on?: Timestamp;
+  views?: number;
+  card_image?: string;
+  tags?: [string];
+  name?: string;
+}
+export interface BlogDataType {
+  video: { url?: string; msg?: string };
 }
 export interface CarouselResponseType {
   image?: string;
