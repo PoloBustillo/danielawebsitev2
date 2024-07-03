@@ -132,7 +132,7 @@ const Blogs = () => {
               return (
                 <article className="flex flex-col dark:bg-gray-900">
                   <a
-                    rel="noopener noreferrer"
+                    className="cursor-pointer"
                     onClick={() => router.push(`/blogs/${data.name}`)}
                   >
                     <img
@@ -142,18 +142,20 @@ const Blogs = () => {
                     />
                   </a>
                   <div className="flex flex-col flex-1 p-6">
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
-                      aria-label="Te nulla oportere reprimique his dolorum"
-                    ></a>
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
-                      className="text-xs tracki uppercase hover:underline dark:text-violet-400"
-                    >
-                      {data.tags![0] ? data.tags![0] : "Psicología"}
-                    </a>
+                    <div className=" ">
+                      {data.tags?.map((tag) => {
+                        return (
+                          <a
+                            rel="noopener noreferrer"
+                            href="#"
+                            className=" text-xs tracki uppercase hover:underline dark:text-violet-400"
+                          >
+                            {` #${tag} • `}
+                          </a>
+                        );
+                      })}
+                    </div>
+
                     <h3
                       onClick={() => router.push(`/blogs/${data.name}`)}
                       className="cursor-pointer flex-1 py-2 text-lg font-semibold leadi"
