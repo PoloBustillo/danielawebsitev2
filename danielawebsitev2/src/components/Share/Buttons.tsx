@@ -9,17 +9,26 @@ import {
   TelegramShareButton,
 } from "react-share";
 
-const Buttons = ({ pageUrl }: { pageUrl: string }) => {
+const Buttons = ({
+  pageUrl,
+  enableCita = true,
+}: {
+  pageUrl: string;
+  enableCita?: boolean;
+}) => {
   const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/terapia/${pageUrl}`;
   return (
     <div className="flex justify-end flex-wrap py-6 gap-2 border-t border-dashed dark:border-gray-400">
-      <a
-        rel="noopener noreferrer"
-        href="/cita"
-        className="px-2 cursor-pointer py-2 flex rounded-sm hover:underline bg-transparent hover:bg-rose-300 hover:text-black text-white"
-      >
-        <CalendarCheck2 />
-      </a>
+      {enableCita && (
+        <a
+          rel="noopener noreferrer"
+          href="/cita"
+          className="px-2 cursor-pointer py-2 flex rounded-sm hover:underline bg-transparent hover:bg-rose-300 hover:text-black text-white"
+        >
+          <CalendarCheck2 />
+        </a>
+      )}
+
       <p className="px-2 flex justify-center rounded-sm hover:underline bg-transparent hover:bg-rose-300 hover:text-black text-white hover:text-black">
         <WhatsappShareButton title="Mejor Psicologo de Puebla" url={shareUrl}>
           <span className="sr-only"> Whatsapp </span>

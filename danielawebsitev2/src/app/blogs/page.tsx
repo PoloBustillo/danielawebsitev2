@@ -2,10 +2,12 @@
 import { getBlogs, getBlogsData } from "@/lib/api";
 import { BlogArticleType, BlogDataType } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Blogs = () => {
   const [selected, setSelected] = useState<string>("ultimos");
+  const router = useRouter();
   const [blogs, setBlogs] = useState<BlogDataType>({
     video: { url: "", msg: "" },
   });
@@ -19,8 +21,6 @@ const Blogs = () => {
       setBlogsData(blogs);
     })();
   }, []);
-
-  console.log("BLOGS", blogsData);
 
   return (
     <div>
@@ -85,16 +85,18 @@ const Blogs = () => {
               {blogsData.map((blog, index) => {
                 return (
                   <div className="flex px-1 py-4">
-                    <img
-                      alt=""
-                      className="flex-shrink-0 object-cover w-20 h-20 mr-4 dark:bg-gray-500"
-                      src={blog.card_image}
-                    />
+                    <a onClick={() => router.push(`/blogs/${blog.name}`)}>
+                      <img
+                        alt=""
+                        className="cursor-pointer flex-shrink-0 object-cover w-20 h-20 mr-4 dark:bg-gray-500"
+                        src={blog.card_image}
+                      />
+                    </a>
                     <div className="flex flex-col flex-grow">
                       <a
                         rel="noopener noreferrer"
-                        href="#"
-                        className="font-serif hover:underline"
+                        onClick={() => router.push(`/blogs/${blog.name}`)}
+                        className="cursor-pointer font-serif hover:underline"
                       >
                         {blog.name}
                       </a>
@@ -131,8 +133,7 @@ const Blogs = () => {
                 <article className="flex flex-col dark:bg-gray-900">
                   <a
                     rel="noopener noreferrer"
-                    href="#"
-                    aria-label="Te nulla oportere reprimique his dolorum"
+                    onClick={() => router.push(`/blogs/${data.name}`)}
                   >
                     <img
                       alt=""
@@ -153,7 +154,10 @@ const Blogs = () => {
                     >
                       {data.tags![0] ? data.tags![0] : "Psicología"}
                     </a>
-                    <h3 className="flex-1 py-2 text-lg font-semibold leadi">
+                    <h3
+                      onClick={() => router.push(`/blogs/${data.name}`)}
+                      className="cursor-pointer flex-1 py-2 text-lg font-semibold leadi"
+                    >
                       {data.name}
                     </h3>
                     <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">

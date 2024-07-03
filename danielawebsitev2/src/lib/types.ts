@@ -34,8 +34,11 @@ export interface TerapiaType {
 
 export interface BlogArticleType {
   header_image?: string;
+  id: string;
+  autor: string;
   created_on?: Timestamp;
   views?: number;
+  resumen: string;
   card_image?: string;
   tags?: [string];
   name?: string;
