@@ -11,7 +11,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
   const terapia = (await getTerapia(id)) as TerapiaType;
 
   return (
-    <div className="max-w-4xl px-6 py-16 mx-auto space-y-12">
+    <div className="max-w-4xl px-6 pt-16 -mb-6 mx-auto space-y-12">
       <article>
         <div className="w-full mx-auto space-y-4 text-center">
           <p className="text-xs font-semibold tracking-wider uppercase">
@@ -22,7 +22,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
           </h1>
           <p className="text-sm dark:text-gray-600">
             by
-            <p className="flex justify-center underline dark:text-violet-600">
+            <p className="flex justify-center underline dark:text-white">
               <span itemProp="name">Psic. Daniela Diaz</span>
             </p>
           </p>
@@ -51,7 +51,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
             alt=""
             className="w-full h-60 sm:h-96 dark:bg-gray-500"
           />
-          <div className="p-6 pb-12 w-full sm:w-auto m-4 mx-auto -mt-16 space-y-6 lg:max-w-4xl sm:px-10 sm:mx-12 lg:rounded-md bg-[#0b3d64e8] dark:bg-[#1c1c1c]">
+          <div className="p-6 pb-12 w-full sm:w-auto m-4 mx-auto -mt-16 space-y-6 lg:max-w-4xl sm:px-10 sm:mx-12 lg:rounded-md bg-[#0b3d64e8] dark:bg-[#111827]">
             <div className="space-y-2">
               <blockquote className="relative text-center max-w-lg mx-auto pt-6">
                 <div className="relative z-10">

@@ -42,6 +42,7 @@ export interface BlogArticleType {
   card_image?: string;
   tags?: [string];
   name?: string;
+  content?: [any];
 }
 export interface BlogDataType {
   video: { url?: string; msg?: string };
