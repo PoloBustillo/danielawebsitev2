@@ -301,9 +301,9 @@ export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
 export const getBlog: (id: string) => Promise<TerapiaType | {}> = cache(
   async (id: string) => {
     try {
-      let terapiasCollection = collection(db, "blog");
+      let blogCollection = collection(db, "blog");
       const queryTerapia = query(
-        terapiasCollection,
+        blogCollection,
         where("name", "==", decodeURIComponent(id))
       );
       const docSnap = await getDocs(queryTerapia);
@@ -312,7 +312,7 @@ export const getBlog: (id: string) => Promise<TerapiaType | {}> = cache(
       docSnap.forEach(async (docData) => {
         blogData = docData.data();
 
-        blogData = { ...blogData };
+        blogData = { ...blogData, id: docData.id };
       });
       let imageHeader = await getFile(
         (blogData as BlogArticleType).header_image!
