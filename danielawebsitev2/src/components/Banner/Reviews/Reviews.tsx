@@ -16,7 +16,6 @@ const Reviews = () => {
     <Card
       isBlurred
       className="border-none m-auto md:bg-[#37354b] bg-[#37354b] dark:bg-default-100/50 min-w-[20vw] max-w-[90vw] md:max-w-[380px] md:max-h-[650px] max-h-[380px] md:m-0 pt-5 "
-      //className="bg-[#37354b] dark:bg-default-100/50 w-[100wv] m-4 p-10 pt-3 "
     >
       <CardBody className="overflow-hidden">
         <div>

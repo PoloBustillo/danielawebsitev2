@@ -1,7 +1,5 @@
 "use client";
 import { Tab, Tabs } from "@nextui-org/react";
-
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -9,7 +7,6 @@ import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import PreferencesCard from "@/components/PreferencesCard/PreferencesCard";
 
 const page = () => {
-  const { data: session, status, update: sessionUpdate } = useSession();
   const xs = useMediaQuery({ query: "(max-width: 640px)" });
   const [selected, setSelected] = useState("settings");
 

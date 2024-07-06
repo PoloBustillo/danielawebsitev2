@@ -1,4 +1,3 @@
-"use client";
 import { CarouselResponseType } from "@/lib/types";
 import React from "react";
 import Markdown from "react-markdown";

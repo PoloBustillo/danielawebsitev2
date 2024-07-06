@@ -138,7 +138,7 @@ export const DesktopMenu = ({
       </Dropdown>
       <NavbarItem
         isActive={path == "/blogs"}
-        className=" data-[active=true]:font-extrabold hidden lg:flex"
+        className="hidden sm:flex data-[active=true]:font-extrabold"
       >
         <Button
           role="button"
@@ -155,7 +155,7 @@ export const DesktopMenu = ({
       </NavbarItem>
       <NavbarItem
         isActive={path == "/servicios"}
-        className="hidden sm:flex data-[active=true]:font-extrabold"
+        className="data-[active=true]:font-extrabold hidden lg:flex"
       >
         <Button
           role="button"

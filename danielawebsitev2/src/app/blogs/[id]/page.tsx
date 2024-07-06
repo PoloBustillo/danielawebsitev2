@@ -169,7 +169,7 @@ const page = async ({ params }: { params: any }) => {
           </div>
         </div>
       </div>
-      <Comments></Comments>
+      <Comments blogId={blogData.id}></Comments>
     </article>
   );
 };

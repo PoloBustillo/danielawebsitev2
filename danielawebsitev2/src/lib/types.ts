@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { DocumentReference, Timestamp } from "firebase/firestore";
 
 export interface MensajeType {
   message: string;
@@ -35,6 +35,7 @@ export interface TerapiaType {
 export interface BlogArticleType {
   header_image?: string;
   id: string;
+  ref: DocumentReference;
   autor: string;
   created_on?: Timestamp;
   views?: number;
@@ -51,6 +52,30 @@ export interface CarouselResponseType {
   image?: string;
   content?: string;
   title?: string;
+}
+
+export interface CommentType {
+  blogId: DocumentReference;
+  userId: DocumentReference;
+  id: string;
+  commentText: string;
+  status: string;
+  replies: [DocumentReference] | [];
+  created_on: any;
+  likes: number;
+  dislikes: number;
+  reports: number;
+}
+export interface CommentTypeExtended {
+  id: string;
+  username: string;
+  userAvatar: string;
+  commentText: string;
+  status: string;
+  created_on: any;
+  likes: number;
+  dislikes: number;
+  reports: number;
 }
 export interface PageDataType {
   enabled: boolean;

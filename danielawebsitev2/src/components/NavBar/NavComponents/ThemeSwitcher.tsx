@@ -17,31 +17,20 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   return (
-    <>
-      {/* {theme == "dark" ? (
-        <button onClick={() => setTheme("light")}>
-          <SunIcon />{" "}
-        </button>
-      ) : (
-        <button onClick={() => setTheme("dark")}>
-          <MoonIcon />
-        </button>
-      )} */}
-      <Switch
-        defaultSelected={theme == "light"}
-        size="lg"
-        color="primary"
-        startContent={<SunIcon />}
-        endContent={<MoonIcon />}
-        onChange={(evt) => {
-          const result = evt.target as HTMLInputElement;
-          if (result.checked == false) {
-            setTheme("dark");
-          } else {
-            setTheme("light");
-          }
-        }}
-      ></Switch>
-    </>
+    <Switch
+      defaultSelected={theme == "light"}
+      size="lg"
+      color="primary"
+      startContent={<SunIcon />}
+      endContent={<MoonIcon />}
+      onChange={(evt: any) => {
+        const result = evt.target as HTMLInputElement;
+        if (result.checked == false) {
+          setTheme("dark");
+        } else {
+          setTheme("light");
+        }
+      }}
+    ></Switch>
   );
 }

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Blogs = () => {
+  //TODO: move selected to component to make server page
+  //TODO: missing filter for selected
   const [selected, setSelected] = useState<string>("ultimos");
   const router = useRouter();
   const [blogs, setBlogs] = useState<BlogDataType>({
