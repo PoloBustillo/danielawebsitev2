@@ -67,10 +67,18 @@ const Comments = ({ blogId }: { blogId: string }) => {
           likes: commentData.likes.filter((id) => id !== session?.user.id),
         });
       } else {
-        setLikes({
-          ...likes,
-          [commentId]: [...likes[commentId], session?.user?.id!],
-        });
+        if (likes[commentId] === undefined) {
+          setLikes({
+            ...likes,
+            [commentId]: [session?.user?.id!],
+          });
+        } else {
+          setLikes({
+            ...likes,
+            [commentId]: [...likes[commentId], session?.user?.id!],
+          });
+        }
+
         await updateDoc(docRef, {
           likes: [...commentData.likes, session?.user.id],
         });
@@ -145,12 +153,19 @@ const Comments = ({ blogId }: { blogId: string }) => {
   };
 
   const showReply = (commentId: string) => {
-    setReplyData({
-      placeholder: `Respuesta a @${
-        comments.find((c) => c.id === commentId)?.username
-      }: `,
-      commentId: commentId,
-    });
+    if (replyData.commentId !== commentId) {
+      setReplyData({
+        placeholder: `Respuesta a @${
+          comments.find((c) => c.id === commentId)?.username
+        }: `,
+        commentId: commentId,
+      });
+    } else {
+      setReplyData({
+        placeholder: "",
+        commentId: "",
+      });
+    }
   };
   return (
     <section className="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
@@ -237,8 +252,10 @@ const Comments = ({ blogId }: { blogId: string }) => {
             );
           })
           .map((comment: CommentTypeExtended) => {
-            const likesCount = likes[comment.id].length;
-            const liked = likes[comment.id].includes(session?.user?.id!);
+            const likesCount = likes[comment.id] ? likes[comment.id].length : 0;
+            const liked = likes[comment.id]
+              ? likes[comment.id].includes(session?.user?.id!)
+              : false;
             return (
               <div
                 key={comment.id}
