@@ -62,9 +62,7 @@ export interface CommentType {
   status: string;
   replies: [DocumentReference] | [];
   created_on: any;
-  likes: number;
-  dislikes: number;
-  reports: number;
+  likes: string[];
 }
 export interface CommentTypeExtended {
   id: string;
@@ -73,9 +71,7 @@ export interface CommentTypeExtended {
   commentText: string;
   status: string;
   created_on: any;
-  likes: number;
-  dislikes: number;
-  reports: number;
+  likes: string[];
 }
 export interface PageDataType {
   enabled: boolean;

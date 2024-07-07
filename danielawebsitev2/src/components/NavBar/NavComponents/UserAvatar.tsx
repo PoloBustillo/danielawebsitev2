@@ -74,9 +74,8 @@ const UserAvatar = () => {
         <DropdownItem key="logout">
           <Button
             role="button"
-            onPress={() => {
-              signOut({ callbackUrl: "/" });
-              route.push("/");
+            onPress={async () => {
+              await signOut({ callbackUrl: "/" });
             }}
             className="w-full bg-danger-400 border-none text-white justify-center flex"
           >
