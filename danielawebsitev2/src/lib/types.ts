@@ -63,6 +63,7 @@ export interface CommentType {
   replies: [DocumentReference] | [];
   created_on: any;
   likes: string[];
+  isReply: boolean;
 }
 export interface CommentTypeExtended {
   id: string;
@@ -71,7 +72,9 @@ export interface CommentTypeExtended {
   commentText: string;
   status: string;
   created_on: any;
+  replies: string[];
   likes: string[];
+  isReply: boolean;
 }
 export interface PageDataType {
   enabled: boolean;
