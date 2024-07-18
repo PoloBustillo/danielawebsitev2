@@ -45,6 +45,17 @@ export interface BlogArticleType {
   name?: string;
   content?: [any];
 }
+
+export interface TareasType {
+  name?: string;
+  id: string;
+  users: DocumentReference[];
+  fechaInicio: Timestamp;
+  fechaEntrega: Timestamp | null;
+  type?: any[];
+  status: "inicio|enProgreso|completado";
+  actions: string[];
+}
 export interface BlogDataType {
   video: { url?: string; msg?: string };
 }

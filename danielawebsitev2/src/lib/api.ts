@@ -20,6 +20,7 @@ import {
   MensajesResponseType,
   PageDataType,
   PreguntasResponseType,
+  TareasType,
   TerapiaType,
   TerapiasResponseType,
   WebDataType,
@@ -273,6 +274,29 @@ export const getBlogs: () => Promise<BlogArticleType[] | []> = cache(
   }
 );
 
+export const getTareas: (userId: string) => Promise<TareasType[]> = cache(
+  async (userId) => {
+    try {
+      let terapiasCollection = collection(db, "tareas");
+      let userRef = doc(db, "users", userId);
+
+      const queryTareas = query(
+        terapiasCollection,
+        where("users", "array-contains", userRef)
+      );
+      const docSnap = await getDocs(queryTareas);
+
+      let tareas = [] as any;
+      docSnap.forEach(async (docData) => {
+        let blog = docData.data();
+        tareas.push({ ...blog, id: docData.id });
+      });
+      return tareas;
+    } catch (error) {
+      return [];
+    }
+  }
+);
 export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
   async (id: string) => {
     try {

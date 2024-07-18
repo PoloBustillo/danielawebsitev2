@@ -48,7 +48,7 @@ const UserAvatar = () => {
           startContent={<Task fill="currentColor" size={30}></Task>}
           key="system"
           onPress={() => {
-            route.push(`/protected/tareas/${session?.user?.id}`);
+            route.push(`/protected/tareas`);
           }}
         >
           Tareas
