@@ -17,12 +17,7 @@ import {
   Pagination,
   SortDescriptor,
 } from "@nextui-org/react";
-import {
-  ChevronDownIcon,
-  DotSquareIcon,
-  FileCog,
-  SearchIcon,
-} from "lucide-react";
+import { ChevronDownIcon, FileCog, SearchIcon } from "lucide-react";
 import { getTareas } from "@/lib/api";
 import { useSession } from "next-auth/react";
 import { TareasType } from "@/lib/types";
@@ -32,11 +27,13 @@ import {
   statusColorMap,
   statusOptions,
 } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "status", "actions"];
 
 export default function page() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [tareasData, setTareasData] = useState<TareasType[]>([]);
   const [filterValue, setFilterValue] = useState("");
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
@@ -110,10 +107,43 @@ export default function page() {
       const cellValue = tarea[columnKey];
 
       switch (columnKey) {
-        case "type":
+        case "fechaInicio":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-small capitalize">
+                {typeof cellValue === "object" &&
+                cellValue !== null &&
+                "toDate" in cellValue
+                  ? `${cellValue.toDate().toLocaleDateString()}-${cellValue
+                      .toDate()
+                      .toLocaleTimeString()}`
+                  : ""}
+              </p>
+            </div>
+          );
+        case "fechaEntrega":
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-small capitalize">
+                {typeof cellValue === "object" &&
+                cellValue !== null &&
+                "toDate" in cellValue
+                  ? `${cellValue.toDate().toLocaleDateString()}-${cellValue
+                      .toDate()
+                      .toLocaleTimeString()}`
+                  : ""}
+              </p>
+            </div>
+          );
+        case "name":
+          return (
+            <div className="flex flex-col">
+              <p
+                className="text-bold text-medium capitalize cursor-pointer"
+                onClick={() => {
+                  router.push(`/protected/tareas/${tarea.id}`);
+                }}
+              >
                 {cellValue?.toString()}
               </p>
             </div>
@@ -144,7 +174,13 @@ export default function page() {
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu>
-                  <DropdownItem>Ver</DropdownItem>
+                  <DropdownItem
+                    onClick={() => {
+                      router.push(`/protected/tareas/${tarea.id}`);
+                    }}
+                  >
+                    Ver
+                  </DropdownItem>
                   <DropdownItem>Entregar</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
@@ -156,18 +192,6 @@ export default function page() {
     },
     []
   );
-
-  const onNextPage = React.useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1);
-    }
-  }, [page, pages]);
-
-  const onPreviousPage = React.useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  }, [page]);
 
   const onRowsPerPageChange = React.useCallback(
     (e: { target: { value: any } }) => {
@@ -346,12 +370,7 @@ export default function page() {
           items={sortedItems}
         >
           {(item) => (
-            <TableRow
-              onClick={() => {
-                console.log("Clicked on row");
-              }}
-              key={item.id}
-            >
+            <TableRow key={item.id}>
               {(columnKey) => (
                 <TableCell>
                   {renderCell(item, columnKey as keyof TareasType)}

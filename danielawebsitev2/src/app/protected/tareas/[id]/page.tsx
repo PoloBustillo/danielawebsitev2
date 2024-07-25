@@ -1,6 +1,8 @@
 import React from "react";
 
-const page = () => {
+const page = async ({ params: { id } }: { params: { id: string } }) => {
+  console.log("🚀 ~ page ~ id:", id);
+
   return (
     <div className="flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800">
       <h2 className="text-xl font-semibold">Your cart</h2>
