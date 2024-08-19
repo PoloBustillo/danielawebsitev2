@@ -144,7 +144,7 @@ export default function ModalSign({
                 Crear cuenta
               </Link>
             </p>
-            <div className="flex gap-2 justify-end">
+            <div className="flex gap-2 justify-end cursor-pointer">
               <Button type="submit" fullWidth color="primary">
                 Acceder
               </Button>
@@ -197,7 +197,11 @@ export default function ModalSign({
             />
             <p className="text-center text-small">
               Ya tienes cuenta creada?{" "}
-              <Link size="sm" onPress={() => setSelected("login")}>
+              <Link
+                className="cursor-pointer"
+                size="sm"
+                onPress={() => setSelected("login")}
+              >
                 Acceder
               </Link>
             </p>

@@ -274,7 +274,10 @@ const PersonalInformationCard = () => {
                   days: 2000,
                 })}
                 value={date}
-                onChange={setDate}
+                onChange={(value) => {
+                  setTouched(true);
+                  setDate(value);
+                }}
                 variant="bordered"
                 className=" md:w-[30vw] w-[100%]"
               />

@@ -29,8 +29,8 @@ const options: NextAuthConfig = {
   ...authConfig,
   providers: [
     SpotifyProvider({
-      clientId: process.env.FACEBOOK_ID,
-      clientSecret: process.env.FACEBOOK_SECRET,
+      clientId: process.env.SPOTIFY_CLIENT,
+      clientSecret: process.env.SPOTIFY_SECRET,
     }),
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
