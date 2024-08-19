@@ -51,6 +51,25 @@ export async function saveAvatarImageToStorage(url: any, path: string) {
   }
 }
 
+export async function saveTareasToStorage(url: any, path: string) {
+  try {
+    const storageRef = ref(storage, `tareas/${path}`);
+    const res = await uploadBytes(storageRef, url);
+    return res.metadata.fullPath;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const saveTareasToFirestore = async (tareaId: string, data: {}) => {
+  try {
+    const docRef = doc(db, "tareas", tareaId);
+    await setDoc(docRef, data, { merge: true });
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Extract common logic for fetching data from a Firestore collection
 async function fetchDataFromCollection<T>(
   collectionName: string
@@ -317,6 +336,20 @@ export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
       terapia = { ...terapia, imageDescription: imageUrl };
       return terapia;
     } catch (error) {
+      return {};
+    }
+  }
+);
+
+export const getTarea: (id: string) => Promise<TareasType | {}> = cache(
+  async (id: string) => {
+    const docRef = doc(db, "tareas", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return { ...data, id: docSnap.id };
+    } else {
       return {};
     }
   }

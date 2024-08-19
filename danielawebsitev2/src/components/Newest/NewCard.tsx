@@ -19,7 +19,7 @@ const NewCard = ({ banners }: { banners: BannerResponse[] }) => {
   }, [indexImg]);
 
   return (
-    <Card isFooterBlurred>
+    <Card isFooterBlurred className="bg-transparent border-none">
       <motion.div
         initial={{ y: -2 }}
         animate={{ y: 2 }}
@@ -32,7 +32,6 @@ const NewCard = ({ banners }: { banners: BannerResponse[] }) => {
         className="hidden sm:block -space-x-2 overflow-hidden"
       >
         <Image
-          isZoomed
           width={"400px"}
           height={"400px"}
           alt={banners[indexImg]?.description}

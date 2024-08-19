@@ -1,209 +1,156 @@
-import React from "react";
+"use client";
 
-const page = async ({ params: { id } }: { params: { id: string } }) => {
-  console.log("🚀 ~ page ~ id:", id);
+import {
+  getTarea,
+  saveAvatarImageToStorage,
+  saveTareasToStorage,
+} from "@/lib/api";
+import { TareasType } from "@/lib/types";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { log } from "console";
+import { Save } from "lucide-react";
 
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+import { FileWithPath, useDropzone } from "react-dropzone";
+
+interface FileWithPreview extends FileWithPath {
+  preview: string;
+}
+
+const page = ({ params: { id } }: { params: { id: string } }) => {
+  const [tarea, setTarea] = useState<TareasType>();
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const { data: session, status, update: sessionUpdate } = useSession();
+
+  useEffect(() => {
+    (async () => {
+      const fetchedTarea = (await getTarea(id)) as TareasType;
+      setTarea(fetchedTarea);
+    })();
+  }, []);
+
+  const {
+    getRootProps,
+    getInputProps,
+    open: dragOpen,
+    acceptedFiles,
+  } = useDropzone({
+    accept: {},
+    onDrop: (acceptedFiles) => {
+      let files = acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      ) as FileWithPreview[];
+      setFiles(files);
+    },
+  });
+
+  const handleSubmit = async () => {
+    let filesStrings = await Promise.all(
+      files.map(async (file) => {
+        if (file.preview != undefined) {
+          let filePath = await saveTareasToStorage(
+            file,
+            session?.user?.id! + file.path
+          );
+          return filePath;
+        }
+
+        //   let user = { ...session?.user };
+        //   let imagePath = await saveAvatarImageToStorage(
+        //     file.,
+        //     session?.user?.id!
+        //   );
+        // }
+      })
+    );
+    console.log("🚀 ~ handleSubmit ~ filesStrings:", filesStrings);
+
+    // if ((imageAvatar as File).name != undefined) {
+    //   let user = { ...session?.user };
+    //   let imagePath = await saveAvatarImageToStorage(
+
+    //     imageAvatar,
+    //     session?.user?.id!
+    //   );
+    //   let imageUrl = await getFile(imagePath);
+    //   setImageAvatarURL(imageUrl);
+    //   saveImageForUser(session?.user?.id!, imageUrl);
+    //   user = { ...user, image: imageUrl };
+    //   await sessionUpdate({
+    //     user: {
+    //       ...session?.user!,
+    //       image: imageUrl,
+    //     },
+    //   });
+    //   setTouched(false);
+    //   setImageAvatar(undefined);
+    // }
+  };
   return (
-    <div className="flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800">
-      <h2 className="text-xl font-semibold">Your cart</h2>
-      <ul className="flex flex-col divide-y dark:divide-gray-300">
-        <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
-          <div className="flex w-full space-x-2 sm:space-x-4">
-            <img
-              className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-              src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80"
-              alt="Polaroid camera"
-            />
-            <div className="flex flex-col justify-between w-full pb-4">
-              <div className="flex justify-between w-full pb-2 space-x-2">
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold leading-snug sm:pr-8">
-                    Polaroid camera
-                  </h3>
-                  <p className="text-sm dark:text-gray-600">Classic</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-semibold">59.99€</p>
-                  <p className="text-sm line-through dark:text-gray-400">
-                    75.50€
-                  </p>
-                </div>
-              </div>
-              <div className="flex text-sm divide-x">
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 pl-0 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
-                    <rect width="32" height="200" x="168" y="216"></rect>
-                    <rect width="32" height="200" x="240" y="216"></rect>
-                    <rect width="32" height="200" x="312" y="216"></rect>
-                    <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
-                  </svg>
-                  <span>Remove</span>
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
-                  </svg>
-                  <span>Add to favorites</span>
-                </button>
-              </div>
-            </div>
+    <Card className="m-8 sm:m-20 p-4">
+      <CardHeader className="pb-0 py-2 p-4 flex-col sm:flex-row content-between justify-between">
+        <div>
+          <h4 className="font-bold text-large">{tarea?.name}</h4>
+          <small className="text-default-500">{`ID: ${tarea?.id}`}</small>
+        </div>
+        <div className="text-center">
+          <Button
+            color={files.length == 0 ? "default" : "success"}
+            type="submit"
+            isDisabled={files.length == 0}
+            startContent={<Save className="w-8 h-8" />}
+            onClick={handleSubmit}
+          >
+            Entregar tarea
+          </Button>
+        </div>
+      </CardHeader>
+      <CardBody className="pb-0 pt-2 p-4 align-middle justify-around content-center">
+        <div className="grid">
+          <div {...getRootProps({ className: "dropzone" })}>
+            <label className="flex flex-col items-center w-[100%] p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-8 h-8 text-gray-500 dark:text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+                />
+              </svg>
+              <h2 className="mt-1 font-medium tracking-wide text-gray-700 dark:text-gray-200">
+                Da click o arrastra tu archivo aquí.
+              </h2>
+              <p className="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400">
+                SVG, PNG, JPG, GIF, PDF, WORD (MAX. 5MB)
+              </p>
+
+              <input {...getInputProps()} />
+            </label>
+            {files.length > 0 && (
+              <aside className="m-4">
+                <p className="bold text-medium">Archivo(s):</p>
+                <ul>
+                  {files.map((file) => (
+                    <li key={file.name}>
+                      {file.name} - {file.size} bytes
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )}
           </div>
-        </li>
-        <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
-          <div className="flex w-full space-x-2 sm:space-x-4">
-            <img
-              className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-              src="https://images.unsplash.com/photo-1504274066651-8d31a536b11a?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=675&amp;q=80"
-              alt="Replica headphones"
-            />
-            <div className="flex flex-col justify-between w-full pb-4">
-              <div className="flex justify-between w-full pb-2 space-x-2">
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold leading-snug sm:pr-8">
-                    Replica headphones
-                  </h3>
-                  <p className="text-sm dark:text-gray-600">White</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-semibold">99.95€</p>
-                  <p className="text-sm line-through dark:text-gray-400">
-                    150€
-                  </p>
-                </div>
-              </div>
-              <div className="flex text-sm divide-x">
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 pl-0 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
-                    <rect width="32" height="200" x="168" y="216"></rect>
-                    <rect width="32" height="200" x="240" y="216"></rect>
-                    <rect width="32" height="200" x="312" y="216"></rect>
-                    <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
-                  </svg>
-                  <span>Remove</span>
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
-                  </svg>
-                  <span>Add to favorites</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
-          <div className="flex w-full space-x-2 sm:space-x-4">
-            <img
-              className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500"
-              src="https://images.unsplash.com/phodark:to-5fed330ce?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=675&amp;q=80"
-              alt="Set of travel chargers"
-            />
-            <div className="flex flex-col justify-between w-full pb-4">
-              <div className="flex justify-between w-full pb-2 space-x-2">
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold leading-snug sm:pr-8">
-                    Set of travel chargers
-                  </h3>
-                  <p className="text-sm dark:text-gray-600">Black</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-semibold">8.99€</p>
-                  <p className="text-sm line-through dark:text-gray-400">
-                    15.99€
-                  </p>
-                </div>
-              </div>
-              <div className="flex text-sm divide-x">
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 pl-0 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
-                    <rect width="32" height="200" x="168" y="216"></rect>
-                    <rect width="32" height="200" x="240" y="216"></rect>
-                    <rect width="32" height="200" x="312" y="216"></rect>
-                    <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
-                  </svg>
-                  <span>Remove</span>
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center px-2 py-1 space-x-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 h-4 fill-current"
-                  >
-                    <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
-                  </svg>
-                  <span>Add to favorites</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div className="space-y-1 text-right">
-        <p>
-          Total amount:
-          <span className="font-semibold">357 €</span>
-        </p>
-        <p className="text-sm dark:text-gray-600">
-          Not including taxes and shipping costs
-        </p>
-      </div>
-      <div className="flex justify-end space-x-4">
-        <button
-          type="button"
-          className="px-6 py-2 border rounded-md dark:border-violet-600"
-        >
-          Back
-          <span className="sr-only sm:not-sr-only">to shop</span>
-        </button>
-        <button
-          type="button"
-          className="px-6 py-2 border rounded-md dark:bg-violet-600 dark:text-gray-50 dark:border-violet-600"
-        >
-          <span className="sr-only sm:not-sr-only">Continue to</span>Checkout
-        </button>
-      </div>
-    </div>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
 
