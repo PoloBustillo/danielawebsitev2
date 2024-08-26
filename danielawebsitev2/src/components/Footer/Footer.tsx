@@ -20,7 +20,6 @@ const products: ProductType[] = [
       { name: "Blog", value: "/blogs" },
       { name: "Contacto", value: "/#contactame" },
       { name: "Servicios", value: "/servicios" },
-      { name: "Testimonials", value: "" },
     ],
   },
   {

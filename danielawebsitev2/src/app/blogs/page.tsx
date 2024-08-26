@@ -6,14 +6,18 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Blogs = () => {
-  //TODO: move selected to component to make server page
-  //TODO: missing filter for selected
   const [selected, setSelected] = useState<string>("ultimos");
   const router = useRouter();
   const [blogs, setBlogs] = useState<BlogDataType>({
     video: { url: "", msg: "" },
   });
   const [blogsData, setBlogsData] = useState<BlogArticleType[] | []>([]);
+  const [blogsDataFiltered, setBlogsDataFiltered] = useState<
+    BlogArticleType[] | []
+  >([]);
+
+  console.log(blogsData);
+  console.log(blogsDataFiltered);
 
   useEffect(() => {
     (async () => {
@@ -21,8 +25,40 @@ const Blogs = () => {
       const data = (await getBlogsData()) as BlogDataType;
       setBlogs(data);
       setBlogsData(blogs);
+      setBlogsDataFiltered(
+        blogs
+          .sort((a: BlogArticleType, b: BlogArticleType) => {
+            return a.created_on!.toDate() < b.created_on!.toDate() ? 1 : -1;
+          })
+          .slice(0, 5)
+      );
     })();
   }, []);
+
+  useEffect(() => {
+    if (selected == "ultimos") {
+      let clone = [...blogsData];
+      setBlogsDataFiltered(
+        clone
+          .sort((a: BlogArticleType, b: BlogArticleType) => {
+            return a.created_on!.toDate() < b.created_on!.toDate() ? 1 : -1;
+          })
+          .slice(0, 5)
+      );
+    }
+
+    if (selected == "populares") {
+      let clone = [...blogsData];
+      console.log(clone);
+      setBlogsDataFiltered(
+        clone
+          .sort((a: BlogArticleType, b: BlogArticleType) => {
+            return a.views! < b.views! ? 1 : -1;
+          })
+          .slice(0, 5)
+      );
+    }
+  }, [selected]);
 
   return (
     <div>
@@ -84,7 +120,7 @@ const Blogs = () => {
               </button>
             </div>
             <div className="flex flex-col divide-y divide-gray-700">
-              {blogsData.map((blog, index) => {
+              {blogsDataFiltered.map((blog, index) => {
                 return (
                   <div className="flex px-1 py-4">
                     <a onClick={() => router.push(`/blogs/${blog.name}`)}>

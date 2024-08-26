@@ -2,7 +2,16 @@
 import { db } from "@/lib/firebase-config";
 import { CommentType, CommentTypeExtended } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Button, useDisclosure } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  useDisclosure,
+} from "@nextui-org/react";
+import { useToast } from "@/components/ui/use-toast";
 import {
   addDoc,
   arrayUnion,
@@ -22,6 +31,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
   const { data: session, status, update: sessionUpdate } = useSession();
   const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
+  const { toast } = useToast();
   const [comments, setComments] = useState<CommentTypeExtended[]>([]);
   const [likes, setLikes] = useState<{ [key: string]: string[] }>({});
   const { theme } = useTheme();
@@ -34,9 +44,11 @@ const Comments = ({ blogId }: { blogId: string }) => {
     (async () => {
       const collectionRef = collection(db, "comments");
       const docSnaps = await getDocs(collectionRef);
+
       let response: any = [];
       docSnaps.forEach((doc) => {
-        response.push({ ...doc.data(), id: doc.id });
+        if ((doc.data().blogId as DocumentReference).id === blogId)
+          response.push({ ...doc.data(), id: doc.id });
       });
       //Convert data to be handle in state
       let reponse = await filterComments(response);
@@ -270,10 +282,13 @@ const Comments = ({ blogId }: { blogId: string }) => {
                   <footer className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
                       <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                        <img
-                          className="mr-2 w-6 h-6 rounded-full"
+                        <Avatar
+                          isBordered
+                          className="mr-2 w-10 h-10 rounded-full"
+                          color="secondary"
+                          name={comment.username}
+                          size="md"
                           src={comment.userAvatar}
-                          alt={comment.username}
                         />
                         {comment.username}
                       </p>
@@ -302,44 +317,6 @@ const Comments = ({ blogId }: { blogId: string }) => {
                       </svg>
                       <span className="sr-only">Comment settings</span>
                     </button>
-
-                    <div
-                      id="dropdownComment1"
-                      className={cn(
-                        "z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600",
-                        "hidden"
-                      )}
-                    >
-                      <ul
-                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownMenuIconHorizontalButton"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Edit
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Remove
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Report
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
                   </footer>
                   <p className="text-gray-500 dark:text-gray-400">
                     {comment.commentText}
@@ -434,7 +411,13 @@ const Comments = ({ blogId }: { blogId: string }) => {
                           <Button
                             isIconOnly
                             onClick={(e) => {
-                              handleReply(e, comment.id);
+                              if (reply != "") {
+                                handleReply(e, comment.id);
+                                setReplyData({
+                                  commentId: "",
+                                  placeholder: "",
+                                });
+                              }
                             }}
                             type="submit"
                             isDisabled={status !== "authenticated"}
@@ -464,10 +447,13 @@ const Comments = ({ blogId }: { blogId: string }) => {
                           <footer className="flex justify-between items-center mb-2">
                             <div className="flex items-center">
                               <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                                <img
+                                <Avatar
+                                  isBordered
                                   className="mr-2 w-6 h-6 rounded-full"
+                                  color="success"
+                                  size="sm"
                                   src={replyComment?.userAvatar}
-                                  alt={replyComment?.username}
+                                  name={replyComment?.username}
                                 />
                                 {replyComment?.username}
                               </p>
@@ -486,58 +472,64 @@ const Comments = ({ blogId }: { blogId: string }) => {
                                 </time>
                               </p>
                             </div>
-                            <button
-                              id="dropdownComment2Button"
-                              data-dropdown-toggle="dropdownComment2"
-                              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                              type="button"
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 16 3"
+                            <Popover placement="bottom" showArrow>
+                              <PopoverTrigger>
+                                <button
+                                  onClick={() => {
+                                    console.log("clicked");
+                                  }}
+                                  id="dropdownComment2Button"
+                                  data-dropdown-toggle="dropdownComment2"
+                                  className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                  type="button"
+                                >
+                                  <svg
+                                    className="w-4 h-4"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 3"
+                                  >
+                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                                  </svg>
+                                  <span className="sr-only">
+                                    Comment settings
+                                  </span>
+                                </button>
+                              </PopoverTrigger>
+                              <PopoverContent
+                                className={cn(
+                                  "z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                )}
                               >
-                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                              </svg>
-                              <span className="sr-only">Comment settings</span>
-                            </button>
+                                <ul
+                                  className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                                >
+                                  <li className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    Editar
+                                  </li>
+                                  <li className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    Eliminar
+                                  </li>
+                                  <li
+                                    onClick={() => {
+                                      toast({
+                                        variant: "destructive",
 
-                            <div
-                              id="dropdownComment2"
-                              className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                            >
-                              <ul
-                                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                              >
-                                <li>
-                                  <a
-                                    href="#"
-                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        title:
+                                          "Gracias por tu retroalimentación",
+                                        description:
+                                          "Tu reporte ha sido enviado a moderación",
+                                      });
+                                    }}
+                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                                   >
-                                    Edit
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="#"
-                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    Remove
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="#"
-                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    Report
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
+                                    Reportar
+                                  </li>
+                                </ul>
+                              </PopoverContent>
+                            </Popover>
                           </footer>
 
                           <p className="text-gray-500 dark:text-gray-400">

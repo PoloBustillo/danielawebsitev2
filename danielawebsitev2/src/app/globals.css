@@ -174,13 +174,21 @@
       rgb(112, 215, 21), rgb(236, 14, 158));
 }
 
+/* Markdown CSS*/
 strong {
   font-weight: bolder;
   font-size: 1.2em;
   font-style: italic;
 }
-
-
+h2{
+  font-size: 1.5em;
+  font-weight: bold;
+  font-style: italic;
+}
+ol {
+  list-style: decimal;
+  padding-left: 2rem;
+}
 
 @media only screen and (max-width: 600px) {
   .simplybook-widget-button {

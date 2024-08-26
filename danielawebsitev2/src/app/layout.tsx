@@ -1,6 +1,7 @@
 import { MsgBanner } from "@/components/Banner/Msgs/MsgBanner";
 import Footer from "@/components/Footer/Footer";
 import NavBar from "@/components/NavBar/NavBar";
+import { Toaster } from "@/components/ui/toaster";
 import { getMensajes, getTerapias, getWebData } from "@/lib/api";
 import type {
   MensajesResponseType,
@@ -62,6 +63,7 @@ export default async function RootLayout({
             <MsgBanner messageData={mensaje.message}></MsgBanner>
           )}
           {children}
+          <Toaster />
           <Footer webData={webData} />
         </Providers>
       </body>

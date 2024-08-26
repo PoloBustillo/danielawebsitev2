@@ -98,11 +98,12 @@ const page = async ({ params }: { params: any }) => {
               {blogData.content?.map(async (content, index) => {
                 if (content.type == "text")
                   return (
-                    <div key={index}>
-                      <Markdown rehypePlugins={[rehypeRaw, remarkGfm]}>
-                        {content.value}
-                      </Markdown>
-                    </div>
+                    <Markdown
+                      rehypePlugins={[rehypeRaw, remarkGfm]}
+                      key={index}
+                    >
+                      {content.value}
+                    </Markdown>
                   );
                 if (content.type == "image") {
                   let image = await getFile(content.value.image);
