@@ -17,14 +17,16 @@ const Procesos = () => {
           <div className="bg-[#37354b] text-white dark:bg-[#1c1c1c] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
             <div className="mb-8">
               <h3 className="text-2xl font-semibold text-white">
-                Talleres Piscologicos
+                Psicología y Pedagogía:
               </h3>
               <p className="mt-4 text-gray-400">
-                Get started with our basic features.
+                Intervención en casos de acoso escolar o laboral.
               </p>
             </div>
             <div className="mb-8">
-              <span className="text-5xl font-extrabold text-white">$0</span>
+              <span className="text-5xl font-extrabold text-white">
+                Desde $5000
+              </span>
               <span className="text-xl font-medium text-gray-400">/mo</span>
             </div>
             <ul className="mb-24 space-y-4 text-gray-400">
@@ -43,7 +45,7 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 user account</span>
+                <span>Asesoramiento en clima laboral</span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -60,7 +62,9 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 Taller</span>
+                <span>
+                  Campañas para fomentar un ambiente positivo y productivo.
+                </span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -77,7 +81,7 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>Soporte basico</span>
+                <span>Programas de desarrollo del talento</span>
               </li>
             </ul>
             <Button
@@ -90,14 +94,16 @@ const Procesos = () => {
           <div className="bg-[#37354b] text-white dark:bg-[#1c1c1c] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
             <div className="mb-8">
               <h3 className="text-2xl font-semibold text-white">
-                Talleres Piscologicos
+                Medicina y Psicología:
               </h3>
               <p className="mt-4 text-gray-400">
-                Get started with our basic features.
+                Programas de salud mental en empresas
               </p>
             </div>
             <div className="mb-8">
-              <span className="text-5xl font-extrabold text-white">$0</span>
+              <span className="text-5xl font-extrabold text-white">
+                Desde $2000
+              </span>
               <span className="text-xl font-medium text-gray-400">/mo</span>
             </div>
             <ul className="mb-24 space-y-4 text-gray-400">
@@ -116,7 +122,10 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 user account</span>
+                <span>
+                  Prevención de burnout, estrés laboral, promoción del bienestar
+                  emocional.
+                </span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -133,7 +142,7 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 Taller</span>
+                <span>Atención integral a pacientes crónicos.</span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -150,7 +159,10 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>Soporte basico</span>
+                <span>
+                  Gestión del dolor crónico: Abordar el dolor desde una
+                  perspectiva biopsicosocial
+                </span>
               </li>
             </ul>
             <Button
@@ -163,14 +175,16 @@ const Procesos = () => {
           <div className="bg-[#37354b] text-white dark:bg-[#1c1c1c] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
             <div className="mb-8">
               <h3 className="text-2xl font-semibold text-white">
-                Talleres Piscologicos
+                Pedagogía y Medicina
               </h3>
               <p className="mt-4 text-gray-400">
-                Get started with our basic features.
+                Evaluaciones neuropsicológicas
               </p>
             </div>
             <div className="mb-8">
-              <span className="text-5xl font-extrabold text-white">$0</span>
+              <span className="text-5xl font-extrabold text-white">
+                Desde $1500
+              </span>
               <span className="text-xl font-medium text-gray-400">/mo</span>
             </div>
             <ul className="mb-24 space-y-4 text-gray-400">
@@ -189,7 +203,10 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 user account</span>
+                <span>
+                  Identificar dificultades de aprendizaje asociadas a
+                  condiciones médicas.
+                </span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -206,7 +223,7 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 Taller</span>
+                <span> Diseño de programas educativos adaptados</span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -223,7 +240,10 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>Soporte basico</span>
+                <span>
+                  Promoción de hábitos saludables en escuelas: Nutrición,
+                  actividad física, higiene mental.
+                </span>
               </li>
             </ul>
             <Button
@@ -236,14 +256,14 @@ const Procesos = () => {
           <div className="bg-[#37354b] text-white dark:bg-[#1c1c1c] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
             <div className="mb-8">
               <h3 className="text-2xl font-semibold text-white">
-                Talleres Piscologicos
+                Servicios combinados
               </h3>
-              <p className="mt-4 text-gray-400">
-                Get started with our basic features.
-              </p>
+              <p className="mt-4 text-gray-400">Acompañamiento personalizado</p>
             </div>
             <div className="mb-8">
-              <span className="text-5xl font-extrabold text-white">$0</span>
+              <span className="text-5xl font-extrabold text-white">
+                Desde $2000
+              </span>
               <span className="text-xl font-medium text-gray-400">/mo</span>
             </div>
             <ul className="mb-24 space-y-4 text-gray-400">
@@ -262,7 +282,7 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 user account</span>
+                <span>Coaching ejecutivo y psicoterapia</span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -279,7 +299,9 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>1 Taller</span>
+                <span>
+                  Asesoramiento en diseño de espacios de trabajo saludables
+                </span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -296,7 +318,7 @@ const Procesos = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span>Soporte basico</span>
+                <span>Programas de prevención de adicciones</span>
               </li>
             </ul>
             <Button

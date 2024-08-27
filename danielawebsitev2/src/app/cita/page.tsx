@@ -1,8 +1,10 @@
 "use client";
+import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
 
 const CitaPage = () => {
   const widgetContainerRef = useRef(null);
+  let theme = useTheme();
 
   useEffect(() => {
     let button = document.querySelector(
@@ -31,7 +33,7 @@ const CitaPage = () => {
           btn_color_1: "#f8ad31,#fc591e,#fc591e",
           link_color: "#cb8d75",
           display_item_mode: "block",
-          body_bg_color: "#f5f5f5",
+          body_bg_color: "#f0f0f0",
           sb_review_image: "",
           dark_font_color: "#403733",
           light_font_color: "#ffffff",

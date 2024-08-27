@@ -79,6 +79,7 @@ export interface CommentType {
 export interface CommentTypeExtended {
   id: string;
   username: string;
+  userId: string;
   userAvatar: string;
   commentText: string;
   status: string;

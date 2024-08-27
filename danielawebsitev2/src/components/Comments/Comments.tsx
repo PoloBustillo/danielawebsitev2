@@ -5,7 +5,11 @@ import { cn } from "@/lib/utils";
 import {
   Avatar,
   Button,
-  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -26,10 +30,14 @@ import { SendHorizonal } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
+import { on } from "events";
 
 const Comments = ({ blogId }: { blogId: string }) => {
   const { data: session, status, update: sessionUpdate } = useSession();
   const [comment, setComment] = useState("");
+  const [commentToBeEdited, setCommentToBeEdited] =
+    useState<CommentTypeExtended>();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [reply, setReply] = useState("");
   const { toast } = useToast();
   const [comments, setComments] = useState<CommentTypeExtended[]>([]);
@@ -52,6 +60,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
       });
       //Convert data to be handle in state
       let reponse = await filterComments(response);
+
       setComments(reponse);
     })();
   }, []);
@@ -118,6 +127,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
           return {
             id: comment.id,
             username: userData!.name,
+            userId: comment.userId.id,
             userAvatar: userData!.image,
             status: comment.status,
             commentText: comment.commentText,
@@ -130,6 +140,15 @@ const Comments = ({ blogId }: { blogId: string }) => {
     );
     setLikes(commentsLikes);
     return data;
+  };
+
+  const deleteComment = async (commentId: string) => {
+    const docRef = doc(db, "comments", commentId);
+    await updateDoc(docRef, {
+      status: "deleted",
+    });
+    let newComments = comments.filter((comment) => comment.id !== commentId);
+    setComments(newComments);
   };
 
   const handleReply = async (e: any, commentId: any) => {
@@ -162,6 +181,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
       id: docRef.id,
       username: session?.user.name!,
       userAvatar: session?.user.image!,
+      userId: session?.user.id!,
       commentText: reply,
       likes: [],
       replies: [],
@@ -174,6 +194,24 @@ const Comments = ({ blogId }: { blogId: string }) => {
     setReply("");
   };
 
+  const updateComment = async (commentId: string) => {
+    const docRef = doc(db, "comments", commentId);
+    await updateDoc(docRef, {
+      commentText: comment,
+    });
+    let newComments = comments.map((commentObj) => {
+      if (commentObj.id === commentId) {
+        return {
+          ...commentObj,
+          commentText: comment,
+        };
+      }
+      return commentObj;
+    }) as CommentTypeExtended[];
+
+    setComments(newComments);
+    setComment("");
+  };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const userRef = doc(db, "users", session?.user.id!);
@@ -193,6 +231,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
       id: docRef.id,
       username: session?.user.name!,
       userAvatar: session?.user.image!,
+      userId: session?.user.id!,
       commentText: comment,
       likes: [],
       replies: [],
@@ -221,8 +260,64 @@ const Comments = ({ blogId }: { blogId: string }) => {
       });
     }
   };
+
   return (
     <section className="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          setComment("");
+        }}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Edita tu comentario
+              </ModalHeader>
+              <ModalBody>
+                <div>
+                  <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                    <label className="sr-only">Tu comentario</label>
+                    <textarea
+                      disabled={status !== "authenticated"}
+                      id="comment"
+                      className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                      onChange={(e) => setComment(e.target.value)}
+                      value={comment as string}
+                      placeholder={
+                        status !== "authenticated"
+                          ? "Inicia sesión para comentar por favor."
+                          : "Escribe un comentario"
+                      }
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    updateComment(commentToBeEdited?.id!);
+                    onClose();
+                  }}
+                  isDisabled={status !== "authenticated"}
+                  variant="solid"
+                  color="primary"
+                  className="flex float-right focus:ring-primary-200 dark:focus:ring-primary hover:bg-primary"
+                >
+                  Actulizar Comentario
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
@@ -273,6 +368,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
             const liked = likes[comment.id]
               ? likes[comment.id].includes(session?.user?.id!)
               : false;
+
             return (
               <div
                 key={comment.id}
@@ -299,24 +395,75 @@ const Comments = ({ blogId }: { blogId: string }) => {
                         </time>
                       </p>
                     </div>
-                    <button
-                      id="dropdownComment1Button"
-                      data-dropdown-toggle="dropdownComment1"
-                      className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                      type="button"
-                      onClick={() => {}}
-                    >
-                      <svg
-                        className="w-4 h-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 16 3"
+                    <Popover placement="bottom" showArrow>
+                      <PopoverTrigger>
+                        <button
+                          id="dropdownComment2Button"
+                          data-dropdown-toggle="dropdownComment2"
+                          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                          type="button"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 16 3"
+                          >
+                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                          </svg>
+                          <span className="sr-only">Comment settings</span>
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className={cn(
+                          "z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                        )}
                       >
-                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                      </svg>
-                      <span className="sr-only">Comment settings</span>
-                    </button>
+                        <ul
+                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                          aria-labelledby="dropdownMenuIconHorizontalButton"
+                        >
+                          {session?.user?.id === comment.userId && (
+                            <>
+                              <li
+                                onClick={() => {
+                                  setCommentToBeEdited(comment);
+                                  setComment(comment.commentText);
+                                  onOpen();
+                                }}
+                                className="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                Editar
+                              </li>
+
+                              <li
+                                onClick={() => {
+                                  deleteComment(comment.id);
+                                }}
+                                className=" cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                Eliminar
+                              </li>
+                            </>
+                          )}
+                          <li
+                            onClick={() => {
+                              toast({
+                                variant: "destructive",
+
+                                title: "Gracias por tu retroalimentación",
+                                description:
+                                  "Tu reporte ha sido enviado a moderación",
+                              });
+                            }}
+                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                          >
+                            Reportar
+                          </li>
+                        </ul>
+                      </PopoverContent>
+                    </Popover>
                   </footer>
                   <p className="text-gray-500 dark:text-gray-400">
                     {comment.commentText}
@@ -436,152 +583,174 @@ const Comments = ({ blogId }: { blogId: string }) => {
                       let replyComment = comments.find(
                         (c: CommentTypeExtended) => c.id === reply
                       );
-                      const likesCount = likes[replyComment?.id!]
-                        ? likes[replyComment?.id!].length
-                        : 0;
-                      const liked = likes[replyComment?.id!]
-                        ? likes[replyComment?.id!].includes(session?.user?.id!)
-                        : false;
-                      return (
-                        <div key={replyComment?.id}>
-                          <footer className="flex justify-between items-center mb-2">
-                            <div className="flex items-center">
-                              <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                                <Avatar
-                                  isBordered
-                                  className="mr-2 w-6 h-6 rounded-full"
-                                  color="success"
-                                  size="sm"
-                                  src={replyComment?.userAvatar}
-                                  name={replyComment?.username}
-                                />
-                                {replyComment?.username}
-                              </p>
-                              <p className="text-sm text-gray-600 dark:text-gray-400">
-                                <time
-                                  dateTime="2022-02-12"
-                                  title="February 12th, 2022"
-                                >
-                                  {(
-                                    replyComment?.created_on as Date
-                                  ).toLocaleDateString()}{" "}
-                                  -{" "}
-                                  {(
-                                    replyComment?.created_on as Date
-                                  ).toLocaleTimeString()}
-                                </time>
-                              </p>
-                            </div>
-                            <Popover placement="bottom" showArrow>
-                              <PopoverTrigger>
-                                <button
-                                  onClick={() => {
-                                    console.log("clicked");
-                                  }}
-                                  id="dropdownComment2Button"
-                                  data-dropdown-toggle="dropdownComment2"
-                                  className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                  type="button"
-                                >
-                                  <svg
-                                    className="w-4 h-4"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor"
-                                    viewBox="0 0 16 3"
+
+                      if (replyComment) {
+                        const likesCount = likes[replyComment?.id!]
+                          ? likes[replyComment?.id!].length
+                          : 0;
+                        const liked = likes[replyComment?.id!]
+                          ? likes[replyComment?.id!].includes(
+                              session?.user?.id!
+                            )
+                          : false;
+                        return (
+                          <div key={replyComment?.id}>
+                            <footer className="flex justify-between items-center mb-2">
+                              <div className="flex items-center">
+                                <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                                  <Avatar
+                                    isBordered
+                                    className="mr-2 w-6 h-6 rounded-full"
+                                    color="success"
+                                    size="sm"
+                                    src={replyComment?.userAvatar}
+                                    name={replyComment?.username}
+                                  />
+                                  {replyComment?.username}
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                  <time
+                                    dateTime="2022-02-12"
+                                    title="February 12th, 2022"
                                   >
-                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                                  </svg>
-                                  <span className="sr-only">
-                                    Comment settings
-                                  </span>
-                                </button>
-                              </PopoverTrigger>
-                              <PopoverContent
+                                    {(
+                                      replyComment?.created_on as Date
+                                    ).toLocaleDateString()}{" "}
+                                    -{" "}
+                                    {(
+                                      replyComment?.created_on as Date
+                                    ).toLocaleTimeString()}
+                                  </time>
+                                </p>
+                              </div>
+                              <Popover placement="bottom" showArrow>
+                                <PopoverTrigger>
+                                  <button
+                                    id="dropdownComment2Button"
+                                    data-dropdown-toggle="dropdownComment2"
+                                    className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    type="button"
+                                  >
+                                    <svg
+                                      className="w-4 h-4"
+                                      aria-hidden="true"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="currentColor"
+                                      viewBox="0 0 16 3"
+                                    >
+                                      <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                                    </svg>
+                                    <span className="sr-only">
+                                      Comment settings
+                                    </span>
+                                  </button>
+                                </PopoverTrigger>
+                                <PopoverContent
+                                  className={cn(
+                                    "z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                  )}
+                                >
+                                  <ul
+                                    className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownMenuIconHorizontalButton"
+                                  >
+                                    {session?.user?.id ===
+                                      replyComment?.userId && (
+                                      <>
+                                        <li
+                                          onClick={() => {
+                                            setCommentToBeEdited(replyComment);
+                                            setComment(
+                                              replyComment!.commentText
+                                            );
+                                            onOpen();
+                                          }}
+                                          className="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        >
+                                          Editar
+                                        </li>
+
+                                        <li
+                                          onClick={() => {
+                                            deleteComment(comment.id);
+                                          }}
+                                          className=" cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        >
+                                          Eliminar
+                                        </li>
+                                      </>
+                                    )}
+                                    <li
+                                      onClick={() => {
+                                        toast({
+                                          variant: "destructive",
+
+                                          title:
+                                            "Gracias por tu retroalimentación",
+                                          description:
+                                            "Tu reporte ha sido enviado a moderación",
+                                        });
+                                      }}
+                                      className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                    >
+                                      Reportar
+                                    </li>
+                                  </ul>
+                                </PopoverContent>
+                              </Popover>
+                            </footer>
+
+                            <p className="text-gray-500 dark:text-gray-400">
+                              {replyComment?.commentText}
+                            </p>
+                            <div className="flex gap-2 w-[100%] content-end justify-end">
+                              <Button
+                                isIconOnly
+                                variant={
+                                  theme == "dark" && !liked
+                                    ? "faded"
+                                    : theme == "light" && liked
+                                    ? "shadow"
+                                    : "bordered"
+                                }
+                                isDisabled={!session?.user}
+                                onClick={() => {
+                                  handleLike(replyComment?.id!);
+                                }}
                                 className={cn(
-                                  "z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                  "py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2",
+                                  liked
+                                    ? "text-green-600 border-green-600 bg-[#d3d3d375] dark:bg-transparent"
+                                    : "text-gray-400  border-gray-400"
                                 )}
                               >
-                                <ul
-                                  className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                                <svg
+                                  className="w-4 h-4"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
                                 >
-                                  <li className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    Editar
-                                  </li>
-                                  <li className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    Eliminar
-                                  </li>
-                                  <li
-                                    onClick={() => {
-                                      toast({
-                                        variant: "destructive",
-
-                                        title:
-                                          "Gracias por tu retroalimentación",
-                                        description:
-                                          "Tu reporte ha sido enviado a moderación",
-                                      });
-                                    }}
-                                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
-                                  >
-                                    Reportar
-                                  </li>
-                                </ul>
-                              </PopoverContent>
-                            </Popover>
-                          </footer>
-
-                          <p className="text-gray-500 dark:text-gray-400">
-                            {replyComment?.commentText}
-                          </p>
-                          <div className="flex gap-2 w-[100%] content-end justify-end">
-                            <Button
-                              isIconOnly
-                              variant={
-                                theme == "dark" && !liked
-                                  ? "faded"
-                                  : theme == "light" && liked
-                                  ? "shadow"
-                                  : "bordered"
-                              }
-                              isDisabled={!session?.user}
-                              onClick={() => {
-                                handleLike(replyComment?.id!);
-                              }}
-                              className={cn(
-                                "py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2",
-                                liked
-                                  ? "text-green-600 border-green-600 bg-[#d3d3d375] dark:bg-transparent"
-                                  : "text-gray-400  border-gray-400"
-                              )}
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z"
+                                  ></path>
+                                </svg>
+                              </Button>
+                              <span
+                                className={cn(
+                                  "py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2",
+                                  liked ? "text-green-600" : "text-gray-400"
+                                )}
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z"
-                                ></path>
-                              </svg>
-                            </Button>
-                            <span
-                              className={cn(
-                                "py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2",
-                                liked ? "text-green-600" : "text-gray-400"
-                              )}
-                            >
-                              {likesCount}
-                            </span>
+                                {likesCount}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      );
+                        );
+                      }
                     })}
                 </article>
               </div>
