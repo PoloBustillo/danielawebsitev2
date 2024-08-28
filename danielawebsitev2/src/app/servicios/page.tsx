@@ -1,9 +1,119 @@
-import { Button } from "@nextui-org/react";
-import React from "react";
+"use client";
+import { sendEmail } from "@/actions";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Textarea,
+  useDisclosure,
+} from "@nextui-org/react";
+
+import { MailIcon, Phone } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Procesos = () => {
+  const [servicioSelected, setServicioSelected] = useState<string>();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const modal = useRef<HTMLElement | HTMLButtonElement>(null);
+
+  const [sendEmailState, sendEmailAction] = useFormState(sendEmail, {
+    error: null,
+    success: false,
+  });
+
+  useEffect(() => {
+    if (sendEmailState.success) {
+      modal.current?.click();
+    }
+  }, [sendEmailState]);
+
+  function SubmitButton() {
+    const status = useFormStatus();
+    return (
+      <Button
+        isLoading={status.pending}
+        isDisabled={status.pending}
+        form="my-form"
+        type="submit"
+        color="primary"
+      >
+        Estoy interesado
+      </Button>
+    );
+  }
+
   return (
     <section className="bg-background py-12 ">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Contacto
+              </ModalHeader>
+              <form id="my-form" action={sendEmailAction}>
+                <ModalBody>
+                  <input
+                    type="hidden"
+                    value={servicioSelected}
+                    name="servicio"
+                  />
+                  <Input
+                    isInvalid={true}
+                    autoFocus
+                    name="email"
+                    endContent={
+                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="Email"
+                    placeholder="Mail para contactarme"
+                    variant="bordered"
+                    errorMessage="Email no valido"
+                  />
+                  <Input
+                    endContent={
+                      <Phone className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    name="telefono"
+                    label="telefono"
+                    placeholder="Celular de contacto"
+                    type="text"
+                    variant="bordered"
+                  />
+                  <Textarea
+                    label="message"
+                    name="message"
+                    variant="bordered"
+                    placeholder="Mensaje"
+                    disableAnimation
+                    disableAutosize
+                    classNames={{
+                      input: "resize-y min-h-[40px]",
+                    }}
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    ref={modal as React.RefObject<HTMLButtonElement>}
+                    color="danger"
+                    variant="flat"
+                    onPress={onClose}
+                  >
+                    En otro momento
+                  </Button>
+                  <SubmitButton></SubmitButton>
+                </ModalFooter>
+              </form>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-extrabold  sm:text-5xl">
@@ -85,6 +195,10 @@ const Procesos = () => {
               </li>
             </ul>
             <Button
+              onClick={() => {
+                setServicioSelected("Psicología y Pedagogía");
+                onOpen();
+              }}
               color="primary"
               className="bottom-6 left-[10%] right-[10%] absolute h-12 w-[50%] lg:w-[80%] mx-auto bottom-4block  py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
             >
@@ -166,6 +280,10 @@ const Procesos = () => {
               </li>
             </ul>
             <Button
+              onClick={() => {
+                setServicioSelected("Medicina y Psicología:");
+                onOpen();
+              }}
               color="primary"
               className="bottom-6 left-[10%] right-[10%] absolute h-12 w-[50%] lg:w-[80%] mx-auto bottom-4block  py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
             >
@@ -247,6 +365,10 @@ const Procesos = () => {
               </li>
             </ul>
             <Button
+              onClick={() => {
+                setServicioSelected(" Pedagogía y Medicina");
+                onOpen();
+              }}
               color="primary"
               className="bottom-6 left-[10%] right-[10%] absolute h-12 w-[50%] lg:w-[80%] mx-auto bottom-4block  py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
             >
@@ -322,6 +444,10 @@ const Procesos = () => {
               </li>
             </ul>
             <Button
+              onClick={() => {
+                setServicioSelected("Servicios combinados");
+                onOpen();
+              }}
               color="primary"
               className="bottom-6 left-[10%] right-[10%] absolute h-12 w-[50%] lg:w-[80%] mx-auto bottom-4block  py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
             >
