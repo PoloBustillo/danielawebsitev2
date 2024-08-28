@@ -1,8 +1,9 @@
 import axios from "axios";
-import { NextApiRequest } from "next";
-import { headers } from "next/headers";
 
-export async function GET(req: NextApiRequest) {
+import { headers } from "next/headers";
+import { NextRequest } from "next/server";
+
+export async function GET(req: NextRequest) {
   const headersList = headers();
   const token = headersList.get("x-simplybook-token");
 
