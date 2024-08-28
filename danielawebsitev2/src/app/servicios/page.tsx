@@ -15,9 +15,9 @@ import {
 import { MailIcon, Phone } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 const Procesos = () => {
+  const [errorField, setErrorField] = useState("noerror");
   const [servicioSelected, setServicioSelected] = useState<string>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const modal = useRef<HTMLElement | HTMLButtonElement>(null);
@@ -26,11 +26,12 @@ const Procesos = () => {
     error: null,
     success: false,
   });
-
+  console.log(sendEmailState);
   useEffect(() => {
     if (sendEmailState.success) {
       modal.current?.click();
     }
+    setErrorField(sendEmailState.error || "");
   }, [sendEmailState]);
 
   function SubmitButton() {
@@ -65,7 +66,10 @@ const Procesos = () => {
                     name="servicio"
                   />
                   <Input
-                    isInvalid={true}
+                    onChange={() => {
+                      setErrorField("noerror");
+                    }}
+                    isInvalid={errorField == "email"}
                     autoFocus
                     name="email"
                     endContent={
@@ -77,6 +81,10 @@ const Procesos = () => {
                     errorMessage="Email no valido"
                   />
                   <Input
+                    onChange={() => {
+                      setErrorField("noerror");
+                    }}
+                    isInvalid={errorField == "telefono"}
                     endContent={
                       <Phone className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
@@ -85,6 +93,7 @@ const Procesos = () => {
                     placeholder="Celular de contacto"
                     type="text"
                     variant="bordered"
+                    errorMessage="Celular no valido"
                   />
                   <Textarea
                     label="message"
