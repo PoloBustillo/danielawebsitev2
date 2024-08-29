@@ -162,7 +162,7 @@ const PersonalInformationCard = () => {
                 type="email"
                 name="email"
                 color="primary"
-                disabled={true}
+                disabled={session?.user?.email ? true : false}
                 variant="flat"
                 value={session?.user?.email!}
                 onChange={handleChange}
