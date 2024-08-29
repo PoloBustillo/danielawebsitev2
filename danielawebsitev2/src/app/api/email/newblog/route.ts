@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         let response = await resend.emails.send({
           from: "Blog <blogs@psicologapuebla.com.mx>",
           to: doc.data().email,
-          subject: "Informes de servicio empresarial",
+          subject: "Nueva entrada en el blog de Psicóloga Daniela Diaz",
           html: await render(
             EmailBlogTemplate({
               name: blogName,
