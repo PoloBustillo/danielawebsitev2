@@ -78,6 +78,11 @@ const PreferencesCard = () => {
             onValueChange={(value) => {
               setBlogCheck(value);
               setDoc(
+                doc(db, "users", session?.user.id as string),
+                { subscripcion: value },
+                { merge: true }
+              );
+              setDoc(
                 doc(db, "accounts", accountId as string),
                 { blogSubscription: value },
                 { merge: true }
