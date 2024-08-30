@@ -163,7 +163,7 @@ const PersonalInformationCard = () => {
                 name="email"
                 color="primary"
                 disabled={session?.user?.email ? true : false}
-                variant="flat"
+                variant={session?.user?.email ? "flat" : "bordered"}
                 value={session?.user?.email!}
                 onChange={handleChange}
                 placeholder="Introduzca su email"
