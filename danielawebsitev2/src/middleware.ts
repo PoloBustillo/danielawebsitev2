@@ -32,6 +32,7 @@ export default auth((req) => {
 });
 
 export async function middleware(request: NextRequest) {
+  // Ensure correct parameters and context
   if (request.nextUrl.pathname.startsWith("/api/citas/")) {
     let data = JSON.stringify({
       company: "psicdaniela",
@@ -55,7 +56,6 @@ export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseData = response.data;
     requestHeaders.set("x-simplybook-token", responseData?.token!);
-    console.log("MIDLE");
 
     return NextResponse.next({
       request: {

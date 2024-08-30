@@ -1,5 +1,5 @@
 import type { NextAuthConfig, Session, User } from "next-auth";
-
+import * as Sentry from "@sentry/node";
 export const authConfig = {
   session: {
     strategy: "jwt",
@@ -19,6 +19,13 @@ export const authConfig = {
       if (user) {
         token.sub = user.id;
         token.user = user;
+
+        Sentry.setUser({
+          email: user.email!,
+          id: user.id!,
+          username: user.name!,
+        });
+        console.log("Sentry user set");
       }
       return token;
     },

@@ -28,7 +28,7 @@ import MenuMobile from "./NavComponents/MenuMobile";
 import { ThemeSwitcher } from "./NavComponents/ThemeSwitcher";
 import UserAvatar from "./NavComponents/UserAvatar";
 import { signIn, signOut, useSession } from "next-auth/react";
-
+import * as Sentry from "@sentry/browser";
 import { cn } from "@/utils/functions";
 
 export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
@@ -41,6 +41,17 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const path = usePathname();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
+
+  useEffect(() => {
+    console.log("SET SENTRY session", session);
+
+    if (session?.user)
+      Sentry.setUser({
+        email: session.user?.email!,
+        id: session.user.id!,
+        username: session.user.name!,
+      });
+  }, [session]);
 
   useEffect(() => {
     if (error) {
