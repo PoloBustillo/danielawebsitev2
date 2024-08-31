@@ -8,7 +8,6 @@ interface State {
   success: boolean;
 }
 export const sendEmail = async (prevState: State, formData: FormData) => {
-  console.log(formData);
   const telefono = formData.get("telefono") as string;
   const email = "leopoldobeguiluz1@hotmail.com";
   const servicio = formData.get("servicio") as string;
