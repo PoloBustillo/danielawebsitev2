@@ -96,25 +96,25 @@ const PersonalInformationCard = () => {
     setErrors([]);
 
     let user = { ...session?.user };
-    if (!errors.name) {
+    if (!errors.name && formData.name != undefined) {
       user = { ...user, name: formData.name };
     }
-    if (!errors.celular) {
+    if (!errors.celular && formData.celular != undefined) {
       user = { ...user, celular: formData.celular };
     }
-    if (!errors.apellidoPaterno) {
+    if (!errors.apellidoPaterno && formData.apellidoPaterno != undefined) {
       user = { ...user, apellidoPaterno: formData.apellidoPaterno };
     }
-    if (!errors.apellidoMaterno) {
+    if (!errors.apellidoMaterno && formData.apellidoMaterno != undefined) {
       user = { ...user, apellidoMaterno: formData.apellidoMaterno };
     }
-    if (date) {
+    if (date != null) {
       user = { ...user, fechaNacimiento: date.toString() };
     }
-    if (formData.sexo) {
+    if (formData.sexo != undefined) {
       user = { ...user, sexo: formData.sexo };
     }
-    if (formData.religion) {
+    if (formData.religion != undefined) {
       user = { ...user, religion: formData.religion };
     }
     if (formData.ocupacion) {
@@ -269,6 +269,7 @@ const PersonalInformationCard = () => {
                 Fecha de nacimiento:
               </p>
               <DateInput
+                aria-label="Fecha de nacimiento"
                 name="fechaNacimiento"
                 maxValue={today(getLocalTimeZone()).subtract({
                   days: 2000,
@@ -326,12 +327,12 @@ const PersonalInformationCard = () => {
               <p className="text-tiny uppercase font-bold">Ocupación:</p>
               <Input
                 isClearable
+                aria-label="Ocupación"
                 type="text"
                 name="ocupacion"
                 value={formData.ocupacion}
                 onChange={handleChange}
                 variant="bordered"
-                placeholder="Introduzca su nombre"
                 defaultValue=""
                 className=" md:w-[30vw] w-[100%]"
               />

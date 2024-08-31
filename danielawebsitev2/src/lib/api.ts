@@ -201,9 +201,11 @@ export const saveImageForUser = async (userId: string, urlImage: string) => {
 export const saveDataForUser = async (userId: string, data: {}) => {
   try {
     const docRef = doc(db, "users", userId);
+
     await setDoc(docRef, data, { merge: true });
   } catch (error) {
-    throw error;
+    console.log(error);
+    throw new Error("Error al guardar los datos");
   }
 };
 export const getWebData: () => Promise<WebDataType> = cache(async () => {
