@@ -48,6 +48,7 @@ export default function page() {
       actions: ["string"],
       explicacion: "",
       status: "abierta|cerrada|completada",
+      type: [""],
     },
   ]);
 
