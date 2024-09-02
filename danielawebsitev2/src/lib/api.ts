@@ -26,6 +26,8 @@ import {
   TerapiasResponseType,
   WebDataType,
 } from "./types";
+import { log } from "console";
+import { Timestamp } from "firebase-admin/firestore";
 
 const MESSAGE_INITIAL_STATE: MensajesResponseType = {
   frase: { enable: false, message: "" },
@@ -318,6 +320,11 @@ export const getTareas: (userId: string) => Promise<TareasType[]> = cache(
         };
       })
     );
+
+    tareas = tareas.filter((tarea) => {
+      return (tarea.start as Timestamp).seconds < new Date().getTime() / 1000;
+    });
+
     return tareas;
   }
 );

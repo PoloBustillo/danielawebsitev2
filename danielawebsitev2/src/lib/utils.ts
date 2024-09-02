@@ -11,7 +11,7 @@ export const capitalize = (str: string) => {
 
 export const statusColorMap = {
   completada: "success",
-  cerrada: "danger",
+  cerrada: "primary",
   abierta: "warning",
 };
 

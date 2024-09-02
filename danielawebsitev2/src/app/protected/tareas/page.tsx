@@ -28,7 +28,8 @@ import {
   statusOptions,
 } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { Timestamp } from "firebase/firestore";
+import { doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase-config";
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "status", "descripcion", "actions"];
 
@@ -204,7 +205,42 @@ export default function page() {
                   >
                     Ver
                   </DropdownItem>
-                  <DropdownItem>Entregar</DropdownItem>
+                  <DropdownItem
+                    onClick={async () => {
+                      let userId = session?.user.id!;
+                      let userRef = await doc(db, "users", userId);
+                      const userData = (await getDoc(userRef)).data();
+
+                      if (userData?.tareas) {
+                        let tareasActualizadas = userData.tareas.map(
+                          (tareaUser: any) => {
+                            if (tareaUser.tarea.id == tarea.id) {
+                              return { ...tareaUser, status: "completada" };
+                            }
+                            return tareaUser;
+                          }
+                        );
+                        let tareasActualizadasEstado = tareasData.map(
+                          (task) => {
+                            if (task.id == tarea.id) {
+                              return { ...tarea, status: "completada" };
+                            }
+                            return tarea;
+                          }
+                        );
+                        console.log(
+                          "🚀 ~ onClick={ ~ tareasActulizadas:",
+                          tareasActualizadas
+                        );
+                        await updateDoc(doc(db, "users", session?.user.id!), {
+                          tareas: tareasActualizadas,
+                        });
+                        setTareasData(tareasActualizadasEstado);
+                      }
+                    }}
+                  >
+                    Entregar
+                  </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </div>
@@ -213,7 +249,7 @@ export default function page() {
           return cellValue?.toString();
       }
     },
-    []
+    [session]
   );
 
   const onRowsPerPageChange = React.useCallback(

@@ -59,7 +59,7 @@ export interface TareasType {
   start: Timestamp;
   end: Timestamp | null;
   tareasContent: [TareaContent];
-  status: "abierta|cerrada|completada";
+  status: string;
   actions: string[];
 }
 export interface BlogDataType {
