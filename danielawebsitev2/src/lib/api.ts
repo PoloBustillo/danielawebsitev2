@@ -9,8 +9,6 @@ import {
 } from "firebase/firestore";
 import firebase from "firebase/app";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-
-import { cache } from "react";
 import { db, storage } from "./firebase-config";
 import {
   BannerResponse,
@@ -26,8 +24,9 @@ import {
   TerapiasResponseType,
   WebDataType,
 } from "./types";
-import { log } from "console";
+
 import { Timestamp } from "firebase-admin/firestore";
+import { cache } from "react";
 
 const MESSAGE_INITIAL_STATE: MensajesResponseType = {
   frase: { enable: false, message: "" },

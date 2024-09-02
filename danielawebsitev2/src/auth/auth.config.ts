@@ -1,5 +1,6 @@
 import type { NextAuthConfig, Session, User } from "next-auth";
-import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/nextjs";
+
 export const authConfig = {
   session: {
     strategy: "jwt",
@@ -10,6 +11,22 @@ export const authConfig = {
     signOut: "/",
   },
   callbacks: {
+    authorized: async ({ request, auth }) => {
+      {
+        console.log(`auth: ${auth}`);
+
+        if (auth?.user) {
+          Sentry.setUser({
+            email: auth?.user.email!,
+            id: auth?.user.id!,
+            username: auth?.user.name!,
+          });
+          console.log("Sentry user set");
+        }
+        const isAuthenticated = !!auth?.user;
+        return isAuthenticated;
+      }
+    },
     jwt: async ({ token, user, trigger, session }) => {
       if (trigger === "update") {
         if (session) {

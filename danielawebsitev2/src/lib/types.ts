@@ -61,6 +61,7 @@ export interface TareasType {
   tareasContent: [TareaContent];
   status: string;
   actions: string[];
+  type: [any];
 }
 export interface BlogDataType {
   video: { url?: string; msg?: string };
