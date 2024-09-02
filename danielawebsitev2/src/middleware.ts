@@ -110,6 +110,5 @@ export const config = {
   matcher: [
     "/((?!_next/static|api|_next/image|public/|favicon.ico|robots.txt|sitemap.xml|manifest.json|../public).*)",
     "/api/citas/:path*",
-    "/protected/tareas/:path*",
   ],
 };
