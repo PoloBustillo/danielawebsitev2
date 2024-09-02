@@ -7,6 +7,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+import firebase from "firebase/app";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { cache } from "react";
@@ -296,28 +297,31 @@ export const getBlogs: () => Promise<BlogArticleType[] | []> = cache(
 );
 
 export const getTareas: (userId: string) => Promise<TareasType[]> = cache(
-  async (userId) => {
-    try {
-      let terapiasCollection = collection(db, "tareas");
-      let userRef = doc(db, "users", userId);
+  async (userId: string) => {
+    let userRef = await doc(db, "users", userId);
+    const userData = (await getDoc(userRef)).data();
 
-      const queryTareas = query(
-        terapiasCollection,
-        where("users", "array-contains", userRef)
-      );
-      const docSnap = await getDocs(queryTareas);
+    let tareas = await Promise.all(
+      userData?.tareas.map(async (tarea: any) => {
+        const tareaRef = await doc(db, "tareas", tarea.tarea.id);
+        const tareaData = (await getDoc(tareaRef)).data();
 
-      let tareas = [] as any;
-      docSnap.forEach(async (docData) => {
-        let blog = docData.data();
-        tareas.push({ ...blog, id: docData.id });
-      });
-      return tareas;
-    } catch (error) {
-      return [];
-    }
+        return {
+          start: tarea.rangeDate[0],
+          end: tarea.rangeDate[1],
+          status: tarea.status,
+          id: tarea.tarea.id,
+          name: tareaData?.name,
+          descripcion: tareaData?.explicacion,
+          explicacion: tareaData?.explicacion,
+          tareaContent: tareaData,
+        };
+      })
+    );
+    return tareas;
   }
 );
+
 export const getTerapia: (id: string) => Promise<TerapiaType | {}> = cache(
   async (id: string) => {
     try {

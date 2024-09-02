@@ -46,14 +46,20 @@ export interface BlogArticleType {
   content?: [any];
 }
 
+export interface TareaContent {
+  type: [any];
+}
+
 export interface TareasType {
-  name?: string;
+  descripcion: string;
+  explicacion: string;
+  name: string;
   id: string;
   users: DocumentReference[];
-  fechaInicio: Timestamp;
-  fechaEntrega: Timestamp | null;
-  type?: any[];
-  status: "inicio|enProgreso|completado";
+  start: Timestamp;
+  end: Timestamp | null;
+  tareasContent: [TareaContent];
+  status: "abierta|cerrada|completada";
   actions: string[];
 }
 export interface BlogDataType {

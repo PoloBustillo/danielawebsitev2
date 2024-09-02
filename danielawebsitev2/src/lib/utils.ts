@@ -10,22 +10,23 @@ export const capitalize = (str: string) => {
 };
 
 export const statusColorMap = {
-  completado: "success",
-  inicio: "danger",
-  enProgreso: "warning",
+  completada: "success",
+  cerrada: "danger",
+  abierta: "warning",
 };
 
 export const statusOptions = [
-  { name: "Nueva", uid: "inicio" },
-  { name: "En Progreso", uid: "enProgreso" },
-  { name: "Completada", uid: "completado" },
+  { name: "Nueva", uid: "abierta" },
+  { name: "Cerrada", uid: "cerrada" },
+  { name: "Completada", uid: "completada" },
 ];
 
 export const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "NOMBRE", uid: "name", sortable: true },
   { name: "ESTADO", uid: "status" },
-  { name: "FECHA INICIO", uid: "fechaInicio", sortable: true },
-  { name: "FECHA FIN", uid: "fechaFin", sortable: true },
+  { name: "DESCRIPCÓN", uid: "descripcion" },
+  { name: "FECHA INICIO", uid: "start", sortable: true },
+  { name: "FECHA FIN", uid: "end", sortable: true },
   { name: "ACCIONES", uid: "actions" },
 ];

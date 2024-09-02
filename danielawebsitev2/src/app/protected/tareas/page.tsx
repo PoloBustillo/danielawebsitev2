@@ -28,15 +28,38 @@ import {
   statusOptions,
 } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Timestamp } from "firebase/firestore";
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "status", "descripcion", "actions"];
 
 export default function page() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [tareasData, setTareasData] = useState<TareasType[]>([]);
+  const [tareasData, setTareasData] = useState<TareasType[]>([
+    {
+      name: "Cargando...",
+      id: "1",
+      users: [],
+      start: Timestamp.fromDate(new Date()),
+      end: Timestamp.fromDate(new Date()),
+      tareasContent: [{ type: ["string"] }],
+      descripcion: "string",
+      actions: ["string"],
+      explicacion: "",
+      status: "abierta|cerrada|completada",
+    },
+  ]);
+
+  useEffect(() => {
+    (async () => {
+      if (session?.user.id) {
+        let tareas = await getTareas(session.user.id);
+        console.log(tareas);
+        setTareasData(tareas);
+      }
+    })();
+  }, [session]);
   const [filterValue, setFilterValue] = useState("");
-  const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = useState(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
@@ -59,11 +82,11 @@ export default function page() {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...tareasData];
+    let filteredUsers = tareasData;
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((tarea) =>
-        tarea?.name!.toLowerCase().includes(filterValue.toLowerCase())
+        tarea?.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -88,7 +111,7 @@ export default function page() {
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = React.useMemo(() => {
-    return [...items].sort((a, b) => {
+    let sortedItemsData = items.sort((a, b) => {
       const first = a[sortDescriptor.column as keyof TareasType];
       const second = b[sortDescriptor.column as keyof TareasType];
       const cmp =
@@ -97,9 +120,9 @@ export default function page() {
           : (first ?? "") > (second ?? "")
           ? 1
           : 0;
-
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
+    return sortedItemsData;
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback(
@@ -107,7 +130,7 @@ export default function page() {
       const cellValue = tarea[columnKey];
 
       switch (columnKey) {
-        case "fechaInicio":
+        case "start":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-small capitalize">
@@ -121,7 +144,7 @@ export default function page() {
               </p>
             </div>
           );
-        case "fechaEntrega":
+        case "end":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-small capitalize">
@@ -329,14 +352,7 @@ export default function page() {
         />
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
-
-  useEffect(() => {
-    (async () => {
-      let tareas = await getTareas(session?.user.id!);
-      setTareasData(tareas);
-    })();
-  }, [session]);
+  }, [items.length, page, pages, hasSearchFilter]);
 
   return (
     <div className="mx-4 md:mx-20">
