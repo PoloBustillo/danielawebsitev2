@@ -8,24 +8,20 @@ import {
   CardBody,
   CardHeader,
   DatePicker,
+  DateValue,
   Input,
 } from "@nextui-org/react";
 
 import { useSession } from "next-auth/react";
 
 import { profileSchema } from "@/schemas/profileSchema";
-import {
-  CalendarDate,
-  getLocalTimeZone,
-  parseDate,
-  today,
-} from "@internationalized/date";
+import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import { SaveIcon } from "lucide-react";
 
 const PersonalInformationCard = () => {
   const { data: session, status, update: sessionUpdate } = useSession();
   const [touched, setTouched] = useState<boolean>(false);
-  const [date, setDate] = useState(null as CalendarDate | null);
+  const [date, setDate] = useState(null as DateValue | null);
   const [errors, setErrors] = useState<any>({});
   const [formData, setFormData] = useState({
     name: "",
