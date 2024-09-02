@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 // Import the scripts
 import { SimplybookWidgetScript } from "../lib/scripts";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/react";
 
 export function Providers(props: { children: ReactNode }) {
   const path = usePathname();
@@ -24,6 +25,7 @@ export function Providers(props: { children: ReactNode }) {
             src="//widget.simplybook.me/v2/widget/widget.js"
           ></Script>
           <SpeedInsights />
+          <Analytics />
           {path !== "/cita" && (
             <Script
               id="simplybook-call"
