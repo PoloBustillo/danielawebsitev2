@@ -6,7 +6,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import Script from "next/script";
 import { ReactNode } from "react";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 // Import the scripts
 import { SimplybookWidgetScript } from "../lib/scripts";
 import { SessionProvider } from "next-auth/react";
@@ -23,7 +23,7 @@ export function Providers(props: { children: ReactNode }) {
             id="simplybook"
             src="//widget.simplybook.me/v2/widget/widget.js"
           ></Script>
-
+          <SpeedInsights />
           {path !== "/cita" && (
             <Script
               id="simplybook-call"
