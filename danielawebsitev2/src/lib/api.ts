@@ -303,6 +303,7 @@ export const getTareas: (userId: string) => Promise<TareasType[]> = cache(
     let userRef = await doc(db, "users", userId);
     const userData = (await getDoc(userRef)).data();
 
+    if (!userData?.tareas) return [];
     let tareas = await Promise.all(
       userData?.tareas.map(async (tarea: any) => {
         const tareaRef = await doc(db, "tareas", tarea.tarea.id);
