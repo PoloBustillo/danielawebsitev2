@@ -7,21 +7,25 @@ import {
   Card,
   CardBody,
   CardHeader,
-  DateInput,
-  DateValue,
+  DatePicker,
   Input,
 } from "@nextui-org/react";
 
 import { useSession } from "next-auth/react";
 
 import { profileSchema } from "@/schemas/profileSchema";
-import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
+import {
+  CalendarDate,
+  getLocalTimeZone,
+  parseDate,
+  today,
+} from "@internationalized/date";
 import { SaveIcon } from "lucide-react";
 
 const PersonalInformationCard = () => {
   const { data: session, status, update: sessionUpdate } = useSession();
   const [touched, setTouched] = useState<boolean>(false);
-  const [date, setDate] = useState(null as DateValue | null);
+  const [date, setDate] = useState(null as CalendarDate | null);
   const [errors, setErrors] = useState<any>({});
   const [formData, setFormData] = useState({
     name: "",
@@ -268,7 +272,7 @@ const PersonalInformationCard = () => {
               <p className="text-tiny uppercase font-bold">
                 Fecha de nacimiento:
               </p>
-              <DateInput
+              <DatePicker
                 aria-label="Fecha de nacimiento"
                 name="fechaNacimiento"
                 maxValue={today(getLocalTimeZone()).subtract({
