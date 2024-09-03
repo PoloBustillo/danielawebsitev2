@@ -43,7 +43,7 @@ export const sendEmail = async (prevState: State, formData: FormData) => {
         EmailTemplate({ telefono, contactemail, message, servicio })
       ),
     });
-    console.log(response);
+
     return {
       error: null,
       success: true,

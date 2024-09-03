@@ -43,8 +43,6 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
   const error = searchParams.get("error");
 
   useEffect(() => {
-    console.log("SET SENTRY session", session);
-
     if (session?.user)
       Sentry.setUser({
         email: session.user?.email!,

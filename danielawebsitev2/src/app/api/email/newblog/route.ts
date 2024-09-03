@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
   let blogName = request.nextUrl.searchParams.get("name") || "";
   let description = request.nextUrl.searchParams.get("description") || "";
 
-  console.log(blogName, description);
   let querySnapshot = await firebase
     .firestore()
     .collection("users")
@@ -17,7 +16,6 @@ export async function GET(request: NextRequest) {
 
   await querySnapshot.forEach(async (doc) => {
     if (doc.data().email) {
-      console.log(doc.data().email);
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
         let response = await resend.emails.send({
@@ -31,7 +29,6 @@ export async function GET(request: NextRequest) {
             })
           ),
         });
-        console.log(response);
       } catch (error) {
         console.log(error);
         return new Response(JSON.stringify(error), { status: 400 });

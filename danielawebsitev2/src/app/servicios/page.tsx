@@ -26,7 +26,7 @@ const Procesos = () => {
     error: null,
     success: false,
   });
-  console.log(sendEmailState);
+
   useEffect(() => {
     if (sendEmailState.success) {
       modal.current?.click();

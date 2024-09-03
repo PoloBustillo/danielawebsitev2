@@ -13,7 +13,6 @@ const Views = ({
   blogId: string;
 }) => {
   useEffect(() => {
-    console.log(blogId);
     if (blogId) {
       const docRef = doc(db, "blog", blogId);
       setDoc(docRef, { views: views + 1 }, { merge: true });

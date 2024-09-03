@@ -10,7 +10,6 @@ import {
   CardBody,
   CardHeader,
   Textarea,
-  user,
 } from "@nextui-org/react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -33,7 +32,6 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
 import { useRouter } from "next/navigation";
-import { DocumentReference } from "firebase/firestore";
 
 interface FileWithPreview extends FileWithPath {
   preview: string;
@@ -47,17 +45,30 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
     setValue,
     formState: { errors },
   } = useForm({});
-  const [tarea, setTarea] = useState<TareasType>();
 
+  const [tarea, setTarea] = useState<TareasType>();
   const router = useRouter();
   const [touched, setTouched] = useState<boolean>(false);
+  const [archivoClicked, setArchivoClicked] = useState<string>("");
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const { data: session, status, update: sessionUpdate } = useSession();
   console.log("🚀 ~ page ~ getValues:", getValues());
+
   useEffect(() => {
     (async () => {
       if (!session?.user?.id) return;
       let userId = session?.user?.id;
+
+      let collectionUser = collection(db, "users");
+      const queryRespuestas = query(
+        collectionUser,
+        where("tareas.tarea", "==", doc(db, "tareas", id))
+      );
+      const docSnap = await getDocs(queryRespuestas);
+      docSnap.forEach((doc) => {
+        console.log("🚀 ~ docSnap.forEach ~ doc.data()", doc.data);
+      });
+
       let userData = (await getDoc(doc(db, "users", userId!))).data();
       if (!userData?.tareas) router.push("/protected/tareas");
       let findTareaForUser = userData?.tareas.find((tarea: any) => {
@@ -79,10 +90,10 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
       const docSnap = await getDocs(queryRespuestas);
       if (!docSnap.empty) {
         docSnap.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
-          doc.data().data.forEach((data: any) => {
-            setValue(data.nombre, data.respuesta);
-          });
+          if (doc.data().data)
+            doc.data().data.forEach((data: any) => {
+              setValue(data.nombre, data.respuesta);
+            });
         });
       }
     })();
@@ -93,25 +104,52 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
     getInputProps,
     open: dragOpen,
     acceptedFiles,
+    rootRef,
   } = useDropzone({
     accept: {},
-    onDrop: (acceptedFiles) => {
+    onDrop: (acceptedFiles, fileRejection, event) => {
       let files = acceptedFiles.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
       ) as FileWithPreview[];
+      console.log("🚀 ~ onDrop ~ files", files);
+
       setFiles(files);
     },
   });
   const submitForm = async (data: any) => {
-    console.log("🚀 ~ submitForm ~ data:", data);
-    let arrayOfObjects = Object.entries(data).map(([key, value]) => ({
+    let arrayOfObjects: {
+      nombre: string;
+      respuesta?: string;
+      archivos?: any;
+    }[] = Object.entries(data).map(([key, value]) => ({
       nombre: key,
-      respuesta: value,
+      respuesta: value as string,
     }));
     arrayOfObjects = arrayOfObjects.filter((obj) => obj.respuesta != undefined);
-    console.log(arrayOfObjects);
+
+    if (files.length > 0) {
+      let filesStrings = await Promise.all(
+        files.map(async (file) => {
+          if (file.preview != undefined) {
+            let filePath = await saveTareasToStorage(
+              file,
+              session?.user?.id! + file.path
+            );
+            return filePath;
+          }
+        })
+      );
+      console.log("🚀 ~ filesStrings:", filesStrings);
+      console.log("🚀 ~ archivoClicked:", archivoClicked);
+      filesStrings = filesStrings.filter((file) => file != undefined);
+      if (filesStrings.length > 0)
+        arrayOfObjects.push({
+          nombre: archivoClicked,
+          archivos: filesStrings!,
+        });
+    }
 
     const queryRespuestas = query(
       collection(db, "respuestas"),
@@ -128,49 +166,7 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
       updateDoc(docSnap.docs[0].ref, { data: arrayOfObjects });
     }
   };
-  const handleSubmit = async () => {
-    let filesStrings = await Promise.all(
-      files.map(async (file) => {
-        if (file.preview != undefined) {
-          let filePath = await saveTareasToStorage(
-            file,
-            session?.user?.id! + file.path
-          );
-          return filePath;
-        }
 
-        //   let user = { ...session?.user };
-        //   let imagePath = await saveAvatarImageToStorage(
-        //     file.,
-        //     session?.user?.id!
-        //   );
-        // }
-      })
-    );
-    setTouched(true);
-    console.log("🚀 ~ handleSubmit ~ filesStrings:", filesStrings);
-
-    // if ((imageAvatar as File).name != undefined) {
-    //   let user = { ...session?.user };
-    //   let imagePath = await saveAvatarImageToStorage(
-
-    //     imageAvatar,
-    //     session?.user?.id!
-    //   );
-    //   let imageUrl = await getFile(imagePath);
-    //   setImageAvatarURL(imageUrl);
-    //   saveImageForUser(session?.user?.id!, imageUrl);
-    //   user = { ...user, image: imageUrl };
-    //   await sessionUpdate({
-    //     user: {
-    //       ...session?.user!,
-    //       image: imageUrl,
-    //     },
-    //   });
-    //   setTouched(false);
-    //   setImageAvatar(undefined);
-    // }
-  };
   return (
     <Card className="m-8 sm:m-20 p-4">
       <CardHeader className="pb-0 py-2 p-4 flex-col sm:flex-row content-between justify-between">
@@ -180,12 +176,11 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
         </div>
         <div className="text-center">
           <Button
-            color={!touched ? "default" : "success"}
+            color={!touched && files.length == 0 ? "default" : "success"}
             form="form-task"
             type="submit"
-            isDisabled={!touched}
+            isDisabled={files.length == 0 && !touched}
             startContent={<Save className="w-8 h-8" />}
-            onClick={handleSubmit}
           >
             Guardar cambios
           </Button>
@@ -251,7 +246,14 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
                     if (subType.type == "archivo") {
                       return (
                         <div className="grid">
-                          <div {...getRootProps({ className: "dropzone" })}>
+                          <div
+                            {...getRootProps({
+                              className: "dropzone",
+                              onClick: () => {
+                                setArchivoClicked(subType.value);
+                              },
+                            })}
+                          >
                             <label className="flex flex-col items-center w-[100%] p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

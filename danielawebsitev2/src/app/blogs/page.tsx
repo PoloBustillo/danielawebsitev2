@@ -16,9 +16,6 @@ const Blogs = () => {
     BlogArticleType[] | []
   >([]);
 
-  console.log(blogsData);
-  console.log(blogsDataFiltered);
-
   useEffect(() => {
     (async () => {
       const blogs = (await getBlogs()) as BlogArticleType[];

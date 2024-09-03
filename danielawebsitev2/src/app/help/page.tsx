@@ -33,7 +33,7 @@ const page = () => {
   useEffect(() => {
     if (session?.user?.id) {
       const docRef = doc(db, "users", session?.user?.id!);
-      console.log(docRef);
+
       getDoc(docRef)
         .then((doc) => {
           if (doc.exists()) {

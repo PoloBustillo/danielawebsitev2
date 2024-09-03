@@ -13,15 +13,12 @@ export const authConfig = {
   callbacks: {
     authorized: async ({ request, auth }) => {
       {
-        console.log(`auth: ${auth}`);
-
         if (auth?.user) {
           Sentry.setUser({
             email: auth?.user.email!,
             id: auth?.user.id!,
             username: auth?.user.name!,
           });
-          console.log("Sentry user set");
         }
         const isAuthenticated = !!auth?.user;
         return isAuthenticated;
@@ -42,7 +39,6 @@ export const authConfig = {
           id: user.id!,
           username: user.name!,
         });
-        console.log("Sentry user set");
       }
       return token;
     },
