@@ -30,6 +30,9 @@ import {
 import { useRouter } from "next/navigation";
 import { doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "status", "descripcion", "actions"];
 
@@ -132,6 +135,17 @@ export default function page() {
       const cellValue = tarea[columnKey];
 
       switch (columnKey) {
+        case "descripcion":
+          return (
+            <div className="flex flex-col">
+              <Markdown
+                className="relative z-10 "
+                rehypePlugins={[rehypeRaw, remarkGfm]}
+              >
+                {cellValue?.toString()}
+              </Markdown>
+            </div>
+          );
         case "start":
           return (
             <div className="flex flex-col">
