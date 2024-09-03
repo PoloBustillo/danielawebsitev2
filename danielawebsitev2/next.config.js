@@ -4,6 +4,8 @@ const nextConfig = {
     domains: ["firebasestorage.googleapis.com"],
   },
   reactStrictMode: true,
+  optimizeFonts: true,
+  experimental: { optimizeCss: true, optimisticClientCache: true },
   eslint: {
     ignoreDuringBuilds: true,
   },
