@@ -9,6 +9,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Input,
   Textarea,
 } from "@nextui-org/react";
 import Markdown from "react-markdown";
@@ -32,6 +33,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
 import { useRouter } from "next/navigation";
+import Formulario from "@/components/Tarea/Formulario";
 
 interface FileWithPreview extends FileWithPath {
   preview: string;
@@ -58,24 +60,18 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
     (async () => {
       if (!session?.user?.id) return;
       let userId = session?.user?.id;
-
-      let collectionUser = collection(db, "users");
-      const queryRespuestas = query(
-        collectionUser,
-        where("tareas.tarea", "==", doc(db, "tareas", id))
+      let tareasCollection = collection(db, "tareas-usuario-respuestas");
+      const queryTareasUsuarios = query(
+        tareasCollection,
+        where("user", "==", doc(db, "users", userId))
       );
-      const docSnap = await getDocs(queryRespuestas);
-      docSnap.forEach((doc) => {
-        console.log("🚀 ~ docSnap.forEach ~ doc.data()", doc.data);
-      });
-
-      let userData = (await getDoc(doc(db, "users", userId!))).data();
-      if (!userData?.tareas) router.push("/protected/tareas");
-      let findTareaForUser = userData?.tareas.find((tarea: any) => {
-        return tarea.tarea.id == id;
-      });
+      let tareasDocs = await getDocs(queryTareasUsuarios);
+      let findTareaForUser = tareasDocs.docs.find(
+        (doc) => doc.data().tarea.id == id
+      );
       if (!findTareaForUser) router.push("/protected/tareas");
       const fetchedTarea = (await getTarea(id)) as TareasType;
+
       setTarea(fetchedTarea);
     })();
   }, [session]);
@@ -224,6 +220,34 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
                 </Accordion>
                 {section.type &&
                   section.type.map((subType: any) => {
+                    if (subType.type == "formulario") {
+                      // console.log("🚀 ~ subType:", formulario.data());
+                      return <Formulario formularioDoc={subType.value} />;
+                    }
+                    if (subType.type == "link") {
+                      return (
+                        <Input
+                          className="my-4"
+                          {...register(subType.value)}
+                          onChange={(e) => {
+                            setTouched(true);
+                          }}
+                          type="url"
+                          label={subType.value}
+                          placeholder="link de la página"
+                          labelPlacement="outside"
+                          variant="bordered"
+                          color="secondary"
+                          startContent={
+                            <div className="pointer-events-none flex items-center">
+                              <span className="text-default-400 text-small">
+                                https://
+                              </span>
+                            </div>
+                          }
+                        />
+                      );
+                    }
                     if (subType.type == "text") {
                       return (
                         <Textarea

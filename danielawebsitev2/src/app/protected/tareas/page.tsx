@@ -28,7 +28,16 @@ import {
   statusOptions,
 } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  Timestamp,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -50,7 +59,7 @@ export default function page() {
       descripcion: "string",
       actions: ["string"],
       explicacion: "",
-      status: "abierta|cerrada|completada",
+      status: "abierta|revisada|completada",
       type: [""],
     },
   ]);
@@ -59,11 +68,12 @@ export default function page() {
     (async () => {
       if (session?.user.id) {
         let tareas = await getTareas(session.user.id);
-        console.log(tareas);
+
         setTareasData(tareas);
       }
     })();
   }, [session]);
+
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState(
     new Set(INITIAL_VISIBLE_COLUMNS)
@@ -220,42 +230,43 @@ export default function page() {
                   >
                     Ver
                   </DropdownItem>
-                  <DropdownItem
-                    onClick={async () => {
-                      let userId = session?.user.id!;
-                      let userRef = await doc(db, "users", userId);
-                      const userData = (await getDoc(userRef)).data();
+                  {tarea.status != "entregada" ? (
+                    <DropdownItem
+                      hidden={tarea.status === "entregada"}
+                      onClick={async () => {
+                        let tareasCollection = collection(
+                          db,
+                          "tareas-usuario-respuestas"
+                        );
+                        const queryTareasUsuarios = query(
+                          tareasCollection,
+                          where("tarea", "==", doc(db, "tareas", tarea.id))
+                        );
+                        let tareasDocs = await getDocs(queryTareasUsuarios);
 
-                      if (userData?.tareas) {
-                        let tareasActualizadas = userData.tareas.map(
-                          (tareaUser: any) => {
-                            if (tareaUser.tarea.id == tarea.id) {
-                              return { ...tareaUser, status: "completada" };
-                            }
-                            return tareaUser;
+                        await updateDoc(
+                          doc(
+                            db,
+                            "tareas-usuario-respuestas",
+                            tareasDocs.docs[0].id
+                          ),
+                          { status: "entregada" }
+                        );
+                        let newTareasData = tareasData.map((tarea) => {
+                          if (tarea.id === tareasDocs.docs[0].id) {
+                            return { ...tarea, status: "entregada" };
                           }
-                        );
-                        let tareasActualizadasEstado = tareasData.map(
-                          (task) => {
-                            if (task.id == tarea.id) {
-                              return { ...tarea, status: "completada" };
-                            }
-                            return tarea;
-                          }
-                        );
-                        console.log(
-                          "🚀 ~ onClick={ ~ tareasActulizadas:",
-                          tareasActualizadas
-                        );
-                        await updateDoc(doc(db, "users", session?.user.id!), {
-                          tareas: tareasActualizadas,
+                          return tarea;
                         });
-                        setTareasData(tareasActualizadasEstado);
-                      }
-                    }}
-                  >
-                    Entregar
-                  </DropdownItem>
+
+                        setTareasData(newTareasData);
+                      }}
+                    >
+                      Entregar
+                    </DropdownItem>
+                  ) : (
+                    <DropdownItem>Entregada!</DropdownItem>
+                  )}
                 </DropdownMenu>
               </Dropdown>
             </div>

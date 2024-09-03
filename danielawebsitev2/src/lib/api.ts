@@ -299,24 +299,33 @@ export const getBlogs: () => Promise<BlogArticleType[] | []> = cache(
 
 export const getTareas: (userId: string) => Promise<TareasType[]> = cache(
   async (userId: string) => {
-    let userRef = await doc(db, "users", userId);
-    const userData = (await getDoc(userRef)).data();
+    let tareasCollection = collection(db, "tareas-usuario-respuestas");
+    const queryTareasUsuarios = query(
+      tareasCollection,
+      where("user", "==", doc(db, "users", userId))
+    );
+    let tareasDocs = await getDocs(queryTareasUsuarios);
+    let tareasUsuarios: any[] = [];
+    tareasDocs.forEach((doc) => {
+      tareasUsuarios.push(doc.data());
+    });
 
-    if (!userData?.tareas) return [];
-    let tareas = await Promise.all(
-      userData?.tareas.map(async (tarea: any) => {
-        const tareaRef = await doc(db, "tareas", tarea.tarea.id);
+    let tareas: TareasType[] = await Promise.all(
+      tareasUsuarios.map(async (tareaUsuario) => {
+        const tareaRef = await doc(db, "tareas", tareaUsuario.tarea.id);
         const tareaData = (await getDoc(tareaRef)).data();
-
         return {
-          start: tarea.rangeDate[0],
-          end: tarea.rangeDate[1],
-          status: tarea.status,
-          id: tarea.tarea.id,
+          start: tareaUsuario.rangeDate[0],
+          end: tareaUsuario.rangeDate[1],
+          status: tareaUsuario.status,
+          id: tareaUsuario.tarea.id,
           name: tareaData?.name,
           descripcion: tareaData?.explicacion,
           explicacion: tareaData?.explicacion,
-          tareaContent: tareaData,
+          tareasContent: tareaData?.type,
+          users: [], // Add the missing property 'users'
+          actions: [], // Add the missing property 'actions'
+          type: [""], // Update the type of 'type' property to allow for a string value
         };
       })
     );

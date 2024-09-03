@@ -11,14 +11,14 @@ export const capitalize = (str: string) => {
 
 export const statusColorMap = {
   completada: "success",
-  cerrada: "primary",
+  revisada: "primary",
   abierta: "warning",
 };
 
 export const statusOptions = [
   { name: "Nueva", uid: "abierta" },
-  { name: "Cerrada", uid: "cerrada" },
-  { name: "Completada", uid: "completada" },
+  { name: "Revisada", uid: "revisada" },
+  { name: "Entregada", uid: "entregada" },
 ];
 
 export const columns = [
