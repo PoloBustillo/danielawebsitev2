@@ -14,9 +14,9 @@ const Newsletter = async () => {
                 <h3 className="text-5xl dark:text-background text-[whitesmoke] font-bold mb-3">
                   Lo último de mi blog.
                 </h3>
-                <h4 className="text-lg font-medium mb-7 dark:text-background text-neutral-300">
+                <div className="text-lg font-medium mb-7 dark:text-background text-neutral-300">
                   Subscribete para recibir promociones y técnicas terapeuticas.
-                </h4>
+                </div>
               </div>
               <div className="flex -2">
                 <input

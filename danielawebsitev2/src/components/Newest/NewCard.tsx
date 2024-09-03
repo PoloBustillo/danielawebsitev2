@@ -32,6 +32,7 @@ const NewCard = ({ banners }: { banners: BannerResponse[] }) => {
         className="hidden sm:block -space-x-2 overflow-hidden"
       >
         <Image
+          width={400}
           alt={banners[indexImg]?.description}
           src={banners[indexImg]?.image}
         />
