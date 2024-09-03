@@ -84,7 +84,9 @@ const Contact = async () => {
                   </span>
                 </p>
 
-                {webData.extraData?.length ? <h3>Información extra:</h3> : null}
+                {webData.extraData?.length ? (
+                  <div>Información extra:</div>
+                ) : null}
                 {webData.extraData?.map((extraData) => (
                   <p key={extraData.name} className="flex items-center">
                     <svg

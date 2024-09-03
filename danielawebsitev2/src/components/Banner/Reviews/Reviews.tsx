@@ -21,16 +21,16 @@ const Reviews = () => {
         <div>
           <div className="flex flex-col items-center justify-center overflow-hidden bannerBorder sm:pl-8">
             <div className="flex flex-col justify-center align-middle ">
-              <h3 className="text-2xl text-center text-[whitesmoke] font-semibold flex flex-col justify-center align-middle">
+              <span className="text-2xl text-center text-[whitesmoke] font-semibold flex flex-col justify-center align-middle">
                 4.8
-              </h3>
+              </span>
 
               <Stars color={"yellow"}></Stars>
             </div>
             <div className="flex justify-center">
-              <h3 className="text-sm text-[whitesmoke]">
+              <span className="text-sm text-[whitesmoke]">
                 En Google y otras plataformas
-              </h3>
+              </span>
             </div>
           </div>
 

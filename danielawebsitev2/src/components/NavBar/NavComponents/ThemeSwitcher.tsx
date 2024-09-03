@@ -20,8 +20,7 @@ export function ThemeSwitcher() {
   return (
     <Switch
       aria-label="Cambiar tema"
-      aria-labelledby="Cambiar tema"
-      aria-selected={theme == "light"}
+      aria-checked={theme == "light"}
       defaultSelected={theme == "light"}
       size="lg"
       color="primary"

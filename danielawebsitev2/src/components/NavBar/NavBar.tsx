@@ -236,7 +236,7 @@ export default function NavBar({ areasTerapias, pageName }: NavBarProps) {
         <DesktopMenu areasTerapias={areasTerapias}></DesktopMenu>
       </NavbarContent>
 
-      <NavbarContent as="div" justify="end">
+      <NavbarContent justify="end">
         <NavbarItem>
           <ThemeSwitcher></ThemeSwitcher>
         </NavbarItem>
