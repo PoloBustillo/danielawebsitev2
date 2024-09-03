@@ -1,4 +1,5 @@
 import { CarouselResponseType } from "@/lib/types";
+import Image from "next/image";
 import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -21,9 +22,12 @@ const BannerCarousel = ({ data }: BannerProps) => {
           </div>
           <div className="lg:w-1/2 xl:w-3/5 dark:bg-gray-800">
             <div className="flex items-center justify-center p-4 md:p-8 lg:p-12">
-              <img
-                src={data.image}
-                alt={data.title}
+              <Image
+                aria-label={data.title!}
+                width={500}
+                height={100}
+                src={data.image!}
+                alt={data.title!}
                 className="rounded-lg shadow-lg dark:bg-gray-500 aspect-video sm:min-h-96"
               />
             </div>

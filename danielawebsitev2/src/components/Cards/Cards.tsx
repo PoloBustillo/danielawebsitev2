@@ -51,9 +51,9 @@ export default function Cards({ terapias }: { terapias: TerapiaType[] }) {
                   <p className="text-tiny text-white/60 uppercase font-bold ">
                     {terapia.type}
                   </p>
-                  <h4 className="text-white/90 font-medium text-xl ">
+                  <div className="text-white/90 font-medium text-xl ">
                     {terapia.name}
-                  </h4>
+                  </div>
                 </CardHeader>
                 <Image
                   removeWrapper
