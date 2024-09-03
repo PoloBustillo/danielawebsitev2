@@ -2,9 +2,10 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Switch } from "@nextui-org/switch";
+
 import { MoonIcon } from "../../icons/MoonIcon";
 import { SunIcon } from "../../icons/SunIcon";
+import { Switch } from "@nextui-org/react";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -18,6 +19,9 @@ export function ThemeSwitcher() {
 
   return (
     <Switch
+      aria-label="Cambiar tema"
+      aria-labelledby="Cambiar tema"
+      aria-selected={theme == "light"}
       defaultSelected={theme == "light"}
       size="lg"
       color="primary"

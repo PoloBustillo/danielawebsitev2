@@ -92,6 +92,7 @@ const Blogs = () => {
           <div className="hidden py-2 xl:col-span-4 lg:col-span-4 md:hidden lg:block self-start">
             <div className="mb-8 space-x-5 border-b-2 border-opacity-10 dark:border-rose-400">
               <button
+                aria-label="Ultimos articulos"
                 type="button"
                 onClick={() => {
                   setSelected("ultimos");
@@ -104,6 +105,7 @@ const Blogs = () => {
                 Ultimos
               </button>
               <button
+                aria-label="Articulos populares"
                 type="button"
                 onClick={() => {
                   setSelected("populares");

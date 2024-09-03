@@ -74,6 +74,7 @@ const Carousel = ({ carouselData }: CarouselProps) => {
             <div className="embla__dots ">
               {carouselData.map((_, index) => (
                 <DotButton
+                  aria-label="cambiar banner"
                   key={index}
                   onClick={() => scrollTo(index)}
                   className={"after:bg-foreground embla__dot".concat(

@@ -18,6 +18,8 @@ const NotFound = () => {
           </p>
           <Link href={"/"}>
             <Button
+              aria-label="Ir a la página Principal"
+              aria-pressed="false"
               as={LinkUI}
               className="px-8 py-3 font-semibold rounded text-white bg-foreground dark:text-gray-900 dark:bg-focus"
               showAnchorIcon

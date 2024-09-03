@@ -109,6 +109,7 @@ const Contact = async () => {
             </div>
             <div className="flex justify-center flex-col ">
               <iframe
+                title="Google Maps"
                 src={webData.googleMapUrl}
                 style={{ border: "0", height: "35vh" }}
                 className="justify-center md:ml-20"
