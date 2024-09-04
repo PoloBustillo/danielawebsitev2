@@ -13,7 +13,9 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Tooltip,
   useDisclosure,
+  user,
 } from "@nextui-org/react";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -26,7 +28,7 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { SendHorizonal } from "lucide-react";
+import { AtSign, IdCard, SendHorizonal } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
@@ -129,6 +131,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
             username: userData!.name,
             userId: comment.userId.id,
             userAvatar: userData!.image,
+            userEmail: userData!.email,
             status: comment.status,
             commentText: comment.commentText,
             likes: comment.likes,
@@ -182,6 +185,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
       username: session?.user.name!,
       userAvatar: session?.user.image!,
       userId: session?.user.id!,
+      userEmail: session?.user.email!,
       commentText: reply,
       likes: [],
       replies: [],
@@ -231,6 +235,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
       id: docRef.id,
       username: session?.user.name!,
       userAvatar: session?.user.image!,
+      userEmail: session?.user.email!,
       userId: session?.user.id!,
       commentText: comment,
       likes: [],
@@ -378,14 +383,41 @@ const Comments = ({ blogId }: { blogId: string }) => {
                   <footer className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
                       <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                        <Avatar
-                          isBordered
-                          className="mr-2 w-10 h-10 rounded-full"
-                          color="secondary"
-                          name={comment.username}
-                          size="md"
-                          src={comment.userAvatar}
-                        />
+                        <Tooltip
+                          showArrow
+                          placement="left"
+                          content={
+                            <>
+                              <div className="flex flex-row">
+                                <AtSign></AtSign>
+                                {comment.userEmail}
+                              </div>
+                              <div className="flex flex-row">
+                                <IdCard></IdCard>
+                                {comment.id}
+                              </div>
+                            </>
+                          }
+                          classNames={{
+                            base: [
+                              // arrow color
+                              "before:bg-neutral-400 dark:before:bg-white",
+                            ],
+                            content: [
+                              "py-2 px-4 shadow-xl",
+                              "text-black bg-gradient-to-br from-white to-neutral-400",
+                            ],
+                          }}
+                        >
+                          <Avatar
+                            isBordered
+                            className="mr-2 w-10 h-10 rounded-full"
+                            color="secondary"
+                            name={comment.username}
+                            size="md"
+                            src={comment.userAvatar}
+                          />
+                        </Tooltip>
                         {comment.username}
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -598,14 +630,41 @@ const Comments = ({ blogId }: { blogId: string }) => {
                             <footer className="flex justify-between items-center mb-2">
                               <div className="flex items-center">
                                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                                  <Avatar
-                                    isBordered
-                                    className="mr-2 w-6 h-6 rounded-full"
-                                    color="success"
-                                    size="sm"
-                                    src={replyComment?.userAvatar}
-                                    name={replyComment?.username}
-                                  />
+                                  <Tooltip
+                                    showArrow
+                                    placement="left"
+                                    content={
+                                      <>
+                                        <div className="flex flex-row">
+                                          <AtSign></AtSign>
+                                          {replyComment.userEmail}
+                                        </div>
+                                        <div className="flex flex-row">
+                                          <IdCard></IdCard>
+                                          {replyComment.id}
+                                        </div>
+                                      </>
+                                    }
+                                    classNames={{
+                                      base: [
+                                        // arrow color
+                                        "before:bg-neutral-400 dark:before:bg-white",
+                                      ],
+                                      content: [
+                                        "py-2 px-4 shadow-xl",
+                                        "text-black bg-gradient-to-br from-white to-neutral-400",
+                                      ],
+                                    }}
+                                  >
+                                    <Avatar
+                                      isBordered
+                                      className="mr-2 w-6 h-6 rounded-full"
+                                      color="success"
+                                      size="sm"
+                                      src={replyComment?.userAvatar}
+                                      name={replyComment?.username}
+                                    />
+                                  </Tooltip>
                                   {replyComment?.username}
                                 </p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">

@@ -89,6 +89,7 @@ export interface CommentTypeExtended {
   username: string;
   userId: string;
   userAvatar: string;
+  userEmail: string;
   commentText: string;
   status: string;
   created_on: any;
