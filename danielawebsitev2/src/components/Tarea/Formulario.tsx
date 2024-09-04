@@ -10,11 +10,9 @@ const Formulario = ({
   );
 
   useEffect(() => {
-    console.log("Formulario", formularioDoc);
     (async () => {
       const doc = await getDoc(formularioDoc);
       setFormularioData(doc.data());
-      console.log(doc.data());
     })();
   }, []);
   return <div>{JSON.stringify(formularioData)}</div>;
