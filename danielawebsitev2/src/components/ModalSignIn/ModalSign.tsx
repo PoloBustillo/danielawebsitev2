@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 import { ErrorAlert } from "../Alerts/ErrorAlert";
 import { NewUser, signupSchema } from "@/schemas/signupSchema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { AtSign, EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function ModalSign({
   tabInit = "login",
@@ -16,6 +17,8 @@ export default function ModalSign({
   closeModal: Function;
 }) {
   const [selected, setSelected] = useState(tabInit);
+  const [typePassword, setTypePassword] = useState("password");
+  const [typePasswordRegister, setTypePasswordRegister] = useState("password");
   const [loginServiceError, setLoginServiceError] = useState(
     "Error en servicio de inicio de sesión."
   );
@@ -118,6 +121,7 @@ export default function ModalSign({
               {...register("email")}
               isRequired
               name="email"
+              endContent={<AtSign></AtSign>}
               label="Email"
               placeholder="Introduce tu email"
               isInvalid={errors?.email ? true : false}
@@ -129,7 +133,23 @@ export default function ModalSign({
               isRequired
               label="Contraseña"
               placeholder="Introduce tu contraseña"
-              type="password"
+              type={typePassword}
+              endContent={
+                typePassword == "text" ? (
+                  <EyeOffIcon
+                    onClick={() => {
+                      setTypePassword("password");
+                    }}
+                  ></EyeOffIcon>
+                ) : (
+                  <EyeIcon
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setTypePassword("text");
+                    }}
+                  ></EyeIcon>
+                )
+              }
               isInvalid={errors?.password ? true : false}
               color={errors?.password ? "danger" : "default"}
               errorMessage={errors?.password?.message}
@@ -168,6 +188,7 @@ export default function ModalSign({
               {...registerSignup("email")}
               isRequired
               label="Email"
+              endContent={<AtSign></AtSign>}
               placeholder="Introduce tu email"
               type="email"
               isInvalid={errorsSignup?.email ? true : false}
@@ -179,8 +200,24 @@ export default function ModalSign({
               {...registerSignup("password")}
               isRequired
               label="Contraseña"
+              endContent={
+                typePasswordRegister == "text" ? (
+                  <EyeOffIcon
+                    onClick={() => {
+                      setTypePasswordRegister("password");
+                    }}
+                  ></EyeOffIcon>
+                ) : (
+                  <EyeIcon
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setTypePasswordRegister("text");
+                    }}
+                  ></EyeIcon>
+                )
+              }
               placeholder="Introduce tu contraseña"
-              type="password"
+              type={typePasswordRegister}
               isInvalid={errorsSignup?.password ? true : false}
               color={errorsSignup?.password ? "danger" : "default"}
               errorMessage={errorsSignup?.password?.message}
@@ -189,8 +226,24 @@ export default function ModalSign({
               {...registerSignup("passwordConfirm")}
               isRequired
               label="Confirme contraseña"
+              endContent={
+                typePasswordRegister == "text" ? (
+                  <EyeOffIcon
+                    onClick={() => {
+                      setTypePasswordRegister("password");
+                    }}
+                  ></EyeOffIcon>
+                ) : (
+                  <EyeIcon
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setTypePasswordRegister("text");
+                    }}
+                  ></EyeIcon>
+                )
+              }
               placeholder="Confirme su contraseña"
-              type="password"
+              type={typePasswordRegister}
               isInvalid={errorsSignup?.passwordConfirm ? true : false}
               color={errorsSignup?.passwordConfirm ? "danger" : "default"}
               errorMessage={errorsSignup?.passwordConfirm?.message}
