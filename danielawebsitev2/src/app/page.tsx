@@ -6,31 +6,36 @@ import Contact from "@/components/ContactSection/Contact";
 import Faq from "@/components/FAQ/Faq";
 import Newsletter from "@/components/Footer/Newsletter/Newsletter";
 import {
+  BlogArticleType,
   CarouselResponseType,
   MensajesResponseType,
   PageDataType,
   TerapiasResponseType,
 } from "@/lib/types";
 import {
+  getBlogs,
   getCarouselData,
   getMensajes,
   getPageSkeleton,
   getTerapias,
 } from "../lib/api";
+import BlogsSection from "@/components/BlogsSection/BlogsSection";
 
 export const dynamic = "force-dynamic";
 
 const page = async () => {
-  const [carouselData, mensajes, areasTerapias, pageData]: [
+  const [carouselData, mensajes, areasTerapias, pageData, blogs]: [
     carouselData: CarouselResponseType[],
     mensajes: MensajesResponseType,
     areasTerapias: TerapiasResponseType,
-    pageData: (PageDataType & { id: string })[]
+    pageData: (PageDataType & { id: string })[],
+    blogs: BlogArticleType[]
   ] = await Promise.all([
     getCarouselData(),
     getMensajes(),
     getTerapias(),
     getPageSkeleton(),
+    getBlogs(),
   ]);
 
   let terapias = Object.keys(areasTerapias)
@@ -63,7 +68,8 @@ const page = async () => {
             case "fqa":
               return <Faq></Faq>;
               break;
-
+            case "blogs":
+              return <BlogsSection blogs={blogs}></BlogsSection>;
             default:
               break;
           }
