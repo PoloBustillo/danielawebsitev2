@@ -427,7 +427,11 @@ const Comments = ({ blogId }: { blogId: string }) => {
                         </time>
                       </p>
                     </div>
-                    <Popover placement="bottom" showArrow>
+                    <Popover
+                      shouldCloseOnBlur={true}
+                      placement="bottom"
+                      showArrow
+                    >
                       <PopoverTrigger>
                         <button
                           id="dropdownComment2Button"
