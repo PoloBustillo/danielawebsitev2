@@ -9,10 +9,9 @@ import remarkGfm from "remark-gfm";
 
 const page = async ({ params: { id } }: { params: { id: string } }) => {
   const terapia = (await getTerapia(id)) as TerapiaType;
- 
 
   return (
-    <div className="max-w-4xl px-6 pt-16 -mb-6 mx-auto space-y-12">
+    <div className="max-w-4xl px-6 pt-16 -mb-6 mx-auto space-y-12 ">
       <article>
         <div className="w-full mx-auto space-y-4 text-center">
           <p className="text-xs font-semibold tracking-wider uppercase">
@@ -83,7 +82,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
                 <Buttons pageUrl={id}></Buttons>
               </div>
             </div>
-            <div className="text-white text-justify">
+            <div className="text-white text-justify terapiaData">
               <Markdown rehypePlugins={[rehypeRaw, remarkGfm]}>
                 {terapia.longDescription}
               </Markdown>
