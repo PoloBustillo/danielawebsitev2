@@ -9,18 +9,11 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Input,
-  Textarea,
 } from "@nextui-org/react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import {
-  BetweenHorizontalStartIcon,
-  LetterText,
-  Link,
-  Save,
-} from "lucide-react";
+import { BetweenHorizontalStartIcon, Link, Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import { useSession } from "next-auth/react";
@@ -210,6 +203,7 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
             color={"success"}
             form="form-task"
             type="submit"
+            variant="ghost"
             startContent={<Save className="w-8 h-8" />}
           >
             Guardar cambios
@@ -276,7 +270,14 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
                 {section.type &&
                   section.type.map((subType: any) => {
                     if (subType.type == "formulario") {
-                      return <Formulario formularioDoc={subType.value} />;
+                      return (
+                        <Formulario
+                          formularioDoc={subType.value}
+                          respuestaId={respuestaId}
+                          tareaUsuarioId={tareaUsuarioId!}
+                          tareaId={id}
+                        />
+                      );
                     }
                     if (subType.type == "link") {
                       return (

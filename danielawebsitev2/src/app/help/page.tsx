@@ -77,6 +77,7 @@ const page = () => {
         Number(limpieza) +
         Number(locacion)) /
       7;
+    if (isNaN(average)) return 88;
     return Number(average.toFixed(1));
   };
   return (

@@ -97,6 +97,13 @@ export interface CommentTypeExtended {
   likes: string[];
   isReply: boolean;
 }
+
+export interface FormularioType {
+  id: string;
+  name: string;
+  description: string;
+  preguntas: [any];
+}
 export interface PageDataType {
   enabled: boolean;
   priority: number;
