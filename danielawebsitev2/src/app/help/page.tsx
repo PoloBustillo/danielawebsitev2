@@ -103,7 +103,7 @@ const page = () => {
           </div>
         </div>
         {showTicket && (
-          <div className=" bg-zinc-500 dark:bg-foreground relative drop-shadow-2xl rounded-3xl p-4 m-auto w-[40%]">
+          <div className="my-4 bg-zinc-500 dark:bg-foreground relative drop-shadow-2xl rounded-3xl p-4 m-auto sm:w-[50%] md:w-[40%]">
             <div className="flex-none sm:flex text-white dark:text-black">
               <div className="flex-auto justify-evenly">
                 <div className="flex items-center">

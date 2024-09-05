@@ -6,10 +6,10 @@ import { useToast } from "@/components/ui/use-toast";
 const page = () => {
   const { toast } = useToast();
   return (
-    <div className="bg-background py-10">
+    <div className="bg-background py-10 ">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold mb-4">Status de servicios</h1>
-        <div className="grid grid-cols-3 gap-4">
+        <h1 className="text-4xl font-bold m-4">Status de servicios</h1>
+        <div className="grid grid-cols-3 gap-4 m-10">
           <div className="col-span-3 md:col-span-1">
             <div className="bg-green-500 p-4 rounded-lg text-center">
               <h2 className="text-lg font-medium">Serivicios de citas</h2>

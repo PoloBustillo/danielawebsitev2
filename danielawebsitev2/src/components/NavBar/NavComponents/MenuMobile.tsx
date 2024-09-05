@@ -4,6 +4,14 @@ import { NavbarMenuItem } from "@nextui-org/react";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { HomeIcon } from "../../icons/Home";
+import {
+  Building2,
+  CalendarSearch,
+  GraduationCap,
+  HandHeart,
+  Hospital,
+  Newspaper,
+} from "lucide-react";
 
 const MenuMobile = ({
   areasTerapias,
@@ -33,7 +41,10 @@ const MenuMobile = ({
           onClick={() => closeMenu(false)}
           className="block rounded-lg px-4  py-2 text-lg font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         >
-          Reserva tu cita
+          <div className="flex content-start gap-2">
+            <CalendarSearch></CalendarSearch>
+            Reserva tu cita
+          </div>
         </Link>
       </NavbarMenuItem>
       <NavbarMenuItem>
@@ -42,7 +53,10 @@ const MenuMobile = ({
           href="/blogs"
           className="block rounded-lg px-4  py-2 text-lg font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         >
-          Blog
+          <div className="flex content-start gap-2">
+            <Newspaper></Newspaper>
+            Blog
+          </div>
         </Link>
       </NavbarMenuItem>
       <NavbarMenuItem>
@@ -51,7 +65,10 @@ const MenuMobile = ({
           href="/servicios"
           className="block rounded-lg px-4  py-2 text-lg font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         >
-          Empresarial
+          <div className="flex content-start gap-2">
+            <Building2></Building2>
+            Empresarial
+          </div>
         </Link>
       </NavbarMenuItem>
       {(arrayTerapias as any).map(
@@ -60,8 +77,12 @@ const MenuMobile = ({
             <NavbarMenuItem key={item + index.toString()}>
               <details className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500">
-                  <span className="text-lg font-medium">{item}</span>
-
+                  <div className="flex content-start gap-2">
+                    {item == "Educativa" && <GraduationCap></GraduationCap>}
+                    {item == "Social" && <HandHeart></HandHeart>}
+                    {item == "Clinica" && <Hospital></Hospital>}
+                    <span className="text-lg font-medium">{item}</span>
+                  </div>
                   <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
