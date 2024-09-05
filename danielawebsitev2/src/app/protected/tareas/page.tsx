@@ -258,7 +258,10 @@ export default function page() {
                           }
                           return tarea;
                         });
-
+                        console.log(
+                          "🚀 ~ newTareasData ~ newTareasData:",
+                          newTareasData
+                        );
                         setTareasData(newTareasData);
                       }}
                     >

@@ -162,16 +162,18 @@ const Formulario = ({
             );
           }
         })}
-        <Button
-          color={"success"}
-          className="flex float-end"
-          variant="ghost"
-          type="submit"
-          onClick={handleSubmit(submitForm)}
-          startContent={<Save className="w-8 h-8" />}
-        >
-          Guardar cambios
-        </Button>
+        <div className="my-10">
+          <Button
+            color={"success"}
+            className="flex float-end w-[150px]"
+            variant="ghost"
+            type="submit"
+            onClick={handleSubmit(submitForm)}
+            startContent={<Save className="w-8 h-8" />}
+          >
+            Guardar cambios
+          </Button>
+        </div>
       </form>
     </div>
   );
