@@ -69,7 +69,8 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
       let tareasCollection = collection(db, "tareas-usuario-respuestas");
       const queryTareasUsuarios = query(
         tareasCollection,
-        where("user", "==", doc(db, "users", userId))
+        where("user", "==", doc(db, "users", userId)),
+        where("tarea", "==", doc(db, "tareas", id))
       );
       let tareasDocs = await getDocs(queryTareasUsuarios);
       let findTareaForUser = tareasDocs.docs.find(
@@ -87,7 +88,8 @@ const page = ({ params: { id } }: { params: { id: string } }) => {
       let tareasCollection = collection(db, "tareas-usuario-respuestas");
       const queryTareasUsuarios = query(
         tareasCollection,
-        where("tarea", "==", doc(db, "tareas", id))
+        where("tarea", "==", doc(db, "tareas", id)),
+        where("user", "==", doc(db, "users", session?.user?.id!))
       );
       const docSnap = await getDocs(queryTareasUsuarios);
       setTareaUsuarioId(docSnap.docs[0].id);
