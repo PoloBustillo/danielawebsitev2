@@ -38,7 +38,7 @@ const BlogsSection = ({ blogs }: { blogs: BlogArticleType[] }) => {
                     })}
                   </div>
 
-                  <h3 className="cursor-pointer flex-1 py-2 text-lg font-semibold leadi">
+                  <h3 className="cursor-pointer flex-1 py-2 text-lg font-semibold leadi text-white">
                     {data.name}
                   </h3>
                   <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
